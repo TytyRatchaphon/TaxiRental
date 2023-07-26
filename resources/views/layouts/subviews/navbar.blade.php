@@ -1,16 +1,19 @@
-<nav class="bg-white border-gray-200 py-2.5">
-    <div class="flex flex-wrap items-center justify-between max-w-screen-xl px-4 mx-auto">
+<nav class="bg-white border-gray-200 py-2.5 overflow-hidden">
+    <div class="flex flex-wrap items-center justify-between max-w-screen-xl mx-auto">
         <a href="#" class="flex items-center">
-            <img src="https://www.svgrepo.com/show/499962/music.svg" class="h-6 mr-3 sm:h-9" alt="Logo">
-            <span class="self-center text-xl font-semibold whitespace-nowrap">Music Lover</span>
+            <img src="https://www.svgrepo.com/show/429168/fruit-lemon-slice.svg" class="h-9 mr-3 sm:h-9" alt="Logo">
+            <span class="self-center text-xl font-semibold whitespace-nowrap hover:text-[#fde047] transition">Honey Lemon</span>
         </a>
         <div class="flex items-center lg:order-2">
             <div class="hidden mt-2 mr-4 sm:inline-block">
                 <span></span>
             </div>
-
-            <a href="#"
-               class="text-white bg-purple-700 hover:bg-purple-800 focus:ring-4 focus:ring-purple-300 font-medium rounded-lg text-sm px-4 lg:px-5 py-2 lg:py-2.5 sm:mr-2 lg:mr-0 focus:outline-none">Download</a>
+            
+            <li class="hidden md:block">
+                <a href="#" class="text-Black bg-[#fde047] hover:bg-[#fde460] trainsition focus:ring-4 focus:ring-purple-300 font-medium rounded-lg text-sm px-4 lg:px-5 py-2 lg:py-2.5 sm:mr-2 lg:mr-0 focus:outline-none">
+                    Sign in
+                </a>
+            </li>
 
             <button data-collapse-toggle="mobile-menu-2" type="button"
                     class="inline-flex items-center p-2 ml-1 text-sm text-gray-500 rounded-lg lg:hidden hover:bg-gray-100 focus:outline-none focus:ring-2 focus:ring-gray-200"
@@ -28,29 +31,29 @@
                 </svg>
             </button>
         </div>
-        <div class="items-center justify-between w-full lg:flex lg:w-auto lg:order-1" id="mobile-menu-2">
-            <ul class="flex flex-col mt-4 font-medium lg:flex-row lg:space-x-8 lg:mt-0">
+        <div class="items-center justify-between w-full lg:flex lg:w-auto lg:order-1 hidden" id="mobile-menu-2">
+            <ul class="flex flex-col mt-4 font-medium lg:flex-row lg:space-x-8 lg:mt-0 overflow-hidden">
                 <li>
                     <a href="{{ url('/') }}"
-                       class="nav-menu {{ request()->is('/') ? 'active' : '' }}">
-                        Welcome
+                       class="nav-menu hover:text-[#fde047] transition {{ request()->is('/') ? 'active' : '' }}">
+                        Home
                     </a>
                 </li>
                 <li>
                     <a href="{{ route('songs.index') }}"
-                       class="nav-menu {{ Route::currentRouteName() === 'songs.index' ? 'active' : '' }}">
-                        Song Playlist
+                       class="nav-menu hover:text-[#fde047] transition {{ Route::currentRouteName() === 'songs.index' ? 'active' : '' }}">
+                        Create Event
                     </a>
                 </li>
                 <li>
                     <a href="{{ route('artists.index') }}"
-                       class="nav-menu {{ Route::currentRouteName() === 'artists.index' ? 'active' : '' }}">
-                        Artists List
+                       class="nav-menu hover:text-[#fde047] transition {{ Route::currentRouteName() === 'artists.index' ? 'active' : '' }}">
+                        Join
                     </a>
                 </li>
                 <li>
                     <a href="{{ route('about.index') }}"
-                       class="nav-menu {{ Route::currentRouteName() === 'about.index' ? 'active' : '' }}">
+                       class="nav-menu hover:text-[#fde047] transition {{ Route::currentRouteName() === 'about.index' ? 'active' : '' }}">
                         About
                     </a>
                 </li>
