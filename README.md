@@ -3,7 +3,7 @@ Website project devlope by Honey Lemon Team. Dedicated to a Web-tech class.
 
 After clone , cd to the folder you've cloned then in your terminal.
 
-Run these commands in terminal
+Run these commands
  
 
 ```bash
