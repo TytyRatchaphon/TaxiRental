@@ -1,12 +1,10 @@
 <?php
 
-use App\Http\Controllers\AboutController;
-use App\Http\Controllers\ArtistController;
-use App\Http\Controllers\HelloController;
+use App\Http\Controllers\HomeController;
 use App\Http\Controllers\ProfileController;
-use App\Http\Controllers\SongController;
+use Illuminate\Auth\Events\Verified;
 use Illuminate\Support\Facades\Route;
-
+use App\Models\Event;
 
 /*
 |--------------------------------------------------------------------------
@@ -23,36 +21,21 @@ Route::get('/', function () {
     return view('welcome');
 });
 
-Route::get('/hello', function () {
-    return "Hello Laravel";
-})->name("hello");
+Route::get('/home', [HomeController::class, 'index'])->name('home');
+Route::get('/search-events', [HomeController::class, 'searchEvents']);
 
-Route::get('/hello/{name}', function ($name) {
-    return "Hello {$name}";
-})->name("hello.name");
+Route::get('/login', function () {
+    return view('login');
+})->middleware(['auth','verified'])->name('login');
 
-Route::get('/about', [AboutController::class, 'index'])
-    ->name('about.index');
+Route::get('/dashboard', function () {
+    return view('dashboard');
+})->middleware(['auth', 'verified'])->name('dashboard');
 
-Route::get('/songs', [SongController::class, 'index'])
-    ->name('songs.index');
+Route::middleware('auth')->group(function () {
+    Route::get('/profile', [ProfileController::class, 'edit'])->name('profile.edit');
+    Route::patch('/profile', [ProfileController::class, 'update'])->name('profile.update');
+    Route::delete('/profile', [ProfileController::class, 'destroy'])->name('profile.destroy');
+});
 
-Route::resource(name:'/artists', controller:ArtistController::class);
-
-Route::get('/artists/{artist}/songs', [ArtistController::class, 'createSong'])
-    ->name('artists.songs.create');
-
-Route::post('/artists/{artist}/songs', [ArtistController::class, 'storeSong'])
-    ->name('artists.songs.store');
-
-// Route::get('/dashboard', function () {
-//     return view('dashboard');
-// })->middleware(['auth', 'verified'])->name('dashboard');
-
-// Route::middleware('auth')->group(function () {
-//     Route::get('/profile', [ProfileController::class, 'edit'])->name('profile.edit');
-//     Route::patch('/profile', [ProfileController::class, 'update'])->name('profile.update');
-//     Route::delete('/profile', [ProfileController::class, 'destroy'])->name('profile.destroy');
-// });
-
-// require __DIR__.'/auth.php';
+require __DIR__.'/auth.php';
