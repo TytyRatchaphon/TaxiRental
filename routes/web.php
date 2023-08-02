@@ -35,6 +35,9 @@ Route::get('/events/event/manage/kanban', [EventController::class, 'manageKanban
 Route::get('/events/event/manage/applicants', [EventController::class, 'manageApplicants'])->name('events.manage.applicants');
 Route::get('/events/event/manage/staffs', [EventController::class, 'manageStaffs'])->name('events.manage.staffs');
 Route::get('/events/event/manage/budgets', [EventController::class, 'manageBudgets'])->name('events.manage.budgets');
+Route::get('/events/certificates', [EventController::class, 'showCertificates'])->name('events.show-certificates');
+Route::get('/events/create', [EventController::class, 'create'])->name('events.create');
+
 
 Route::get('/dashboard', function () {
     return view('dashboard');
