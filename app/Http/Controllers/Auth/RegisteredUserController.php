@@ -44,9 +44,10 @@ class RegisteredUserController extends Controller
         ]);
 
         // Handle profile image upload
-        $user_profile_img = null;
         if ($request->hasFile('user_profile_img')) {
             $user_profile_img = $request->file('user_profile_img')->store('profile_images', 'public');
+        } else {
+            $user_profile_img = null;
         }
 
         $user = User::create([

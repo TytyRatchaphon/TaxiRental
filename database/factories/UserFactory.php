@@ -4,6 +4,7 @@ namespace Database\Factories;
 
 use Illuminate\Database\Eloquent\Factories\Factory;
 use Illuminate\Support\Str;
+use Illuminate\Support\Facades\Hash;
 
 /**
  * @extends \Illuminate\Database\Eloquent\Factories\Factory<\App\Models\User>
@@ -18,10 +19,15 @@ class UserFactory extends Factory
     public function definition(): array
     {
         return [
-            'name' => fake()->name(),
-            'email' => fake()->unique()->safeEmail(),
-            'email_verified_at' => now(),
-            'password' => '$2y$10$92IXUNpkjO0rOQ5byMi.Ye4oKoEa3Ro9llC/.og/at2.uheWG/igi', // password
+            'user_firstname' => $this->faker->firstName,
+            'user_lastname' => $this->faker->lastName,
+            'username' => $this->faker->unique()->userName,
+            'user_profile_img' => $this->faker->imageUrl(200, 200), // Generates a random image URL
+            'Major' => $this->faker->word,
+            'Faculty' => $this->faker->word,
+            'Year' => $this->faker->numberBetween(1, 4), // Generates a random number between 1 and 4
+            'email' => $this->faker->unique()->safeEmail,
+            'password' => Hash::make('password123'),
             'remember_token' => Str::random(10),
         ];
     }

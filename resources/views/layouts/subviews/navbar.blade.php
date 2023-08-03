@@ -1,24 +1,43 @@
 <nav class="bg-white border-gray-200 overflow-hidden sticky top-0 z-50">
     <div class="my-2 transition flex flex-wrap items-center justify-between max-w-screen-xl mx-auto">
         <a href="{{ url('/') }}" class="flex items-center">
-            <img src="https://www.svgrepo.com/show/429168/fruit-lemon-slice.svg" class="h-10 mr-1.5 sm:h-10" alt="Logo">
+            <img src="https://www.svgrepo.com/show/429168/fruit-lemon-slice.svg" class="h-10 mr-1.5 sm:h-10"
+                alt="Logo">
             <span
                 class="link link-underline link-underline-yellow text-[#F6D106] self-center text-xl font-semibold whitespace-nowrap hover:text-[#faea9d] mr-2 transition">HONEY
                 LEMON</span>
         </a>
-         
-        <div class="flex items-center lg:order-2">
+
+        @if (!auth()->check())
+            <div class="flex items-center lg:order-2">
                 <li class="hidden lg:flex justify-between space-x-2">
                     <a href="{{ url('/login') }}"
-                        class="text-Black transition-colors bg-[#fde047] hover:text-white font-medium rounded-lg text-sm  focus:ring-2 focus:ring-[#F6D106] px-5 py-1.5">
+                        class="transition-transform duration-500 hover:scale-110 text-Black bg-[#fde047] hover:text-white font-medium rounded-lg text-sm  focus:ring-2 focus:ring-[#F6D106] px-5 py-1.5">
                         Sign in
                     </a>
                     <a href="{{ url('/register') }}"
-                        class="text-Black transition-colors hover:text-[#fde047] font-medium rounded-lg text-sm  focus:ring-2 focus:ring-[#F6D106] px-5 py-1.5">
+                        class="transition-transform duration-500 hover:scale-110 text-Black hover:text-[#fde047] font-medium rounded-lg text-sm  focus:ring-2 focus:ring-[#F6D106] px-4 py-1.5">
                         Sign up
                     </a>
-                 </li>
-        </div>
+                </li>
+            </div>
+        @endif
+
+        @auth
+            <div class="flex items-center space-x-3 lg:order-2">
+                <img src="{{ Storage::url(auth()->user()->user_profile_img) }}" alt="Profile Image"
+                    class="h-8 w-8 rounded-full">
+                <span class="text-Black text-sm font-medium mr-3">{{ auth()->user()->username }}</span>
+                <a href="{{ route('logout') }}"
+                    class="transition-transform duration-500 hover:scale-110 text-Black bg-[#fde047] hover:text-white font-medium rounded-lg text-sm  focus:ring-2 focus:ring-[#F6D106] px-3 py-1.5"
+                    onclick="event.preventDefault(); document.getElementById('logout-form').submit();">
+                    Sign Out
+                </a>
+                <form id="logout-form" action="{{ route('logout') }}" method="POST" style="display: none;">
+                    @csrf
+                </form>
+            </div>
+        @endauth
 
         <button data-collapse-toggle="mobile-menu-2" type="button"
             class="inline-flex items-center p-1.5 ml-1 text-sm text-gray-500 rounded-lg lg:hidden hover:bg-gray-100 focus:outline-none focus:ring-2 focus:ring-gray-200"
@@ -30,7 +49,7 @@
                 <path fill-rule="evenodd"
                     d="M3 5a1 1 0 011-1h12a1 1 0 110 2H4a1 1 0 01-1-1zM3 10a1 1 0 011-1h12a1 1 0 110 2H4a1 1 0 01-1-1zM3 15a1 1 0 011-1h12a1 1 0 110 2H4a1 1 0 01-1-1z"
                     clip-rule="evenodd">
-                
+
                 </path>
             </svg>
 
@@ -43,44 +62,50 @@
 
         </button>
 
-        <!--
-            @if (!request()->is('/'))
-                <div class="bg-[#F6D106] items-end justify-between hidden pt-2 pb-2 w-full lg:pt-0 lg:pb-0 lg:flex lg:w-auto lg:order-1" id="mobile-menu-2">
-                    <ul class=" flex flex-col max-w-screen-xl mx-auto font-medium justify-between lg:flex-row lg:bg-white lg:space-x-8 lg:p-0 overflow-hidden">
-                        <li>
-                            <a href="{{ url('/') }}"
-                                class="pl-3 lg:pl-0 nav-menu hover:text-white lg:hover:text-[#fde047] transition {{ request()->is('/') ? 'active' : '' }}">
-                                My Activities
-                            </a>
-                        </li>
-                        <li>
-                            <a href="{{ url('/') }}"
-                                class="pl-3 lg:pl-0 nav-menu hover:text-white lg:hover:text-[#fde047] transition {{ request()->is('/') ? 'active' : '' }}">
-                                Activites
-                            </a>
-                        </li>
-                        <li>
-                            <a href="{{ route('home') }}"
-                                class="pl-3 lg:pl-0 nav-menu hover:text-white lg:hover:text-[#fde047] transition {{ Route::currentRouteName() === 'songs.index' ? 'active' : '' }}">
-                                Create Event
-                            </a>
-                        </li>
-                    </ul>
-                </div>
-            @endif
-        -->
+        @auth
+            <div class="bg-[#F6D106] items-end justify-between hidden pt-2 pb-2 w-full lg:pt-0 lg:pb-0 lg:flex lg:w-auto lg:order-1"
+                id="mobile-menu-2">
+                <ul
+                    class=" flex flex-col max-w-screen-xl mx-auto font-medium justify-between lg:flex-row lg:bg-white lg:space-x-8 lg:p-0 overflow-hidden">
+                    <li>
+                        <a href="{{ url('/') }}"
+                            class="pl-3 lg:pl-0 nav-menu hover:text-white lg:hover:text-[#fde047] transition {{ request()->is('/') ? 'active' : '' }}">
+                            My Activities
+                        </a>
+                    </li>
+                    <li>
+                        <a href="{{ url('/') }}"
+                            class="pl-3 lg:pl-0 nav-menu hover:text-white lg:hover:text-[#fde047] transition {{ request()->is('/') ? 'active' : '' }}">
+                            Activites
+                        </a>
+                    </li>
+                    <li>
+                        <a href="{{ route('home') }}"
+                            class="pl-3 lg:pl-0 nav-menu hover:text-white lg:hover:text-[#fde047] transition {{ Route::currentRouteName() === 'songs.index' ? 'active' : '' }}">
+                            Create Event
+                        </a>
+                    </li>
+                    <li>
+                        <a href="{{ route('home') }}"
+                            class="pl-3 lg:pl-0 nav-menu hover:text-white lg:hover:text-[#fde047] transition {{ Route::currentRouteName() === 'songs.index' ? 'active' : '' }}">
+                            Certificate
+                        </a>
+                    </li>
+                </ul>
+            </div>
+        @endauth
     </div>
 </nav>
 
 <script>
-    document.addEventListener("DOMContentLoaded", function () {
-      const button = document.querySelector("[data-collapse-toggle='mobile-menu-2']");
-      const menu = document.getElementById("mobile-menu-2");
-  
-      button.addEventListener("click", function () {
-        menu.classList.toggle("hidden");
-        const expanded = menu.classList.contains("hidden") ? "false" : "true";
-        button.setAttribute("aria-expanded", expanded);
-      });
+    document.addEventListener("DOMContentLoaded", function() {
+        const button = document.querySelector("[data-collapse-toggle='mobile-menu-2']");
+        const menu = document.getElementById("mobile-menu-2");
+
+        button.addEventListener("click", function() {
+            menu.classList.toggle("hidden");
+            const expanded = menu.classList.contains("hidden") ? "false" : "true";
+            button.setAttribute("aria-expanded", expanded);
+        });
     });
-  </script>
+</script>
