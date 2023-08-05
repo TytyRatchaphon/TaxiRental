@@ -4,6 +4,7 @@ namespace Database\Factories;
 
 use App\Models\Event;
 use Illuminate\Database\Eloquent\Factories\Factory;
+use App\Models\User;
 
 /**
  * @extends \Illuminate\Database\Eloquent\Factories\Factory<\App\Models\Event>
@@ -31,7 +32,6 @@ class EventFactory extends Factory
             'event_description' => $this->faker->realText(200),
             'event_thumbnail' => $this->faker->imageUrl(400, 300, 'events', true),
             'event_image' => $this->faker->image('public/storage/events', 800, 600, null, false),
-            'event_participant' => $this->faker->numberBetween(0, 1000),
         ];
     }
 }
