@@ -3,6 +3,7 @@
 use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
+use App\Models\Event;
 
 return new class extends Migration
 {
@@ -16,6 +17,8 @@ return new class extends Migration
             $table->string('title');
             $table->string('detail');
             $table->string('status');
+            $table->date('date_deadline');
+            $table->foreignIdFor(Event::class);
             $table->timestamps();
             $table->softDeletes();
         });
