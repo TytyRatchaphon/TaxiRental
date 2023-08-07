@@ -15,29 +15,27 @@
                     <i class="fas fa-search"></i>
                 </button>
             </form>
-        <!-- promt a suggestions -->
+            
             <div id="search-suggestions"
                 class="py-2 px-4 bg-white shadow-lg rounded-lg hidden sm:left-0 sm:right-0"   >
             </div>
         </div>
-
         <div class="grid grid-cols-1 gap-6 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-3">
             @foreach ($events as $event)
                 <div class="bg-white transition-transform duration-500 hover:scale-110 rounded-lg shadow-md p-6">
-                    <div class="h-40 bg-cover bg-center rounded-t-lg"
-                        style="background-image: url('{{ $event->event_thumbnail }}');"></div>
-                    <h2 class="text-xl font-semibold mt-4 mb-2">{{ $event->event_name }}</h2>
-                    <p class="text-gray-600 text-sm">{{ $event->event_date }} | {{ $event->event_location }}</p>
-                    <p class="text-gray-800 text-sm mt-3">{{ $event->description }}</p>
-                    <p class="text-yellow-500 font-bold ">Participants:
-                        {{ $event->event_participant }}/{{ $event->event_participant_limit }}</p>
-                    <p class="text-red-500 text-sm ">Application deadline: {{ $event->event_application_deadline }}
-                    </p>
-                    <!-- Add more event details here -->
+                    <a href="{{ route('events.show', ['event'=> $event])}}">
+                        <div class="h-40 bg-cover bg-center rounded-t-lg" style="background-image: url('{{ $event->event_thumbnail }}');"></div>
+                        <h2 class="text-xl font-semibold mt-4 mb-2">{{ $event->event_name }}</h2>
+                        <p class="text-gray-600 text-sm">{{ $event->event_date }} | {{ $event->event_location }}</p>
+                        <p class="text-gray-800 text-sm mt-3">{{ $event->event_description }}</p>
+                        <p class="text-yellow-500 font-bold">Participants: {{ $event->event_participant }}/{{ $event->event_participant_limit }}</p>
+                        <p class="text-red-500 text-sm">Application deadline: {{ $event->event_application_deadline }}</p>
+                    </a>
                 </div>
             @endforeach
         </div>
-    </div>
 
+
+    <div>
     <script src="{{ asset('js/search.js') }}"></script>
 @endsection
