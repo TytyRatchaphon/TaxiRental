@@ -23,12 +23,15 @@ class UserFactory extends Factory
             'user_lastname' => $this->faker->lastName,
             'username' => $this->faker->unique()->userName,
             'user_profile_img' => $this->faker->imageUrl(200, 200), // Generates a random image URL
-            'Major' => $this->faker->word,
-            'Faculty' => $this->faker->word,
-            'Year' => $this->faker->numberBetween(1, 4), // Generates a random number between 1 and 4
+            'major' => $this->faker->word,
+            'faculty' => $this->faker->word,
+            'year' => $this->faker->numberBetween(1, 4), // Generates a random number between 1 and 4
             'email' => $this->faker->unique()->safeEmail,
             'password' => Hash::make('password123'),
             'remember_token' => Str::random(10),
+            'facebook' => fake()->name,
+            'line' =>fake()->name(),
+            'instagram' =>fake()->name
         ];
     }
 

@@ -3,8 +3,7 @@
 use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
-use App\Models\User;
-use App\Models\Event;
+use App\Models\Enums\UserEventStatus;
 
 return new class extends Migration
 {
@@ -13,13 +12,8 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('event_user', function (Blueprint $table) {
-            $table->id();
-            $table->foreignIdFor(User::class);
-            $table->foreignIdFor(Event::class);
-            $table->timestamps();
-
-            $table->unique(['event_id','user_id']);
+        Schema::table('event_user', function (Blueprint $table) {
+            $table->string('status')->default('wait_approval')->nullable();
         });
     }
 
@@ -28,6 +22,8 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists('event_user');
+        Schema::table('event_user', function (Blueprint $table) {
+            $table->dropColumn();
+        });
     }
 };
