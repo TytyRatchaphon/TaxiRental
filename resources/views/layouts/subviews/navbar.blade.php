@@ -25,7 +25,7 @@
 
         @auth
             <div class="flex items-center space-x-3 lg:order-2">
-                <img src="{{ Storage::url(auth()->user()->user_profile_img) }}" alt="Profile Image"
+                <img src="{{ asset('/storage/' . (auth()->user()->user_profile_img)) }}" alt="Profile Image"
                     class="h-8 w-8 rounded-full">
                 <span class="text-Black text-sm font-medium mr-3">{{ auth()->user()->username }}</span>
                 <a href="{{ route('logout') }}"
@@ -67,22 +67,23 @@
                 id="mobile-menu-2">
                 <ul
                     class=" flex flex-col max-w-screen-xl mx-auto font-medium justify-between lg:flex-row lg:bg-white lg:space-x-8 lg:p-0 overflow-hidden">
+                    
                     <li>
                         <a href="{{ url('/') }}"
                             class="pl-3 lg:pl-0 nav-menu hover:text-white lg:hover:text-[#fde047] transition {{ request()->is('/') ? 'active' : '' }}">
-                            My Activities
+                            Events
                         </a>
                     </li>
                     <li>
-                        <a href="{{ url('/') }}"
-                            class="pl-3 lg:pl-0 nav-menu hover:text-white lg:hover:text-[#fde047] transition {{ request()->is('/') ? 'active' : '' }}">
-                            Activites
-                        </a>
-                    </li>
-                    <li>
-                        <a href="{{ route('home') }}"
+                        <a href="{{ url('/events/create') }}"
                             class="pl-3 lg:pl-0 nav-menu hover:text-white lg:hover:text-[#fde047] transition {{ Route::currentRouteName() === 'songs.index' ? 'active' : '' }}">
                             Create Event
+                        </a>
+                    </li>
+                    <li>
+                        <a href="{{ url('/') }}"
+                            class="pl-3 lg:pl-0 nav-menu hover:text-white lg:hover:text-[#fde047] transition {{ request()->is('/') ? 'active' : '' }}">
+                            My Events
                         </a>
                     </li>
                     <li>

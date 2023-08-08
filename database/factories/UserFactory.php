@@ -22,7 +22,7 @@ class UserFactory extends Factory
             'user_firstname' => $this->faker->firstName,
             'user_lastname' => $this->faker->lastName,
             'username' => $this->faker->unique()->userName,
-            'user_profile_img' => $this->faker->imageUrl(200, 200), // Generates a random image URL
+            'user_profile_img' => $this->faker->image('public/storage/', 200, 200, null, false),
             'Major' => $this->faker->word,
             'Faculty' => $this->faker->word,
             'Year' => $this->faker->numberBetween(1, 4), // Generates a random number between 1 and 4

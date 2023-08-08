@@ -23,7 +23,6 @@ use App\Models\Event;
 Route::get('/', [WelcomeController::class, 'index']);
 
 Route::get('/home', [HomeController::class, 'index'])->name('home'); //guest
-Route::middleware('auth')->get('/home/{username}', [HomeController::class, 'index'])->name('user.home'); //if someone try to acess route might delete later
 Route::get('/search-events', [HomeController::class, 'searchEvents']);
 
 Route::get('/login', function () {

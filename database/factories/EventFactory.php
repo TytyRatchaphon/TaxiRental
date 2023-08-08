@@ -30,7 +30,7 @@ class EventFactory extends Factory
             'event_application_deadline' => $this->faker->date('Y-m-d'),
             'event_description' => $this->faker->realText(200),
             'event_thumbnail' => $this->faker->imageUrl(400, 300, 'events', true),
-            'event_image' => $this->faker->image('public/storage/events', 800, 600, null, false),
+            'event_image' => $this->faker->image('public/storage/', 800, 600, null, false),
             'event_participant' => $this->faker->numberBetween(0, 1000),
         ];
     }

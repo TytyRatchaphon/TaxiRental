@@ -1,6 +1,6 @@
 <x-guest-layout>
-    <div class="flex justify-center">
-        <div class="w-full sm:w-96 bg-white dark:bg-black p-8 rounded-lg shadow-md">
+    <div class="">
+        <div class="">
             <form method="POST" action="{{ route('register') }}" enctype="multipart/form-data">
                 @csrf
 
@@ -35,9 +35,9 @@
                 </div>
 
                 <!-- Profile Image -->
-                <div class="mb-6">
+                <div class="">
                     <x-input-label for="user_profile_img" :value="__('Profile Image')" />
-                    <x-text-input id="user_profile_img" class="block w-full mt-1" type="file"
+                    <x-text-input id="user_profile_img" class="block w-full py-2 px-4 shadow-none" type="file"
                         name="user_profile_img" />
                     @error('user_profile_img')
                         <p class="mt-2 text-red-500 text-sm">{{ $message }}</p>
@@ -109,12 +109,12 @@
                 </div>
 
                 <div class="flex items-center justify-end mt-4">
-                    <a class="underline text-sm text-gray-600 dark:text-gray-400 hover:text-gray-900 dark:hover:text-gray-100 rounded-md focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500 dark:focus:ring-offset-gray-800"
+                    <a class="underline text-sm text-black hover:text-[#F6D106]  rounded-md focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-black"
                         href="{{ route('login') }}">
                         {{ __('Already registered?') }}
                     </a>
 
-                    <x-primary-button class="ml-4 bg-yellow-500 hover:bg-yellow-600">
+                    <x-primary-button class="ml-4 bg-[#F6D106] hover:bg-yellow-500">
                         {{ __('Register') }}
                     </x-primary-button>
                 </div>

@@ -44,17 +44,18 @@ class RegisteredUserController extends Controller
         ]);
 
         // Handle profile image upload
+        $imageName = null;
         if ($request->hasFile('user_profile_img')) {
-            $user_profile_img = $request->file('user_profile_img')->store('profile_images', 'public');
-        } else {
-            $user_profile_img = null;
+            $image = $request->file('user_profile_img');
+            $imageName = time() . '.' . $image->getClientOriginalExtension(); // how profile img file will be name when store
+            $image->storeAs('public/', $imageName);
         }
 
         $user = User::create([
             'user_firstname' => $request->user_firstname,
             'user_lastname' => $request->user_lastname,
             'username' => $request->username,
-            'user_profile_img' => $user_profile_img,
+            'user_profile_img' => $imageName,
             'Major' => $request->Major,
             'Faculty' => $request->Faculty,
             'Year' => $request->Year,
