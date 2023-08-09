@@ -3,21 +3,18 @@
 @section('title', 'Welcome')
 
 @section('content')
-    <header class="h-100 bg-gradient-to-r from-orange-900 to-yellow-700 text-white py-20 text-center bg-scroll">
-        <h1 class="text-4xl md:text-5xl font-semibold">Welcome to Event Management</h1>
-        <p class="mt-4 text-lg md:text-xl">Manage and organize your events with ease.</p>
+    <header class="bg-gradient-to-r from-[#f75394] to-yellow-300 rounded drop-shadow text-white py-16 text-center">
+        <h1 class="drop-shadow text-3xl md:text-5xl transition-all font-semibold translate-y-12 duration-500 opacity-0"  data-replace='{ "translate-y-12": "translate-y-0", "opacity-0": "opacity-100" }'>WELCOME TO EVENT MANAGEMENT SYSTEM</h1>
+        <p class="drop-shadow mt-4 text-[2.2vh] md:text-xl transition-all translate-y-12 duration-300 opacity-0" data-replace='{ "translate-y-12": "translate-y-0", "opacity-0": "opacity-100" }'>Manage and organize your events with ease</p>
         <a href="{{ url('/home') }}"
-            class="transition-transform duration-500 hover:scale-110 mt-8 px-8 py-4 bg-yellow-500 text-white font-medium rounded-lg inline-block hover:bg-yellow-600 animate-bounce">Enter Stie
-            </a>
+            class="drop-shadowtransition-transform duration-1000 hover:duration:300 hover:scale-110 mt-8 px-8 py-4 bg-[#F6D106] text-white font-medium rounded-lg inline-block hover:bg-yellow-400 opacity-0 " data-replace='{ "opacity-0": "opacity-100" }'>Get
+            Started</a>
     </header>
 
-    <div class="my-2 flex flex-wrap items-center justify-between max-w-screen-xl mx-auto">
-        <div class="container mt-8">
-            <h2 class="font-extrabold text-transparent text-6xl bg-clip-text bg-gradient-to-r from-orange-400 to-yellow-200 text-center">About Honey Lemon Hub</h2>
-            <h3 class="font-extrabold text-transparent text-4xl bg-clip-text bg-gradient-to-r from-orange-600 to-yellow-500 text-center">
-                    Meet the best event organize platform.
-            </h3>
-            <p class="mt-4 text-lg text-center font-medium">Lorem ipsum dolor sit amet, consectetur adipiscing elit. Quisque nec odio dolor. Duis vitae
+    <div class="my-2 m-auto max-w-screen-xl mx-auto">
+        <div class="container mt-8">    
+            <h2 class="text-3xl font-semibold">About Us</h2>
+            <p class="mt-4 text-lg">Lorem ipsum dolor sit amet, consectetur adipiscing elit. Quisque nec odio dolor. Duis vitae
                 neque vel orci congue
                 feugiat. Aenean et eros in sapien eleifend elementum eu eget nisi. Vestibulum ante ipsum primis in faucibus orci
                 luctus et ultrices posuere cubilia Curae; Nunc pulvinar ipsum vitae nunc vestibulum luctus. Ut tincidunt felis
@@ -33,4 +30,5 @@
         </div>
     </div>
     
+    <script src="{{ asset('js/data-replacer.js') }}"></script>
 @endsection

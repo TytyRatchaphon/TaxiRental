@@ -30,17 +30,26 @@ Route::get('/login', function () {
     return view('login');
 })->middleware(['auth','verified'])->name('login');
 
+Route::get('/event/{event}/kanban', [KanbanController::class, 'kanban'])
+    ->name('events.manage.kanban');
 
 Route::resource('/events', EventController::class);
 Route::get('/events', [EventController::class, 'index'])->name('events.index');
 // Route::get('/events/show', 'EventController@show')->name('events.show');
-Route::get('/events/event/manage/kanban', [EventController::class, 'manageKanban'])->name('events.manage.kanban');
-Route::get('/events/event/manage/applicants', [EventController::class, 'manageApplicants'])->name('events.manage.applicants');
-Route::get('/events/event/manage/staffs', [EventController::class, 'manageStaffs'])->name('events.manage.staffs');
-Route::get('/events/event/manage/budgets', [EventController::class, 'manageBudgets'])->name('events.manage.budgets');
-Route::get('/events/certificates', [EventController::class, 'showCertificates'])->name('events.show-certificates');
-Route::get('/events/create', [EventController::class, 'create'])->name('events.create');
-Route::resource('/events/kanbans', KanbanController::class);
+//Route::get('/events/event/manage/kanban', [EventController::class, 'manageKanban'])->name('events.manage.kanban');
+//Route::get('/events/event/manage/applicants', [EventController::class, 'manageApplicants'])->name('events.manage.applicants');
+//Route::get('/events/event/manage/staffs', [EventController::class, 'manageStaffs'])->name('events.manage.staffs');
+//Route::get('/events/event/manage/budgets', [EventController::class, 'manageBudgets'])->name('events.manage.budgets');
+//Route::get('/events/certificates', [EventController::class, 'showCertificates'])->name('events.show-certificates');
+//Route::get('/events/create', [EventController::class, 'create'])->name('events.create');
+//Route::resource('/events/kanbans', KanbanController::class);
+
+Route::get('/events/{event}/kanban', [KanbanController::class, 'index'])->name('kanbans.index');
+Route::post('/events/{event}/kanban', [KanbanController::class, 'store'])->name('kanbans.store');
+Route::delete('/kanbans/{kanban}', [KanbanController::class, 'destroy'])->name('kanbans.destroy');
+Route::patch('/kanbans/{kanban}', [KanbanController::class, 'update'])->name('kanbans.update');
+Route::get('/kanbans/{kanban}', [KanbanController::class, 'show'])->name('kanbans.show');
+
 
 Route::get('/dashboard', function () {
     return view('dashboard');

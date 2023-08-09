@@ -1,10 +1,10 @@
-<nav class="bg-white border-gray-200 overflow-hidden sticky top-0 z-50">
+<nav class="bg-white drop-shadow border-gray-200 overflow-hidden sticky top-0 z-50">
     <div class="my-2 transition flex flex-wrap items-center justify-between max-w-screen-xl mx-auto">
         <a href="{{ url('/') }}" class="flex items-center">
             <img src="https://www.svgrepo.com/show/429168/fruit-lemon-slice.svg" class="h-10 mr-1.5 sm:h-10"
                 alt="Logo">
             <span
-                class="link link-underline link-underline-yellow text-[#F6D106] self-center text-xl font-semibold whitespace-nowrap hover:text-[#faea9d] mr-2 transition">HONEY
+                class="link link-underline link-underline-yellow text-[#F6D106] self-center text-xl font-semibold whitespace-nowrap hover:text-[#faea9d] hover:scale-105 mr-2 transition">HONEY
                 LEMON</span>
         </a>
 
@@ -12,12 +12,12 @@
             <div class="flex items-center lg:order-2">
                 <li class="hidden lg:flex justify-between space-x-2">
                     <a href="{{ url('/login') }}"
-                        class="transition-transform duration-500 hover:scale-110 text-Black bg-[#fde047] hover:text-white font-medium rounded-lg text-sm  focus:ring-2 focus:ring-[#F6D106] px-5 py-1.5">
-                        Sign in
+                        class="transition-transform duration-500 hover:scale-105 text-Black bg-[#fde047] hover:text-white font-medium rounded-lg text-sm  focus:ring-2 focus:ring-[#F6D106] px-5 py-1.5">
+                        Sign In
                     </a>
                     <a href="{{ url('/register') }}"
-                        class="transition-transform duration-500 hover:scale-110 text-Black hover:text-[#fde047] font-medium rounded-lg text-sm  focus:ring-2 focus:ring-[#F6D106] px-4 py-1.5">
-                        Sign up
+                        class="transition-transform duration-500 hover:scale-105 text-Black hover:text-[#fde047] font-medium rounded-lg text-sm  focus:ring-2 focus:ring-[#F6D106] px-4 py-1.5">
+                        Sign Up
                     </a>
                 </li>
             </div>

@@ -2,18 +2,17 @@
 
 namespace Database\Seeders;
 
-use App\Models\Event;
 use App\Models\Kanban;
 use Illuminate\Database\Console\Seeds\WithoutModelEvents;
 use Illuminate\Database\Seeder;
 
-class EventSeeder extends Seeder
+class KanbanSeeder extends Seeder
 {
     /**
      * Run the database seeds.
      */
     public function run(): void
     {
-        Event::factory(5)->has(Kanban::factory()->count(5))->create();
+        Kanban::factory(10)->create();
     }
 }

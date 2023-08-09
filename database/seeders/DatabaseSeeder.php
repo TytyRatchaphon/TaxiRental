@@ -14,5 +14,6 @@ class DatabaseSeeder extends Seeder
     {
         $this->call(EventSeeder::class);
         $this->call(UserSeeder::class);
+        $this->call(KanbanSeeder::class);
     }
 }

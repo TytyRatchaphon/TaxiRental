@@ -14,9 +14,9 @@
                 <div class="flex flex-inline space-x-4">
                     <h2 class="text-2xl font-bold text-gray-800 mb-1">{{ $event->event_name }}</h2>
                     <ul class="flex p-2 pl-0 mb-5">
-                        <li class="bg-[#F6D106] p-1 pl-3 pr-3 mr-5 rounded">ผู้จัดกิจกรรม</li>
+                        <li class="bg-[#F6D106] p-1 pl-3 pr-3 mr-5 rounded">Event Creator</li>
                         <li class="bg-[#F6D106] p-1 pl-3 pr-3 mr-5 rounded">{{ $event->event_approval_status }}</li>
-                        <a href={{ url('/events/event/manage/kanban') }} class="p-1 pl-3 pr-3 mr-5">จัดการกิจกรรม</a>
+                        <a href="{{ route('kanbans.index', ['event' => $event]) }}" class="p-1 pl-3 pr-3 mr-5">Manage Event</a>
                     </ul>
                 </div>
 

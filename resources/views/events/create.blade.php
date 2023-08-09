@@ -2,25 +2,25 @@
 @section('content')
 <div class="flex justify-center p-10">
     <div class="bg-white shadow-lg rounded-lg max-w-5xl w-full p-10">
-        <h1 class="text-2xl p-5">เพิ่มกิจกรรม</h1>
+        <h1 class="text-2xl p-5">Add Event</h1>
         <hr>
         <div class="flex flex-col overflow-hidden mt-5">
             <div class="flex">
                 <div class="flex flex-col w-4/5 p-3">
-                    <label for="" class="pb-1">ชื่อกิจกรรม</label>
+                    <label for="" class="pb-1">Event Title</label>
                     <input type="text" name="" id="" class="w-full">
                 </div>
                 <div class="flex flex-col w-1/5 p-3">
-                    <label for="" class="pb-1">จำนวนคนจำกัด</label>
+                    <label for="" class="pb-1">Participants Limit</label>
                     <input type="number" name="" id="" class="w-full">
                 </div>
             </div>
             <div class="flex flex-col w-full p-3">
-                <label for="" class="pb-1">รายละเอียดของกิจกรรม</label>
+                <label for="" class="pb-1">Detail</label>
                 <input type="text" name="" id="" class="w-full h-40">
             </div>
             <div class="flex flex-col  p-3">
-                <label for="" class="pb-3">เพิ่มรูปของกิจกรรม</label>
+                <label for="" class="pb-3">Add Image</label>
                 <input type="image" src="https://images.unsplash.com/photo-1454496522488-7a8e488e8606" alt="" class="h-64 w-full hover:opacity-80 rounded-lg border-yellow-200">
             </div>
             <div class="flex mt-3 mb-5">

@@ -9,34 +9,46 @@ use Illuminate\Http\Request;
 
 class KanbanController extends Controller
 {
-    public function index() {
-        $event = Event::find(2);
-//        $kanbans = $event->kanbans()->get();
-//        $kanban = Kanban::get();
+    public function index(Event $event)
+    {
         $statusOptions = KanbanAccessibility::cases();
+
         return view('events.manage.kanban', [
             'event' => $event,
-//            'kanbans' => $kanbans,
-            'statusOptions' => $statusOptions
+            'statusOptions' => $statusOptions,
         ]);
     }
-    public function store(Request $request, Event $event) {
+
+    public function store(Request $request, Event $event)
+    {
         $kanban = new Kanban();
-        $kanban->title = $request->get('title');
-        $kanban->detail = $request->get('detail');
-        $kanban->date_deadline = $request->get('date_deadline');
+        $kanban->title = $request->input('title');
+        $kanban->detail = $request->input('detail');
+        $kanban->date_deadline = $request->input('date_deadline');
         $kanban->status = 'Not Start';
-        $kanban->event_id = 2; // $event->id events.kanbans.store
+        $kanban->event_id = $event->id;
         $kanban->save();
+
         return redirect()->route('events.index');
     }
-    public function destroy(Kanban $kanban) {
+
+    public function destroy(Kanban $kanban)
+    {
         $kanban->delete();
+
         return redirect()->route('events.index');
     }
-    public function update(Request $request, Kanban $kanban) {
-        $kanban->status = $request->get('status');
+
+    public function update(Request $request, Kanban $kanban)
+    {
+        $kanban->status = $request->input('status');
         $kanban->save();
+
         return redirect()->route('kanbans.index');
+    }
+
+    public function show(Kanban $kanban)
+    {
+        return view('events.manage.kanban_show', ['kanban' => $kanban]);
     }
 }
