@@ -17,6 +17,9 @@ return new class extends Migration
             $table->id();
             $table->foreignIdFor(User::class);
             $table->foreignIdFor(Event::class);
+            $table->boolean('approval_event')->default(false);
+            $table->boolean('is_staff_event')->default(false);
+            $table->boolean('is_head_event')->default(false);
             $table->timestamps();
 
             $table->unique(['event_id','user_id']);

@@ -19,12 +19,9 @@ return new class extends Migration {
             $table->string('user_firstname');
             $table->string('user_lastname');
             $table->string('user_profile_img')->nullable();
-            $table->string('major');
-            $table->string('faculty');
-            $table->string('year');
-            $table->string('facebook');
-            $table->string('line');
-            $table->string('instagram');
+            $table->string('Major');
+            $table->string('Faculty');
+            $table->string('Year');
             $table->rememberToken();
             $table->timestamps();
             $table->softDeletes();

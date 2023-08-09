@@ -2,7 +2,6 @@
 
 namespace Database\Seeders;
 
-use App\Models\Event;
 use App\Models\User;
 use Illuminate\Database\Console\Seeds\WithoutModelEvents;
 use Illuminate\Database\Seeder;
@@ -14,6 +13,6 @@ class UserSeeder extends Seeder
      */
     public function run(): void
     {
-        $users = User::factory()->has(Event::factory()->count(5))->count(10)->create();
+        User::factory()->count(3)->create();
     }
 }

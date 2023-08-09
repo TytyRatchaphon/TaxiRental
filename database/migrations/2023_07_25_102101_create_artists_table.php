@@ -3,7 +3,6 @@
 use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
-use App\Models\Event;
 
 return new class extends Migration
 {
@@ -12,14 +11,14 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('budgets', function (Blueprint $table) {
+        Schema::create('artists', function (Blueprint $table) {
             $table->id();
-            $table->foreignIdFor(Event::class);
-            $table->string('category');
-            $table->string('description');
-            $table->integer('cost');
-            $table->boolean('status_budget')->default(false);
+            $table->string(column:'name');
+            $table->string(column:'image_path')->nullable();
+
+
             $table->timestamps();
+            $table->softDeletes(); //`deleted_at` timestamp nullable
         });
     }
 
@@ -28,6 +27,6 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists('budgets');
+        Schema::dropIfExists('artists');
     }
 };
