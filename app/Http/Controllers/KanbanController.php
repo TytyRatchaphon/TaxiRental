@@ -9,34 +9,42 @@ use Illuminate\Http\Request;
 
 class KanbanController extends Controller
 {
-    public function index() {
-        $event = Event::find(2);
-//        $kanbans = $event->kanbans()->get();
-//        $kanban = Kanban::get();
+    public function showKanbans(Event $event) {
         $statusOptions = KanbanAccessibility::cases();
-        return view('events.manage.kanban', [
+        return view('kanbans.index', [
             'event' => $event,
-//            'kanbans' => $kanbans,
             'statusOptions' => $statusOptions
         ]);
     }
-    public function store(Request $request, Event $event) {
+
+    public function storeKanban(Request $request, Event $event) {
+        $request->validate([
+            'title' => ['required', 'string', 'min:4', 'max:255'],
+            'detail' => ['required', 'string', 'min:4', 'max:255'],
+            'date_deadline' => ['required', 'date', 'after:today']
+        ]);
+
         $kanban = new Kanban();
         $kanban->title = $request->get('title');
         $kanban->detail = $request->get('detail');
         $kanban->date_deadline = $request->get('date_deadline');
-        $kanban->status = 'Not Start';
-        $kanban->event_id = 2; // $event->id events.kanbans.store
-        $kanban->save();
-        return redirect()->route('events.index');
+        $kanban->status = KanbanAccessibility::NOT_START->value;
+        $event->kanbans()->save($kanban);
+        return redirect()->route('events.kanbans.show', ['event'=> $event]);
     }
-    public function destroy(Kanban $kanban) {
+
+    public function destroyKanban(Event $event, Kanban $kanban) {
         $kanban->delete();
-        return redirect()->route('events.index');
+        return redirect()->route('events.kanbans.show', ['event'=> $event]);
     }
-    public function update(Request $request, Kanban $kanban) {
+
+    public function updateStatusKanban(Request $request, Event $event, Kanban $kanban) {
+        $request->validate([
+            'status' => ['required', 'in:Not Start,In Progress,Success']
+        ]);
+        $kanban = $event->findByKanbanID($kanban->id);
         $kanban->status = $request->get('status');
         $kanban->save();
-        return redirect()->route('kanbans.index');
+        return redirect()->route('events.kanbans.show', ['event'=> $event]);
     }
 }
