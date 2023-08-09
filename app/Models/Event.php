@@ -5,6 +5,8 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
+use Illuminate\Database\Eloquent\Relations\BelongsToMany;
+use Illuminate\Database\Eloquent\Relations\HasMany;
 
 class Event extends Model
 {
@@ -26,4 +28,10 @@ class Event extends Model
         'event_image',
         'event_participant',
     ];
+    public function users() : BelongsToMany {
+        return $this->belongsToMany(User::class);
+    }
+    public function kanbans() : HasMany {
+        return $this->hasMany(Kanban::class);
+    }
 }

@@ -4,6 +4,7 @@ use App\Http\Controllers\WelcomeController;
 use App\Http\Controllers\HomeController;
 use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\EventController;
+use App\Http\Controllers\KanbanController;
 use Illuminate\Auth\Events\Verified;
 use Illuminate\Support\Facades\Route;
 use App\Models\Event;
@@ -29,15 +30,17 @@ Route::get('/login', function () {
     return view('login');
 })->middleware(['auth','verified'])->name('login');
 
+
 Route::resource('/events', EventController::class);
-// Route::get('/events', [EventController::class, 'index'])->name('events.index');
-// // Route::get('/events/show', 'EventController@show')->name('events.show');
-// Route::get('/events/event/manage/kanban', [EventController::class, 'manageKanban'])->name('events.manage.kanban');
-// Route::get('/events/event/manage/applicants', [EventController::class, 'manageApplicants'])->name('events.manage.applicants');
-// Route::get('/events/event/manage/staffs', [EventController::class, 'manageStaffs'])->name('events.manage.staffs');
-// Route::get('/events/event/manage/budgets', [EventController::class, 'manageBudgets'])->name('events.manage.budgets');
-// Route::get('/events/certificates', [EventController::class, 'showCertificates'])->name('events.show-certificates');
-// Route::get('/events/create', [EventController::class, 'create'])->name('events.create');
+Route::get('/events', [EventController::class, 'index'])->name('events.index');
+// Route::get('/events/show', 'EventController@show')->name('events.show');
+Route::get('/events/event/manage/kanban', [EventController::class, 'manageKanban'])->name('events.manage.kanban');
+Route::get('/events/event/manage/applicants', [EventController::class, 'manageApplicants'])->name('events.manage.applicants');
+Route::get('/events/event/manage/staffs', [EventController::class, 'manageStaffs'])->name('events.manage.staffs');
+Route::get('/events/event/manage/budgets', [EventController::class, 'manageBudgets'])->name('events.manage.budgets');
+Route::get('/events/certificates', [EventController::class, 'showCertificates'])->name('events.show-certificates');
+Route::get('/events/create', [EventController::class, 'create'])->name('events.create');
+Route::resource('/events/kanbans', KanbanController::class);
 
 Route::get('/dashboard', function () {
     return view('dashboard');

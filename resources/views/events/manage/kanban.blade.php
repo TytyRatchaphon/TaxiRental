@@ -10,111 +10,90 @@
 </div>
 <div class="flex flex-col justify-center items-center bg-gray-100 p-7">
     <div class="flex bg-white rounded-lg shadow-lg overflow-hidden max-w-5xl w-full">
-        <img src="https://images.unsplash.com/photo-1454496522488-7a8e488e8606" alt="Mountain" class="w-full h-64 object-cover">
+        <img src="{{ $event->event_image }}" alt="event_image" class="w-full h-64 object-cover">
         <div class="p-6">
-            <h2 class="text-2xl font-bold text-gray-800 mb-2">Beautiful Mountain View</h2>
+            <h2 class="text-2xl font-bold text-gray-800 mb-2">{{ $event->event_name }}</h2>
             <p class="text-gray-700 leading-tight mb-4">
-                Lorem ipsum dolor sit amet, consectetur adipiscing elit. Aliquam eu sapien porttitor, blandit velit ac,
-                vehicula elit. Nunc et ex at turpis rutrum viverra.
+                {{ $event->event_description }}
             </p>
             <a href={{ url('/events/show') }}>เพิ่มเติม...</a>
             <div class="flex justify-between items-center mt-5">
                 <div class="flex items-center">
-                    <img src="https://randomuser.me/api/portraits/men/32.jpg" alt="Avatar" class="w-8 h-8 rounded-full mr-2 object-cover">
-                    <span class="text-gray-800 font-semibold">John Doe</span>
+                    @foreach($event->users as $user)
+                        @if($user->is_head_event)
+                        <img src="{{ $user->user_profile_image }}" alt="Avatar" class="w-8 h-8 rounded-full mr-2 object-cover">
+                        <span class="text-gray-800 font-semibold">{{ $user->username }}</span>
+                        @endif
+                    @endforeach
                 </div>
-                <span class="text-gray-600">2 hours ago</span>
+                <span class="text-gray-600">{{ $event->event_date }}</span>
             </div>
         </div>
     </div>
 </div>
-<div class="flex flex-col bg-white justify-center items-center">
-    <h1>เพิ่มคัมบังบอร์ดของคุณ</h1>
-    <div class="flex justify-center items-center">
-        <h1 class="p-5 max-w-6xl w-full">หัวเรื่อง</h1>
-        <input class="h-10 border-2 border-sky-500 focus:outline-none focus:border-sky-500 text-sky-500 rounded px-2 md:px-3 py-0 md:py-1 mr-5" type="text">
-        <select id="statusKanban" name="statusKanban"
-                class="h-10 border-2 border-sky-500 focus:outline-none focus:border-sky-500 text-sky-500 rounded px-2 md:px-3 py-0 md:py-1">
-            <option value="All" selected="">กรุณาเลือก</option>
-            <option value="not-start">ยังไม่เริ่ม</option>
-            <option value="in-progress">กำลังดำเนินการ</option>
-            <option value="success">เสร็จสิ้นแล้ว</option>
-        </select>
+<div class="flex-col justify-center items-center bg-gray-100 p-7">
+    <div class="flex flex-col bg-white">
+        <form action="{{ route('kanbans.store', ['event' => $event]) }}" method="post">
+            @csrf
+            <h1>เพิ่มคัมบังบอร์ดของคุณ</h1>
+            <div class="flex justify-center items-center p-5">
+                <label for="title">หัวเรื่อง</label>
+                <input id="title" name="title" type="text" class="w-full">
+                <label for="date_deadline">Deadline</label>
+                <input id="date_deadline" name="date_deadline" type="date" class="w-full">
+            </div>
+            <div class="flex justify-center items-center p-5">
+                <label for="detail">รายละเอียด</label>
+                <input id="detail" name="detail" type="text" class="w-full">
+            </div>
+            <button type="submit">เพิ่มกิจกรรม</button>
+        </form>
     </div>
-    <div class="flex justify-center items-center p-5 max-w-5xl">
-        <label for="">รายละเอียด</label>
-        <input type="text" class="w-full">
-    </div>
-    <input type="submit">
-</div>
-<div class="flex flex-col justify-center items-center bg-gray-100 p-7 w-full">
-    <div class="flex max-w-5xl w-4/5 mb-5">
-        <ul class="flex flex-col bg-[#FFD4D4] shadow-lg p-5 mr-5">
-            <div class="flex items-center justify-end mb-5">
-                <h1 class="text-xl font-sans pr-3">Not Start</h1>
+    @for($i = 0; $i < 3; $i++)
+    <div class="flex mb-5">
+        <ul class="flex-col p-5 mr-3 w-64">
+            <div class="flex-col items-center justify-end mb-5">
+                <h1 class="text-xl font-sans pr-3">{{ $statusOptions[$i]->value }}</h1>
             </div>
-            @foreach($kanbans as $kanban)
-            <li class="bg-white mb-3">
-                <div class="p-6">
-                    <h2 class="text-2xl font-bold text-gray-800 mb-2">{{ $kanban->title }}</h2>
-                    <p class="text-gray-700 leading-tight mb-4">
-                        {{ $kanban->detail }}
-                    </p>
-                    <div class="flex justify-between items-center">
-                        <div class="flex items-center">
-                            <img src="https://randomuser.me/api/portraits/men/32.jpg" alt="Avatar" class="w-8 h-8 rounded-full mr-2 object-cover">
-                            <span class="text-gray-800 font-semibold">John Doe</span>
+            @foreach($event->kanbans as $kanban)
+                @if($kanban->status === $statusOptions[$i]->value)
+                <li class="flex-col bg-white shadow-lg mb-3 w-64">
+                    <div class="p-6">
+                        <h2 class="text-2xl font-bold text-gray-800 mb-2">{{ $kanban->title }}</h2>
+                        <p class="text-gray-700 leading-tight mb-4">
+                            {{ $kanban->detail }}
+                        </p>
+                        <div class="flex justify-between items-center">
+                            <h1>{{ $kanban->status }}</h1>
+                            <span class="text-gray-600">{{ $kanban->date_deadline }}</span>
                         </div>
-                        <span class="text-gray-600">{{ $kanban->created_at }}</span>
+                        <div class="flex justify-between items-center">
+                            <form action="{{ route('kanbans.update', ['kanban' => $kanban]) }}" method="POST" id="statusForm">
+                                @csrf
+                                @method('PUT')
+                                <select name="status" id="status" autocomplete="status" onchange="submitForm()">
+                                    @foreach($statusOptions as $statusOption)
+                                    <option value="{{ $statusOption }}" id="status">{{ $statusOption }}</option>
+                                    @endforeach
+                                </select>
+                            </form>
+                            <form action="{{ route('kanbans.destroy', ['kanban' => $kanban]) }}" method="POST">
+                                @csrf
+                                @method("DELETE")
+                                <button type="submit">ลบเนื้อหา</button>
+                            </form>
+                        </div>
                     </div>
-                </div>
-            </li>
+                </li>
+                @endif
             @endforeach
         </ul>
-        <ul class="flex flex-col bg-[#F5F0BB] shadow-lg p-5 mr-5">
-            <div class="flex items-center justify-end mb-5">
-                <h1 class="text-xl font-sans pr-3">กำลังดำเนินการ</h1>
-            </div>
-            @foreach($kanbans as $kanban)
-            <li class="bg-white mb-3">
-                <div class="p-6">
-                    <h2 class="text-2xl font-bold text-gray-800 mb-2">{{ $kanban->title }}</h2>
-                    <p class="text-gray-700 leading-tight mb-4">
-                        {{ $kanban->detail }}
-                    </p>
-                    <div class="flex justify-between items-center">
-                        <div class="flex items-center">
-                            <img src="https://randomuser.me/api/portraits/men/32.jpg" alt="Avatar" class="w-8 h-8 rounded-full mr-2 object-cover">
-                            <span class="text-gray-800 font-semibold">John Doe</span>
-                        </div>
-                        <span class="text-gray-600">{{ $kanban->created_at }}</span>
-                    </div>
-                </div>
-            </li>
-            @endforeach
-        </ul>
-        <ul class="flex flex-col bg-[#D0F5BE] shadow-lg p-5">
-            <div class="flex items-center justify-end mb-5">
-                <h1 class="text-xl font-sans pr-3">เสร็จสิ้นแล้ว</h1>
-            </div>
-            @foreach($kanbans as $kanban)
-            <li class="bg-white mb-3">
-                <div class="p-6">
-                    <h2 class="text-2xl font-bold text-gray-800 mb-2">{{ $kanban->title }}</h2>
-                    <p class="text-gray-700 leading-tight mb-4">
-                        {{ $kanban->detail }}
-                    </p>
-                    <div class="flex justify-between items-center">
-                        <div class="flex items-center">
-                            <img src="https://randomuser.me/api/portraits/men/32.jpg" alt="Avatar" class="w-8 h-8 rounded-full mr-2 object-cover">
-                            <span class="text-gray-800 font-semibold">John Doe</span>
-                        </div>
-                        <span class="text-gray-600">{{ $kanban->created_at }}</span>
-                    </div>
-                </div>
-            </li>
-            @endforeach
-        </ul>
+        @endfor
     </div>
 </div>
+<script>
+    function submitForm() {
+        document.getElementById("statusForm").submit();
+    }
+</script>
 @endsection
