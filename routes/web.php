@@ -40,7 +40,12 @@ Route::get('/events/event/manage/staffs', [EventController::class, 'manageStaffs
 Route::get('/events/event/manage/budgets', [EventController::class, 'manageBudgets'])->name('events.manage.budgets');
 Route::get('/events/certificates', [EventController::class, 'showCertificates'])->name('events.show-certificates');
 Route::get('/events/create', [EventController::class, 'create'])->name('events.create');
-Route::resource('/events/kanbans', KanbanController::class);
+
+// Route kanban
+Route::get('/events/{event}/kanbans', [KanbanController::class, 'showKanbans'])->name('events.kanbans.show');
+Route::post('/events/{event}/kanbans', [KanbanController::class, 'storeKanban'])->name('events.kanbans.store');
+Route::put('/events/{event}/kanbans/{kanban}', [KanbanController::class, 'updateStatusKanban'])->name('events.kanbans.update-status');
+Route::delete('/events/{event}/kanbans/{kanban}', [KanbanController::class, 'destroyKanban'])->name('events.kanbans.destroy');
 
 Route::get('/dashboard', function () {
     return view('dashboard');
