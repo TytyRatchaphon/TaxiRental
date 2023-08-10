@@ -3,7 +3,6 @@
         <div class="">
             <form method="POST" action="{{ route('register') }}" enctype="multipart/form-data">
                 @csrf
-
                 <!-- First Name -->
                 <div class="mb-6">
                     <x-input-label for="user_firstname" :value="__('First Name')" />
@@ -46,30 +45,30 @@
 
                 <!-- Major -->
                 <div class="mb-6">
-                    <x-input-label for="Major" :value="__('Major')" />
-                    <x-text-input id="Major" class="block w-full mt-1" type="text" name="Major"
-                        :value="old('Major')" required />
-                    @error('Major')
+                    <x-input-label for="major" :value="__('Major')" />
+                    <x-text-input id="major" class="block w-full mt-1" type="text" name="major"
+                        :value="old('major')" required />
+                    @error('major')
                         <p class="mt-2 text-red-500 text-sm">{{ $message }}</p>
                     @enderror
                 </div>
 
                 <!-- Faculty -->
                 <div class="mb-6">
-                    <x-input-label for="Faculty" :value="__('Faculty')" />
-                    <x-text-input id="Faculty" class="block w-full mt-1" type="text" name="Faculty"
-                        :value="old('Faculty')" required />
-                    @error('Faculty')
+                    <x-input-label for="faculty" :value="__('Faculty')" />
+                    <x-text-input id="faculty" class="block w-full mt-1" type="text" name="faculty"
+                        :value="old('faculty')" required />
+                    @error('faculty')
                         <p class="mt-2 text-red-500 text-sm">{{ $message }}</p>
                     @enderror
                 </div>
 
                 <!-- Year -->
                 <div class="mb-6">
-                    <x-input-label for="Year" :value="__('Year')" />
-                    <x-text-input id="Year" class="block w-full mt-1" type="number" name="Year"
-                        :value="old('Year')" min="1" max="4" required />
-                    @error('Year')
+                    <x-input-label for="year" :value="__('Year')" />
+                    <x-text-input id="year" class="block w-full mt-1" type="number" name="year"
+                        :value="old('year')" min="1" max="4" required />
+                    @error('year')
                         <p class="mt-2 text-red-500 text-sm">{{ $message }}</p>
                     @enderror
                 </div>

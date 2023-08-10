@@ -24,9 +24,6 @@ class User extends Authenticatable
         'user_lastname',
         'username',
         'user_profile_img',
-        'Major',
-        'Faculty',
-        'Year',
         'email',
         'password',
     ];
@@ -50,6 +47,16 @@ class User extends Authenticatable
         'email_verified_at' => 'datetime',
         'password' => 'hashed',
     ];
+
+    public function userStudent()
+    {
+        return $this->hasOne(UserStudent::class);
+    }
+
+    public function userAdmin()
+    {
+        return $this->hasOne(UserAdmin::class);
+    }
 
     public function events() : BelongsToMany {
         return $this->belongsToMany(Event::class);
