@@ -14,6 +14,6 @@ class EventSeeder extends Seeder
      */
     public function run(): void
     {
-        Event::factory(5)->has(Kanban::factory()->count(5))->create();
+        $events = Event::factory()->count(10)->has(Kanban::factory(10))->create();
     }
 }

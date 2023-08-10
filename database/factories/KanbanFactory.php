@@ -23,7 +23,7 @@ class KanbanFactory extends Factory
             'detail' => fake()->realText(200),
             'status' => KanbanAccessibility::randomValue(),
             'date_deadline' => fake()->date('Y-m-d'),
-            'event_id' => fake()->numberBetween(1, Event::all()->count())
+            'event_id' => fake()->numberBetween(1, Event::count())
         ];
     }
 }

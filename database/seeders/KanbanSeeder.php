@@ -2,8 +2,8 @@
 
 namespace Database\Seeders;
 
+use App\Models\Event;
 use App\Models\Kanban;
-use Illuminate\Database\Console\Seeds\WithoutModelEvents;
 use Illuminate\Database\Seeder;
 
 class KanbanSeeder extends Seeder
@@ -13,6 +13,6 @@ class KanbanSeeder extends Seeder
      */
     public function run(): void
     {
-        Kanban::factory(10)->create();
+        $kanbans = Kanban::factory()->count(10)->create();
     }
 }
