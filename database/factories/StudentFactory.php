@@ -4,13 +4,11 @@ namespace Database\Factories;
 
 use App\Models\User;
 use Illuminate\Database\Eloquent\Factories\Factory;
-use Illuminate\Support\Str;
-use Illuminate\Support\Facades\Hash;
 
 /**
  * @extends \Illuminate\Database\Eloquent\Factories\Factory<\App\Models\User>
  */
-class UserStudentFactory extends Factory
+class StudentFactory extends Factory
 {
     /**
      * Define the model's default state.
@@ -21,10 +19,12 @@ class UserStudentFactory extends Factory
     {
 
         return [
-            'user_id' => $this->unique()->faker->numberBetween(1, User::count()),
+            'user_id' => User::factory()->create(['role' => 'USER'])->id,
             'major' => $this->faker->word,
-            'faculty' => $this->faker->word,
-            'year' => $this->faker->numberBetween(1, 4), // Generates a random number between 1 and 4
+            'year' => $this->faker->numberBetween(1, 4),
+            'facebook' => fake()->name(),
+            'line' => fake()->name(),
+            'instagram' =>fake()->name(),
         ];
     }
 
