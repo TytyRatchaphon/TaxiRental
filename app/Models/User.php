@@ -48,17 +48,8 @@ class User extends Authenticatable
         'password' => 'hashed',
     ];
 
-    public function userStudent()
+    public function student()
     {
-        return $this->hasOne(UserStudent::class);
-    }
-
-    public function userAdmin()
-    {
-        return $this->hasOne(UserAdmin::class);
-    }
-
-    public function events() : BelongsToMany {
-        return $this->belongsToMany(Event::class);
+        return $this->hasOne(Student::class);
     }
 }

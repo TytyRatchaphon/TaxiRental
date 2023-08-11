@@ -33,6 +33,9 @@ class Event extends Model
     public function kanbans() : HasMany {
         return $this->hasMany(Kanban::class);
     }
+    public function applicants() : HasMany {
+        return $this->hasMany(Applicant::class);
+    }
 
     public function findByKanbanID($id) {
         return $this->kanbans()->find($id);
