@@ -20,8 +20,8 @@ return new class extends Migration
             $table->string('event_location');
             $table->string('event_description')->nullable();
             $table->decimal('event_expense_amount', 10, 2);
-            $table->integer('event_participant_limit');
-            $table->integer('event_participant')->default(0);
+            $table->integer('event_applicants_limit');
+            $table->integer('event_staffs_limit');
             $table->string('event_approval_status')->default('pending');
             $table->date('event_application_deadline');
             $table->timestamps();

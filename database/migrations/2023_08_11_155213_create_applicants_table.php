@@ -18,6 +18,7 @@ return new class extends Migration
             $table->foreignIdFor(Student::class);
             $table->foreignIdFor(Event::class);
             $table->unique(['student_id','event_id']);
+            $table->string('status')->default('pending');
             $table->string('file_path')->nullable();
             $table->timestamps();
         });
