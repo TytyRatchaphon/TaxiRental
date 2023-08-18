@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Enums\ApplicantStatus;
 use Illuminate\Http\Request;
 use App\Models\Event;
 use App\Models\Student;
@@ -39,7 +40,9 @@ class EventController extends Controller
         return view('events.manage.manage-budgets');
     }
     public function showCertificates() {
-        return view('events.show-certificates');
+        $student = Auth::user()->student;
+        $applicants = $student->applicants()->byStatus(ApplicantStatus::APPROVED)->get();
+        return view('events.show-certificates', ['applicants' => $applicants]);
     }
     public function create() {
 

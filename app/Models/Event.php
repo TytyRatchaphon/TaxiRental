@@ -2,6 +2,7 @@
 
 namespace App\Models;
 
+use App\Models\Enums\EventStatus;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsToMany;
@@ -46,5 +47,12 @@ class Event extends Model
 
     public function findByKanbanID($id) {
         return $this->kanbans()->find($id);
+    }
+    public function isOver() {
+        if ($this->event_status === EventStatus::OVER) {
+            return true;
+        } else {
+            return false;
+        }
     }
 }
