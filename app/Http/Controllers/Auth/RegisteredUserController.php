@@ -4,7 +4,7 @@ namespace App\Http\Controllers\Auth;
 
 use App\Http\Controllers\Controller;
 use App\Models\User;
-use App\Models\UserStudent;
+use App\Models\Student;
 use App\Providers\RouteServiceProvider;
 use Illuminate\Auth\Events\Registered;
 use Illuminate\Http\RedirectResponse;
@@ -61,12 +61,11 @@ class RegisteredUserController extends Controller
             'password' => Hash::make($request->password),
         ]);
 
-        $userStudent = UserStudent::create([
+        $student = Student::create([
             'user_id' => $user->id,
             'major' => $request['major'],
             'faculty' => $request['faculty'],
             'year' => $request['year'],
-            'role' => $request['role'],
         ]);
 
 

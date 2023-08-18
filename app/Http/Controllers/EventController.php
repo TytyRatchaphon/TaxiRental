@@ -4,6 +4,8 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\Models\Event;
+use App\Models\Student;
+use Illuminate\Support\Facades\Auth;
 
 class EventController extends Controller
 {
@@ -40,6 +42,11 @@ class EventController extends Controller
         return view('events.show-certificates');
     }
     public function create() {
+
+        if (!Auth::check()) {
+            return redirect()->route('login')->with('error', 'You need to be logged in to create an event.');
+        }
+
         return view('events.create');
     }
 
@@ -50,4 +57,47 @@ class EventController extends Controller
 
     //     return view('events', ['eventId' => $eventId]);
     // }
+    public function store(Request $request)
+    {
+        $validatedData = $request->validate([
+            'event_name' => 'required|string|max:255',
+            'event_date' => 'required|date',
+            'event_thumbnail' => 'nullable|image|mimes:jpeg,png,jpg|max:2048',
+            'event_image' => 'nullable|image|mimes:jpeg,png,jpg|max:2048',
+            'event_location' => 'required|string|max:255',
+            'event_description' => 'nullable|string',
+            'event_expense_amount' => 'required|numeric|min:0',
+            'event_applicants_limit' => 'required|integer|min:1',
+            'event_staffs_limit' => 'required|integer|min:1',
+            'event_application_deadline' => 'required|date',
+        ]);
+
+        $thumbnailPath = null;
+        $imagePath = null;
+
+        if ($request->hasFile('event_thumbnail')) {
+            $thumbnailPath = $request->file('event_thumbnail')->store('thumbnails', 'public');
+        }
+
+        if ($request->hasFile('event_image')) {
+            $imagePath = $request->file('event_image')->store('images', 'public');
+        }
+
+        $event = new Event([
+            'event_name' => $validatedData['event_name'],
+            'event_date' => $validatedData['event_date'],
+            'event_thumbnail' => $thumbnailPath,
+            'event_image' => $imagePath,
+            'event_location' => $validatedData['event_location'],
+            'event_description' => $validatedData['event_description'],
+            'event_expense_amount' => $validatedData['event_expense_amount'],
+            'event_applicants_limit' => $validatedData['event_applicants_limit'],
+            'event_staffs_limit' => $validatedData['event_staffs_limit'],
+            'event_application_deadline' => $validatedData['event_application_deadline'],
+        ]);
+
+        $event->save();
+        return redirect()->route('events.index')->with('success', 'Event created successfully.');
+    }
+
 }

@@ -14,8 +14,9 @@ return new class extends Migration
     {
         Schema::create('students', function (Blueprint $table) {
             $table->id();
-            $table->foreignIdFor(User::class)->unique(); //this has to can be nullable for now, Not Sure why but its work.
+            $table->foreignIdFor(User::class)->unique();
             $table->string('major')->nullable();
+            $table->string('faculty')->nullable();
             $table->string('year');
             $table->string('facebook')->nullable();
             $table->string('line')->nullable();
