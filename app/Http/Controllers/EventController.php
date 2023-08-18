@@ -5,16 +5,16 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use App\Models\Event;
 use App\Models\Student;
+use App\Providers\RouteServiceProvider;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Log;
 
 class EventController extends Controller
 {
     public function index() {
         // return view('events.index');
         $event = Event::get();
-        return view('home', [
-            'events' => $event
-        ]);
+        return view('home', ['events' => $event]);
     }
     public function show(Event $event)
     {
@@ -57,47 +57,63 @@ class EventController extends Controller
 
     //     return view('events', ['eventId' => $eventId]);
     // }
+
     public function store(Request $request)
     {
-        $validatedData = $request->validate([
-            'event_name' => 'required|string|max:255',
+        //remove validation for now
+        $request->validate([
+            'event_name' => 'required|max:255',
             'event_date' => 'required|date',
-            'event_thumbnail' => 'nullable|image|mimes:jpeg,png,jpg|max:2048',
-            'event_image' => 'nullable|image|mimes:jpeg,png,jpg|max:2048',
-            'event_location' => 'required|string|max:255',
-            'event_description' => 'nullable|string',
+            'event_location' => 'required|max:255',
+            'event_description' => 'required',
             'event_expense_amount' => 'required|numeric|min:0',
             'event_applicants_limit' => 'required|integer|min:1',
             'event_staffs_limit' => 'required|integer|min:1',
-            'event_application_deadline' => 'required|date',
+            'event_application_deadline' => 'required|date|before_or_equal:event_date',
+            'event_thumbnail' => '|image|mimes:jpeg,png,jpg,gif|max:2048',
+            'event_image' => '|image|mimes:jpeg,png,jpg,gif|max:2048',
         ]);
 
         $thumbnailPath = null;
         $imagePath = null;
 
         if ($request->hasFile('event_thumbnail')) {
-            $thumbnailPath = $request->file('event_thumbnail')->store('thumbnails', 'public');
+            $thumbnailFile = $request->file('event_thumbnail');
+            if ($thumbnailFile->isValid()) {
+                $thumbnailPath = $thumbnailFile->store('thumbnails', 'public');
+            }
         }
-
+        
         if ($request->hasFile('event_image')) {
-            $imagePath = $request->file('event_image')->store('images', 'public');
+            $imageFile = $request->file('event_image');
+            if ($imageFile->isValid()) {
+                $imagePath = $imageFile->store('images', 'public');
+            }
+        }
+        
+
+        if (Auth::check() && Auth::user()->student) {
+            $student = Auth::user()->student;
+        
+
+            $event = new Event([
+                'event_name' => $request->get('event_name'), // for all later
+                'event_date' => $request->get('event_date'),
+                'event_thumbnail' => $thumbnailPath,
+                'event_image' => $imagePath,
+                'event_location' => $request->get('event_location'),
+                'event_description' => $request->get('event_description'),
+                'event_expense_amount' =>$request->get('event_expense_amount'),
+                'event_applicants_limit' => $request->get('event_applicants_limit'),
+                'event_staffs_limit' => $request->get('event_staffs_limit'),
+                'event_application_deadline' => $request->get('event_application_deadline'),
+            ]);
+
+            $student->events()->save($event);
         }
 
-        $event = new Event([
-            'event_name' => $validatedData['event_name'],
-            'event_date' => $validatedData['event_date'],
-            'event_thumbnail' => $thumbnailPath,
-            'event_image' => $imagePath,
-            'event_location' => $validatedData['event_location'],
-            'event_description' => $validatedData['event_description'],
-            'event_expense_amount' => $validatedData['event_expense_amount'],
-            'event_applicants_limit' => $validatedData['event_applicants_limit'],
-            'event_staffs_limit' => $validatedData['event_staffs_limit'],
-            'event_application_deadline' => $validatedData['event_application_deadline'],
-        ]);
-
-        $event->save();
-        return redirect()->route('events.index')->with('success', 'Event created successfully.');
+        return redirect(RouteServiceProvider::HOME);
     }
+
 
 }

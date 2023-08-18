@@ -19,14 +19,14 @@ class Event extends Model
     protected $fillable = [
         'event_name',
         'event_date',
+        'event_application_deadline',
         'event_location',
         'event_expense_amount',
-        'event_participant_limit',
-        'event_approval_status',
-        'event_application_deadline',
+        'event_applicants_limit',
+        'event_staffs_limit',
+        'event_description',
         'event_thumbnail',
         'event_image',
-        'event_participant',
     ];
     public function users() : BelongsToMany {
         return $this->belongsToMany(User::class);
@@ -39,6 +39,9 @@ class Event extends Model
     }
     public function certificate() : HasOne {
         return $this->hasOne(Certificate::class);
+    }
+    public function student() {
+        return $this->belongsTo(Student::class, 'student_id');
     }
 
     public function findByKanbanID($id) {

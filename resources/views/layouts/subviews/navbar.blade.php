@@ -69,7 +69,7 @@
                     class=" flex flex-col max-w-screen-xl mx-auto font-medium justify-between lg:flex-row lg:bg-white lg:space-x-8 lg:p-0 overflow-hidden">
                     
                     <li>
-                        <a href="{{ url('/') }}"
+                        <a href="{{ url('/home') }}"
                             class="pl-3 lg:pl-0 nav-menu hover:text-white lg:hover:text-[#fde047] transition {{ request()->is('/') ? 'active' : '' }}">
                             Events
                         </a>

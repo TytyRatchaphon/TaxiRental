@@ -61,20 +61,16 @@ class RegisteredUserController extends Controller
             'password' => Hash::make($request->password),
         ]);
 
+        event(new Registered($user));
+    
+        Auth::login($user);
+    
         $student = Student::create([
             'user_id' => $user->id,
             'major' => $request['major'],
             'faculty' => $request['faculty'],
             'year' => $request['year'],
         ]);
-
-
-        
-
-        event(new Registered($user));
-    
-        Auth::login($user);
-    
         return redirect(RouteServiceProvider::HOME);
     }
 }
