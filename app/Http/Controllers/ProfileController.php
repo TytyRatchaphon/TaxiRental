@@ -31,7 +31,7 @@ class ProfileController extends Controller
     {
         $request->validate([
             'username' => ['required', 'string', 'min:3', 'max:255'],
-            'user_profile_img' => ['nullable', 'image', 'mimes:jpeg', 'png', 'jpg', 'gif', 'max:2048'],
+            'user_profile_img' => ['nullable', 'image', 'mimes:jpeg,png,jpg,gif', 'max:2048'],
             'user_firstname' => ['required', 'string', 'min:3', 'max:255'],
             'user_lastname' => ['required', 'string',  'min:3', 'max:255'],
             'major' => ['required', 'string', 'min:3', 'max:255'],
@@ -43,10 +43,20 @@ class ProfileController extends Controller
             
         ]);
 
+        // Handle profile image upload
+        $imageName = null;
+        if ($request->hasFile('user_profile_img')) {
+            $image = $request->file('user_profile_img');
+            $imageName = time() . '.' . $image->getClientOriginalExtension(); // how profile img file will be name when store
+            $image->storeAs('public/', $imageName);
+        }
+
         $user->username = $request->get('username');
         $user->user_firstname = $request->get('user_firstname');
         $user->user_lastname = $request->get('user_lastname');
-        $user->user_profile_img = $request->get('user_profile_img');
+        $user->user_profile_img = $imageName;
+
+        
 
         if ($request->user()->isDirty('email')) {
             $request->user()->email_verified_at = null;
@@ -67,6 +77,7 @@ class ProfileController extends Controller
             $student->facebook = $request->get('facebook');
             $student->line = $request->get('line');
             $student->instagram = $request->get('instagram');
+            $student->save();
         }
 
         $user->save();

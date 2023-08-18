@@ -26,7 +26,7 @@
         @auth
             <div class="flex items-center space-x-3 lg:order-2">
             <a href="{{ route('profile.index') }}" class="flex items-center">
-                <img src="{{ asset('/storage/' . (auth()->user()->user_profile_img)) }}" alt="Profile Image"
+                <img src="{{ asset('/storage/' . (auth()->user()->user_profile_img))}}" alt="Profile Image"
                     class="h-8 w-8 rounded-full">
                 <span class="text-Black text-sm font-medium mr-3">{{ auth()->user()->username }}</span>
             </a>

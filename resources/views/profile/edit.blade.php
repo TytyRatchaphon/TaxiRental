@@ -2,17 +2,16 @@
 @section('content')
 <div class="p-10">
     <div class="max-w-7xl mx-auto sm:px-6 lg:px-8 space-y-6">
-        <form method="POST" action="{{ route('profile.update', ['user' => $user]) }}">
+        <form method="POST" action="{{ route('profile.update', ['user' => $user]) }}" enctype="multipart/form-data">
             @csrf
             @method('put')
             <!-- Profile Image -->
             <div class="max-w-sm mx-auto overflow-hidden">
                 <img id="profileImagePreview"
                     src="{{ asset('storage/' . (old('user_profile_img', $user->user_profile_img) ?: $user->user_profile_img)) }}"
-                    alt="user_profile_img" class="h-48 w-48 rounded-full border-4 border-yellow-300 mx-auto my-5">
-                <x-input-label for="user_profile" :value="__('Profile Image')" class="text-center" />
-                    <input id="user_profile_img" class="block py-2 px-4 shadow-none" type="file"
-                        name="user_profile_img" onchange="previewProfileImage(event)" />
+                    class="h-48 w-48 rounded-full border-4 border-yellow-300 mx-auto my-5">
+                <x-input-label for="user_profile_img" :value="__('Profile Image')" class="text-center" />
+                    <input id="user_profile_img" class="block py-2 px-4 shadow-none" type="file" name="user_profile_img" onchange="previewProfileImage(event)" />
                 @error('user_profile_img')
                 <p class="mt-2 text-red-500 text-sm">{{ $message }}</p>
                 @enderror

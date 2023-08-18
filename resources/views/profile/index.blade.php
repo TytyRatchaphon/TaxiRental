@@ -5,7 +5,7 @@
         <div class="border-b p-20">
             <div class="text-center">
                 <img class="h-48 w-48 rounded-full border-4 border-yellow-300 mx-auto my-5"
-                    src="{{ asset('/storage/' . ($user->user_profile_img)) }}" alt="profile_image">
+                    src="{{ asset('/storage/' . ($user->user_profile_img)) }}">
                 <div class="py-5">
                     <h3 class="font-bold text-2xl mb-1">
                         {{ $user->user_firstname }}
@@ -25,7 +25,7 @@
         </div>
         @if($user->role === "USER")
         <div class="p-10 pt-5">
-            <div class="flex py-5">
+            <div class="flex flex-col space-y-3 py-5">
                 <div class="flex bg-yellow-300 rounded-xl px-3 items-center">
                     <input type="checkbox" value="">
                     <p class="font-semibold px-1">{{ $user->student->major }}</p>
