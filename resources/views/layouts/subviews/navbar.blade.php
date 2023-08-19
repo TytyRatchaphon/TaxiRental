@@ -1,11 +1,13 @@
 <nav class="bg-white drop-shadow border-gray-200 overflow-hidden sticky top-0 z-50">
     <div class="my-2 transition flex flex-wrap items-center justify-between max-w-screen-xl mx-auto">
+
         <a href="{{ url('/') }}" class="flex items-center">
             <img src="https://www.svgrepo.com/show/429168/fruit-lemon-slice.svg" class="h-10 mr-1.5 sm:h-10"
                 alt="Logo">
             <span
                 class="link link-underline link-underline-yellow text-[#F6D106] self-center text-xl font-semibold whitespace-nowrap hover:text-[#faea9d] hover:scale-105 mr-2 transition">HONEY
-                LEMON</span>
+                LEMON
+            </span>
         </a>
 
         @if (!auth()->check())
@@ -25,9 +27,19 @@
 
         @auth
             <div class="flex items-center space-x-3 lg:order-2">
-                <img src="{{ asset('/storage/' . (auth()->user()->user_profile_img)) }}" alt="Profile Image"
-                    class="h-8 w-8 rounded-full">
-                <span class="text-Black text-sm font-medium mr-3">{{ auth()->user()->username }}</span>
+                @if (Auth::user()->role == 'OPERATOR')
+                    <a href="{{ route('profile.index') }}" class="flex items-center">
+                        <img src="{{ asset('/storage/' . auth()->user()->user_profile_img) }}" alt="Profile Image"
+                            class="h-8 w-8 rounded-full">
+                        <span class="text-Black text-sm font-medium mr-3 ml-2">{{ auth()->user()->username }}</span>
+                    </a>
+                @else
+                    <div class="flex items-center">
+                        <img src="{{ asset('/storage/' . auth()->user()->user_profile_img) }}" alt="Profile Image"
+                            class="h-8 w-8 rounded-full">
+                        <span class="text-Black text-sm font-medium mr-3 ml-2">{{ auth()->user()->username }}</span>
+                    </div>
+                @endif
                 <a href="{{ route('logout') }}"
                     class="transition-transform duration-500 hover:scale-110 text-Black bg-[#fde047] hover:text-white font-medium rounded-lg text-sm  focus:ring-2 focus:ring-[#F6D106] px-3 py-1.5"
                     onclick="event.preventDefault(); document.getElementById('logout-form').submit();">
@@ -67,31 +79,53 @@
                 id="mobile-menu-2">
                 <ul
                     class=" flex flex-col max-w-screen-xl mx-auto font-medium justify-between lg:flex-row lg:bg-white lg:space-x-8 lg:p-0 overflow-hidden">
-                    
+
                     <li>
                         <a href="{{ url('/home') }}"
                             class="pl-3 lg:pl-0 nav-menu hover:text-white lg:hover:text-[#fde047] transition {{ request()->is('/') ? 'active' : '' }}">
                             Events
                         </a>
                     </li>
-                    <li>
-                        <a href="{{ url('/events/create') }}"
-                            class="pl-3 lg:pl-0 nav-menu hover:text-white lg:hover:text-[#fde047] transition {{ Route::currentRouteName() === 'songs.index' ? 'active' : '' }}">
-                            Create Event
-                        </a>
-                    </li>
-                    <li>
-                        <a href="{{ url('/') }}"
-                            class="pl-3 lg:pl-0 nav-menu hover:text-white lg:hover:text-[#fde047] transition {{ request()->is('/') ? 'active' : '' }}">
-                            My Events
-                        </a>
-                    </li>
-                    <li>
-                        <a href="{{ route('home') }}"
-                            class="pl-3 lg:pl-0 nav-menu hover:text-white lg:hover:text-[#fde047] transition {{ Route::currentRouteName() === 'songs.index' ? 'active' : '' }}">
-                            Certificate
-                        </a>
-                    </li>
+                    @if (Auth::user()->role !== 'ADMIN')
+                        <li>
+                            <a href="{{ url('/events/create') }}"
+                                class="pl-3 lg:pl-0 nav-menu hover:text-white lg:hover:text-[#fde047] transition {{ Route::currentRouteName() === 'songs.index' ? 'active' : '' }}">
+                                Create Event
+                            </a>
+                        </li>
+                    @endif
+                    @if (Auth::user()->role !== 'ADMIN')
+                        <li>
+                            <a href="{{ url('/') }}"
+                                class="pl-3 lg:pl-0 nav-menu hover:text-white lg:hover:text-[#fde047] transition {{ request()->is('/') ? 'active' : '' }}">
+                                My Events
+                            </a>
+                        </li>
+                    @endif
+                    @if (Auth::user()->role !== 'ADMIN')
+                        <li>
+                            <a href="{{ route('home') }}"
+                                class="pl-3 lg:pl-0 nav-menu hover:text-white lg:hover:text-[#fde047] transition {{ Route::currentRouteName() === 'songs.index' ? 'active' : '' }}">
+                                Certificate
+                            </a>
+                        </li>
+                    @endif
+                    @if (Auth::user()->role == 'ADMIN')
+                        <li>
+                            <a href="{{ route('operators.create') }}"
+                                class="pl-3 lg:pl-0 nav-menu hover:text-white lg:hover:text-[#fde047] transition {{ Route::currentRouteName() === 'songs.index' ? 'active' : '' }}">
+                                Create Operator
+                            </a>
+                        </li>
+                    @endif
+                    @if (Auth::user()->role == 'ADMIN')
+                        <li>
+                            <a href="{{ url('/operators') }}"
+                                class="pl-3 lg:pl-0 nav-menu hover:text-white lg:hover:text-[#fde047] transition {{ Route::currentRouteName() === 'songs.index' ? 'active' : '' }}">
+                                Operator List
+                            </a>
+                        </li>
+                    @endif
                 </ul>
             </div>
         @endauth

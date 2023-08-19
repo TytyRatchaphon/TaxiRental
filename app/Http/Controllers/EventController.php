@@ -2,10 +2,12 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Enums\ApplicantStatus;
 use Illuminate\Http\Request;
 use App\Models\Event;
 use App\Models\Student;
 use App\Providers\RouteServiceProvider;
+use Illuminate\Support\Facades\Gate;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Log;
 
@@ -39,7 +41,9 @@ class EventController extends Controller
         return view('events.manage.manage-budgets');
     }
     public function showCertificates() {
-        return view('events.show-certificates');
+        $student = Auth::user()->student;
+        $applicants = $student->applicants()->byStatus(ApplicantStatus::APPROVED)->get();
+        return view('events.show-certificates', ['applicants' => $applicants]);
     }
     public function create() {
 
@@ -48,6 +52,23 @@ class EventController extends Controller
         }
 
         return view('events.create');
+    }
+    public function showPendingEvents() {
+        $events = Event::byStatus('pending')->afterDeadline()->get();
+        return view('events.manage', [
+            'events' => $events
+        ]);
+    }
+    public function changeStatus(Request $request, Event $event) {
+        $request->validate([
+            'status' => ['required']
+        ]);
+
+        $event->event_approval_status = $request->get('status');
+        $event->save();
+
+        $events = Event::get();
+        return redirect()->route('events.manage', ['events' => $events]);
     }
 
     // public function show($eventId)
@@ -115,5 +136,13 @@ class EventController extends Controller
         return redirect(RouteServiceProvider::HOME);
     }
 
-
+    public function destroy(Event $event)
+    {
+        if (Gate::allows('delete', $event)) {
+            $event->delete();
+            return redirect()->route('events.index')->with('success', 'Event deleted successfully.');
+        } else {
+            return redirect()->route('events.index')->with('error', 'You are not authorized to delete this event.');
+        }
+    }
 }

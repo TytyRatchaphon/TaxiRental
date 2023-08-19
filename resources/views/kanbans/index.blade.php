@@ -97,10 +97,8 @@
                         value="{{ old('date_deadline', $kanban->date_deadline) }}"
                         class="@error('date_deadline') border-red-600 @enderror w-full">
                 </div>
-            </div>
-            <div class="flex justify-center w-full py-3">
-                <div class="w-11/12">
-                    <label for="detail" class="font-semibold">Detail</label>
+                <div class="flex justify-center items-center p-5">
+                    <label for="detail">รายละเอียด</label>
                     @error('detail')
                     <div class="text-red-600">
                         {{ $message }}

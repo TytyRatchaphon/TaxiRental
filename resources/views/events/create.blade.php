@@ -42,14 +42,14 @@
                 </div>
                 <div class="flex flex-col  p-3">
                     <label for="event_thumbnail" class="pb-3">Add Event Thumbnail</label>
-                    <input type="file" name="event_thumbnail" id="event_thumbnail" class="h-64 w-full hover:opacity-80 rounded-lg border-yellow-200">
+                    <input type="file" name="event_thumbnail" id="event_thumbnail" class="h-64 w-full hover:opacity-80 rounded-lg cursor-pointer border-yellow-200">
                     @error('event_thumbnail')
                         <span class="text-red-500 text-sm">{{ $message }}</span>
                     @enderror
                 </div>
                 <div class="flex flex-col  p-3">
                     <label for="event_image" class="pb-3">Add Images</label>
-                    <input type="file" name="event_image" id="event_image" class="h-64 w-full hover:opacity-80 rounded-lg border-yellow-200">
+                    <input type="file" name="event_image" id="event_image" class="h-64 w-full hover:opacity-80 rounded-lg cursor-pointer border-yellow-200">
                     @error('event_image')
                         <span class="text-red-500 text-sm">{{ $message }}</span>
                     @enderror

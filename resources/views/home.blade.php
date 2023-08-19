@@ -27,7 +27,7 @@
                     class="drop-shadow border-transparent focus:border-transparent focus:ring-0 form-control w-full rounded-l-lg py-2 px-4"
                     placeholder="Search Events">
                 <button type="submit"
-                    class="z-50 drop-shadow bg-white text-gray-400 transition duration-300 hover:text-[#F6D106] rounded-r-lg py-[8.7px] px-4">
+                    class="z-50 drop-shadow bg-white text-gray-400 transition duration-300 hover:text-[#F6D106] rounded-r-lg py-[8.8px] sm:py-[8.6px] px-4">
                     <i class="fas fa-search"></i>
                 </button>
             </form>

@@ -107,6 +107,18 @@
                     @enderror
                 </div>
 
+                <!-- ORGANIZTION only can be see by admin -->
+                @if(Auth::check() && Auth::user()->role == "ADMIN")
+                    <div class="mb-6">
+                        <x-input-label for="organization" :value="__('Organization')" />
+                        <x-text-input id="organization" class="block w-full mt-1" type="text" name="organization"
+                            :value="old('organization')" required />
+                        @error('organization')
+                            <p class="mt-2 text-red-500 text-sm">{{ $message }}</p>
+                        @enderror
+                    </div>
+                @endif
+
                 <div class="flex items-center justify-end mt-4">
                     <a class="underline text-sm text-black hover:text-[#F6D106]  rounded-md focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-black"
                         href="{{ route('login') }}">
