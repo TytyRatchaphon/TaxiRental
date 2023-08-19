@@ -52,4 +52,14 @@ class User extends Authenticatable
     {
         return $this->hasOne(Student::class);
     }
+    public function scopeByRole($query, $role) {
+        return $query->where('role', $role);
+    }
+    public function scopeForSearch($query, $input) {
+        return $query->where(function ($query) use ($input) {
+            $query->where('username', 'LIKE', "%{$input}%")
+                ->orWhere('user_firstname', 'LIKE', "%{$input}%")
+                ->orWhere('user_lastname', 'LIKE', "%{$input}%");
+        })->limit(5);
+    }
 }
