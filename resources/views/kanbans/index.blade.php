@@ -38,9 +38,9 @@
             <!-- Create new Kanban -->
             <form action="{{ route('events.kanbans.store', ['event' => $event]) }}" method="post">
                 @csrf
-                <h1>เพิ่มคัมบังบอร์ดของคุณ</h1>
+                <h1>Add Your Kanban Board</h1>
                 <div class="flex justify-center items-center p-5">
-                    <label for="title">หัวเรื่อง</label>
+                    <label for="title">Title</label>
                     @error('title')
                         <div class="text-red-600">
                             {{ $message }}
@@ -59,7 +59,7 @@
                         class="@error('date_deadline') border-red-600 @enderror w-full">
                 </div>
                 <div class="flex justify-center items-center p-5">
-                    <label for="detail">รายละเอียด</label>
+                    <label for="detail">Detail</label>
                     @error('detail')
                         <div class="text-red-600">
                             {{ $message }}
@@ -69,7 +69,7 @@
                         class="@error('title') border-red-600 @enderror w-full">
                 </div>
                 <div>
-                    <button type="submit">เพิ่มกิจกรรม</button>
+                    <button type="submit">ADD</button>
                 </div>
             </form>
         </div>

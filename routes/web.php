@@ -5,7 +5,9 @@ use App\Http\Controllers\HomeController;
 use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\EventController;
 use App\Http\Controllers\KanbanController;
+use App\Http\Controllers\OperatorController;
 use Illuminate\Support\Facades\Route;
+use App\Http\Middleware\AdminAccess;
 
 /*
 |--------------------------------------------------------------------------
@@ -28,11 +30,23 @@ Route::get('/login', function () {
     return view('login');
 })->middleware(['auth','verified'])->name('login');
 
+Route::get('/events', [EventController::class, 'index'])->name('events.index');
+Route::resource('/events', EventController::class);
+
+Route::get('/create-operator', [OperatorController::class, 'create'])
+    ->name('operator.create')
+    ->middleware(AdminAccess::class);
+Route::post('/create-operator', [OperatorController::class, 'store'])->name('operator.store');
+
+//==========================GROUP OF ROTES THAT REQUIRED AUTH==================================== 
+Route::middleware('auth')->group(function () {
+
+
+Route::get('/profile/{user}/edit', [ProfileController::class, 'edit'])->name('profile.edit');
+
 Route::get('/event/{event}/kanban', [KanbanController::class, 'kanban'])
     ->name('events.manage.kanban');
 
-Route::resource('/events', EventController::class);
-Route::get('/events', [EventController::class, 'index'])->name('events.index');
 // Route::get('/events/show', 'EventController@show')->name('events.show');
 Route::get('/events/event/manage/kanban', [EventController::class, 'manageKanban'])->name('events.manage.kanban');
 Route::get('/events/event/manage/applicants', [EventController::class, 'manageApplicants'])->name('events.manage.applicants');
@@ -40,6 +54,9 @@ Route::get('/events/event/manage/staffs', [EventController::class, 'manageStaffs
 Route::get('/events/event/manage/budgets', [EventController::class, 'manageBudgets'])->name('events.manage.budgets');
 Route::get('/certificates', [EventController::class, 'showCertificates'])->name('events.show-certificates');
 Route::get('/events/create', [EventController::class, 'create'])->name('events.create');
+
+//Delete ROUTE FOR ADMIN ONLY!!!
+Route::delete('/events/{event}', [EventController::class, 'destroy'])->name('events.destroy');
 
 // Route kanban
 Route::get('/events/{event}/kanbans', [KanbanController::class, 'showKanbans'])->name('events.kanbans.show');
@@ -51,7 +68,7 @@ Route::get('/dashboard', function () {
     return view('dashboard');
 })->middleware(['auth', 'verified'])->name('dashboard');
 
-Route::middleware('auth')->group(function () {
+
     Route::get('/profile', [ProfileController::class, 'index'])->name('profile.index');
     Route::get('/profile/{user}', [ProfileController::class, 'edit'])->name('profile.edit');
     Route::put('/profile/{user}', [ProfileController::class, 'update'])->name('profile.update');

@@ -11,7 +11,7 @@
                     src="{{ asset('storage/' . (old('user_profile_img', $user->user_profile_img) ?: $user->user_profile_img)) }}"
                     class="h-48 w-48 rounded-full border-4 border-yellow-300 mx-auto my-5">
                 <x-input-label for="user_profile_img" :value="__('Profile Image')" class="text-center" />
-                    <input id="user_profile_img" class="block py-2 px-4 shadow-none" type="file" name="user_profile_img" onchange="previewProfileImage(event)" />
+                    <input id="user_profile_img" :value="old('user_profile_img', $user->user_profile_img)" class="block py-2 px-4 shadow-none" type="file" name="user_profile_img" onchange="previewProfileImage(event)" />
                 @error('user_profile_img')
                 <p class="mt-2 text-red-500 text-sm">{{ $message }}</p>
                 @enderror
@@ -46,7 +46,7 @@
                 @enderror
             </div>
 
-            @if($user->role === "USER")
+            @if($user->role === "STUDENT")
             <!-- Major -->
             <div class="mb-6">
                 <x-input-label for="major" :value="__('Major')" />
@@ -113,11 +113,11 @@
             </div>
 
             <div class="flex items-center justify-end mt-4">
-                <a class="underline text-sm text-black hover:text-[#F6D106]  rounded-md focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-black"
+                <a class="underline text-sm text-black transition-all hover:text-[#F6D106]  rounded-md focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-black"
                     href="{{ route('login') }}">
                     Back to Profile
                 </a>
-                <button type="submit" class="ml-4 bg-[#F6D106] hover:bg-yellow-500 hover:scale-105">
+                <button type="submit" class="ml-4 bg-[#F6D106] rounded-lg px-4 py-1 focus:ring-2 focus:ring-offset-2 focus:ring-[#F6D106] hover:text-white hover:scale-105 transition-all">
                     Save
                 <button>
             </div>

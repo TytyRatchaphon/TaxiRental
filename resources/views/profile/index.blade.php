@@ -1,6 +1,6 @@
 @extends('layouts.main')
 @section('content')
-<div class="p-10 bg-gray-300">
+<div class="p-10 bg-gradient-to-r from-[#f75394] to-yellow-300">
     <div class="max-w-sm mx-auto bg-white rounded-lg overflow-hidden shadow-lg">
         <div class="border-b p-20">
             <div class="text-center">
@@ -23,7 +23,7 @@
                 </div>
             </div>
         </div>
-        @if($user->role === "USER")
+        @if($user->role === "STUDENT")
         <div class="p-10 pt-5">
             <div class="flex flex-col space-y-3 py-5">
                 <div class="flex bg-yellow-300 rounded-xl px-3 items-center">

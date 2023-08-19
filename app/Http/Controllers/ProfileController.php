@@ -49,6 +49,9 @@ class ProfileController extends Controller
             $image = $request->file('user_profile_img');
             $imageName = time() . '.' . $image->getClientOriginalExtension(); // how profile img file will be name when store
             $image->storeAs('public/', $imageName);
+        }else {
+            // If no new image is uploaded, use the old image's name
+            $imageName = Auth::user()->user_profile_img;
         }
 
         $user->username = $request->get('username');
@@ -69,7 +72,7 @@ class ProfileController extends Controller
             $user->password = $request->get('password');
         }
 
-        if ($user->role === "USER") {
+        if ($user->role === "STUDENT") {
             $student = $user->student;
             $student->major = $request->get('major');
             $student->faculty = $request->get('faculty');

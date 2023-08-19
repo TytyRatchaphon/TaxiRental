@@ -7,6 +7,7 @@ use Illuminate\Http\Request;
 use App\Models\Event;
 use App\Models\Student;
 use App\Providers\RouteServiceProvider;
+use Illuminate\Support\Facades\Gate;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Log;
 
@@ -118,5 +119,13 @@ class EventController extends Controller
         return redirect(RouteServiceProvider::HOME);
     }
 
-
+    public function destroy(Event $event)
+    {
+        if (Gate::allows('delete', $event)) {
+            $event->delete();
+            return redirect()->route('events.index')->with('success', 'Event deleted successfully.');
+        } else {
+            return redirect()->route('events.index')->with('error', 'You are not authorized to delete this event.');
+        }
+    }
 }
