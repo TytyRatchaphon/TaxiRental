@@ -3,6 +3,7 @@
 namespace App\Models;
 
 use App\Models\Enums\EventStatus;
+use Carbon\Carbon;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsToMany;
@@ -54,5 +55,23 @@ class Event extends Model
         } else {
             return false;
         }
+    }
+
+    public function isFuture() {
+        $currentDate = Carbon::now()->format('Y-m-d');
+        $deadline = Carbon::parse($this->event_application_deadline);
+        if ($deadline->isAfter($currentDate)) {
+            return true;
+        } else {
+            $this->event_approval_status = "rejected";
+            $this->save();
+            return false;
+        }
+    }
+    public function scopeByStatus($query, $status) {
+        return $query->where('event_approval_status', $status);
+    }
+    public function scopeAfterDeadline($query) {
+        return $query->where('event_application_deadline', '>', Carbon::now()->toDateString());
     }
 }

@@ -53,6 +53,23 @@ class EventController extends Controller
 
         return view('events.create');
     }
+    public function showPendingEvents() {
+        $events = Event::byStatus('pending')->afterDeadline()->get();
+        return view('events.manage', [
+            'events' => $events
+        ]);
+    }
+    public function changeStatus(Request $request, Event $event) {
+        $request->validate([
+            'status' => ['required']
+        ]);
+
+        $event->event_approval_status = $request->get('status');
+        $event->save();
+
+        $events = Event::get();
+        return redirect()->route('events.manage', ['events' => $events]);
+    }
 
     // public function show($eventId)
     // {

@@ -8,11 +8,27 @@ use Illuminate\Support\Facades\Hash;
 
 class OperatorController extends Controller
 {
-    public function create()
+    /**
+     * Display a listing of the resource.
+     */
+    public function index()
     {
-        return view('operator.create');
+        $operators = User::byRole('OPERATOR')->get();
+        return view('operators.index', ['operators' => $operators]);
     }
 
+    /**
+     * Show the form for creating a new resource.
+     */
+    public function create()
+    {
+        return view('operators.create');
+    }
+
+
+    /**
+     * Store a newly created resource in storage.
+     */
     public function store(Request $request)
     {
         $request->validate([
@@ -39,5 +55,25 @@ class OperatorController extends Controller
         // Any other logic you want to perform after creating an operator user
 
         return redirect()->route('home')->with('success', 'Operator user created successfully.');
+    }
+
+    /**
+     * Remove the specified resource from storage.
+     */
+    public function destroy(User $operator)
+    {
+        $operator->delete();
+        $operators = User::byRole('OPERATOR')->get();
+        return view('operators.index', [
+            'operators' => $operators
+        ]);
+    }
+
+    public function search(Request $request) {
+        $input = $request->get('input');
+        $operators = User::byRole('OPERATOR')->forSearch($input)->get();
+        return view('operators.index', [
+            'operators' => $operators
+        ]);
     }
 }

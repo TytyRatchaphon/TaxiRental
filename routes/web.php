@@ -47,7 +47,15 @@ Route::get('/profile/{user}/edit', [ProfileController::class, 'edit'])->name('pr
 Route::get('/event/{event}/kanban', [KanbanController::class, 'kanban'])
     ->name('events.manage.kanban');
 
-// Route::get('/events/show', 'EventController@show')->name('events.show');
+//Delete ROUTE FOR ADMIN ONLY!!!
+Route::delete('/events/{event}', [EventController::class, 'destroy'])->name('events.destroy');
+
+// Route Admin use only!!
+Route::get('/create-operators', [OperatorController::class, 'create'])->name('operators.create')->middleware(AdminAccess::class);
+Route::post('/create-operators', [OperatorController::class, 'store'])->name('operators.store');
+
+// Route Event
+Route::resource('/events', EventController::class);
 Route::get('/events/event/manage/kanban', [EventController::class, 'manageKanban'])->name('events.manage.kanban');
 Route::get('/events/event/manage/applicants', [EventController::class, 'manageApplicants'])->name('events.manage.applicants');
 Route::get('/events/event/manage/staffs', [EventController::class, 'manageStaffs'])->name('events.manage.staffs');
@@ -63,6 +71,18 @@ Route::get('/events/{event}/kanbans', [KanbanController::class, 'showKanbans'])-
 Route::post('/events/{event}/kanbans', [KanbanController::class, 'storeKanban'])->name('events.kanbans.store');
 Route::put('/events/{event}/kanbans/{kanban}', [KanbanController::class, 'updateStatusKanban'])->name('events.kanbans.update-status');
 Route::delete('/events/{event}/kanbans/{kanban}', [KanbanController::class, 'destroyKanban'])->name('events.kanbans.destroy');
+
+// Route Operator
+Route::get('/operators', [OperatorController::class, 'index'])->name('operators.index');
+Route::post('/operators/register', [OperatorController::class, 'create'])->name('operators.create');
+Route::delete('/operators/{operator}', [OperatorController::class, 'destroy'])->name('operators.destroy');
+Route::get('/operators', [OperatorController::class, 'search'])->name('operators.search');
+
+
+// Route Manage Event
+Route::get('/manage/events', [EventController::class, 'showPendingEvents'])->name('events.manage');
+Route::put('/manage/events/{event}', [EventController::class, 'changeStatus'])->name('events.change-status');
+
 
 Route::get('/dashboard', function () {
     return view('dashboard');

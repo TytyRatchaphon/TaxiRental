@@ -104,7 +104,7 @@
                     @endif
                     @if (Auth::user()->role == 'ADMIN')
                         <li>
-                            <a href="{{ route('operator.create') }}"
+                            <a href="{{ route('operators.create') }}"
                                 class="pl-3 lg:pl-0 nav-menu hover:text-white lg:hover:text-[#fde047] transition {{ Route::currentRouteName() === 'songs.index' ? 'active' : '' }}">
                                 Create Operator
                             </a>
@@ -112,7 +112,7 @@
                     @endif
                     @if (Auth::user()->role == 'ADMIN')
                         <li>
-                            <a href="{{ route('operator.create') }}"
+                            <a href="{{ route('operators.index') }}"
                                 class="pl-3 lg:pl-0 nav-menu hover:text-white lg:hover:text-[#fde047] transition {{ Route::currentRouteName() === 'songs.index' ? 'active' : '' }}">
                                 Operator List
                             </a>
