@@ -1,144 +1,119 @@
 @extends('layouts.main')
 @section('content')
-    <!-- Select manage page -->
-    <div class="text-sm font-medium text-center text-gray-500 border-b border-gray-200">
-        <ul class="flex justify-center items-center bg-gray-100">
-            <a href="{{ route('events.kanbans.show', ['event' => $event]) }}"
-                class="inline-block p-6 pb-2 text-purple-600 border-b-4 border-purple-600 rounded-t-lg active text-base">คัมบังบอร์ด</a>
-            <a href={{ url('/events/event/manage/applicants') }}
-                class="inline-block p-6 pb-2 border-b-4 border-transparent rounded-t-lg hover:text-gray-600 hover:border-gray-300 text-base">ผู้เข้าร่วมกิจกรรม</a>
-            <a href={{ url('/events/event/manage/staffs') }}
-                class="inline-block p-6 pb-2 border-b-4 border-transparent rounded-t-lg hover:text-gray-600 hover:border-gray-300 text-base">ผู้จัดกิจกรรม</a>
-            <a href={{ url('/events/event/manage/budgets') }}
-                class="inline-block p-6 pb-2 border-b-4 border-transparent rounded-t-lg hover:text-gray-600 hover:border-gray-300 text-base">ขอเบิกงบประมาณ</a>
-        </ul>
-    </div>
-
-    <!-- What Event? -->
-    <div class="flex flex-col justify-center items-center bg-gray-100 p-7">
-        <div class="flex bg-white rounded-lg shadow-lg overflow-hidden max-w-5xl w-full">
-            <img src="{{ asset('/storage/' . $event->event_image) }}"
-                class=" w-96" alt="...">
-            <div class="p-6">
-                <h2 class="text-2xl font-bold text-gray-800 mb-2">{{ $event->event_name }}</h2>
-                <p class="text-gray-700 leading-tight mb-4 ">{{ Str::limit($event->event_description, 60, '...') }}</p>
-                <div class="flex justify-between items-center mt-5">
-                    <span class="text-gray-600">Event Start: {{ $event->event_date }}</span>
-                </div>
-                <div>
-                    <a href="{{ route('events.show', ['event' => $event]) }}" class="transition-all hover:text-[#F6D106]">More Detail...</a>
-                </div>
-            </div>
+@include('layouts.subviews.navbar-staff')
+<div class="p-10">
+    <div class="flex justify-between mx-10 w-full">
+        <div class="ml-5 w-1/3">
+            <h1 class="text-xl font-sans pr-3">Not Start</h1>
+        </div>
+        <div class="w-1/3">
+            <h1 class="text-xl font-sans pr-3">In Progress</h1>
+        </div>
+        <div class="w-1/3">
+            <h1 class="text-xl font-sans pr-3">Success</h1>
         </div>
     </div>
+    <div class="flex justify-between px-5 w-full">
+        <!-- Check Kanban empty? -->
+        @for ($i = 0; $i < 3; $i++) <ul class="m-5 p-7 w-1/3 rounded-lg h-screen overflow-auto
+        @if($statusOptions[$i]->value == 'Not Start')
+            bg-red-100
+        @elseif($statusOptions[$i]->value == 'In Progress')
+            bg-yellow-100
+        @elseif($statusOptions[$i]->value == 'Success')
+            bg-green-100
+        @endif">
+            @if(!$kanbans->byStatus($statusOptions[$i]->value)->get()->isEmpty())
+            @foreach ($kanbans->byStatus($statusOptions[$i]->value)->get() as $kanban)
+            <li class="flex-col bg-white shadow-lg mb-3 p-3">
+                <div class="p-6">
+                    <h2 class="font-bold text-gray-800 mb-2">{{ $kanban->title }}</h2>
+                    <p class="text-gray-700 leading-tight mb-4">
+                        {{ $kanban->detail }}
+                    </p>
+                    <div class="flex justify-between items-center">
+                        <span class="text-gray-600">{{ $kanban->date_deadline }}</span>
+                    </div>
+                    <!-- update Kanban Status -->
+                    <div class="flex justify-between my-3">
+                        <form
+                            action="{{ route('events.kanbans.update-status', ['event' => $event, 'kanban' => $kanban]) }}"
+                            method="POST" id="statusForm">
+                            @csrf
+                            @method('PUT')
+                            @foreach ($statusOptions as $statusOption)
+                            <button type="submit" id="status" name="status" value="{{ $statusOption }}"
+                                class="@if ($kanban->status == $statusOption->value)
+                                    bg-black text-yellow-400 @else border-yellow-400 border-2 hover:bg-yellow-400 @endif rounded-xl px-3 mr-2">
+                                {{ $statusOption }}
+                            </button>
+                            @endforeach
+                        </form>
+                        <!-- Delete Kanban -->
+                        <form action="{{ route('events.kanbans.destroy', ['event' => $event, 'kanban' => $kanban]) }}"
+                            method="POST">
+                            @csrf
+                            @method('DELETE')
+                            <button type="submit" class="bg-red-400 text-white rounded-full px-3 hover:opacity-90">DELETE</button>
+                        </form>
+                    </div>
 
-    <div class="flex-col justify-center items-center bg-gray-100 p-7">
-        <div class="flex flex-col bg-white">
-
-            <!-- Create new Kanban -->
-            <form action="{{ route('events.kanbans.store', ['event' => $event]) }}" method="post">
-                @csrf
-                <h1>เพิ่มคัมบังบอร์ดของคุณ</h1>
-                <div class="flex justify-center items-center p-5">
-                    <label for="title">หัวเรื่อง</label>
+                </div>
+            </li>
+            @endforeach
+            @else
+            <li class="flex-col bg-white shadow-lg mb-3 p-5">
+                <h1 class="items-center">Nothing in {{ $statusOptions[$i]->value }}</h1>
+            </li>
+            @endif
+            </ul>
+            @endfor
+    </div>
+    <div class="flex-col justify-center items-center bg-white">
+        <!-- Create new Kanban -->
+        <form action="{{ route('events.kanbans.store', ['event' => $kanban->event]) }}" method="post"
+            class="shadow-lg p-5 mx-20 my-5">
+            @csrf
+            <h1 class="text-center text-xl font-semibold">Add new Kanban</h1>
+            <div class="flex justify-center items-center w-full pt-5">
+                <div class="w-8/12 pr-5">
+                    <label for="title" class="font-semibold mr-5">Title</label>
                     @error('title')
-                        <div class="text-red-600">
-                            {{ $message }}
-                        </div>
+                    <div class="text-red-600">
+                        {{ $message }}
+                    </div>
                     @enderror
-                    <input id="title" name="title" type="text"
+                    <input id="title" name="title" type="text" value="{{ old('title', $kanban->title) }}"
                         class="@error('title') border-red-600 @enderror w-full">
-
-                    <label for="date_deadline">Deadline</label>
+                </div>
+                <div class="w-3/12">
+                    <label for="date_deadline" class="font-semibold">Deadline</label>
                     @error('date_deadline')
-                        <div class="text-red-600">
-                            {{ $message }}
-                        </div>
+                    <div class="text-red-600">
+                        {{ $message }}
+                    </div>
                     @enderror
                     <input id="date_deadline" name="date_deadline" type="date"
+                        value="{{ old('date_deadline', $kanban->date_deadline) }}"
                         class="@error('date_deadline') border-red-600 @enderror w-full">
                 </div>
-                <div class="flex justify-center items-center p-5">
-                    <label for="detail">รายละเอียด</label>
+            </div>
+            <div class="flex justify-center w-full py-3">
+                <div class="w-11/12">
+                    <label for="detail" class="font-semibold">Detail</label>
                     @error('detail')
-                        <div class="text-red-600">
-                            {{ $message }}
-                        </div>
+                    <div class="text-red-600">
+                        {{ $message }}
+                    </div>
                     @enderror
-                    <input id="detail" name="detail" type="text"
+                    <input id="detail" name="detail" type="text" value="{{ old('detail', $kanban->detail) }}"
                         class="@error('title') border-red-600 @enderror w-full">
                 </div>
-                <div>
-                    <button type="submit">เพิ่มกิจกรรม</button>
-                </div>
-            </form>
-        </div>
-
-        <!-- Check Kanban empty? -->
-        @if (!$event->kanbans->isEmpty())
-            @for ($i = 0; $i < 3; $i++)
-                <div class="flex mb-5">
-                    <ul class="flex-col p-5 mr-3 w-64">
-                        <div class="flex-col items-center justify-end mb-5">
-                            <h1 class="text-xl font-sans pr-3">{{ $statusOptions[$i]->value }}</h1>
-                        </div>
-
-                        @foreach ($event->kanbans as $kanban)
-                            @if ($kanban->status === $statusOptions[$i]->value)
-                                <li class="flex-col bg-white shadow-lg mb-3 w-64">
-                                    <div class="p-6">
-                                        <h2 class="text-2xl font-bold text-gray-800 mb-2">{{ $kanban->title }}</h2>
-                                        <p class="text-gray-700 leading-tight mb-4">
-                                            {{ $kanban->detail }}
-                                        </p>
-                                        <div class="flex justify-between items-center">
-                                            <span class="text-gray-600">{{ $kanban->date_deadline }}</span>
-                                        </div>
-                                        <div class="flex justify-between items-center">
-
-                                            <!-- update Kanban Status -->
-                                            <form
-                                                action="{{ route('events.kanbans.update-status', ['event' => $event, 'kanban' => $kanban]) }}"
-                                                method="POST" id="statusForm">
-                                                @csrf
-                                                @method('PUT')
-                                                @foreach ($statusOptions as $statusOption)
-                                                    <button type="submit" id="status" name="status"
-                                                        value="{{ $statusOption }}"
-                                                        class="@if ($kanban->status == $statusOption->value) bg-red-600 @endif shadow-lg">
-                                                        {{ $statusOption }}
-                                                    </button>
-                                                @endforeach
-                                            </form>
-
-                                            <!-- Delete Kanban -->
-                                            <form
-                                                action="{{ route('events.kanbans.destroy', ['event' => $event, 'kanban' => $kanban]) }}"
-                                                method="POST">
-                                                @csrf
-                                                @method('DELETE')
-                                                <button type="submit">ลบเนื้อหา</button>
-                                            </form>
-
-                                        </div>
-                                    </div>
-                                </li>
-                            @endif
-                        @endforeach
-                    </ul>
-            @endfor
-        @else
-            <div>
-                <h1>
-                    Not have Kanbans in This Event
-                </h1>
             </div>
-        @endif
+            <div class="text-center m-5">
+                <button type="submit" class="bg-yellow-300 rounded-lg p-2 px-5 hover:opacity-80">เพิ่มเนื้อหา</button>
+            </div>
+        </form>
     </div>
-    </div>
-    <script>
-        function submitForm() {
-            document.getElementById("statusForm").submit();
-        }
-    </script>
+</div>
 @endsection

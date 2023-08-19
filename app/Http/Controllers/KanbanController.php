@@ -11,8 +11,10 @@ class KanbanController extends Controller
 {
     public function showKanbans(Event $event) {
         $statusOptions = KanbanAccessibility::cases();
+        $kanbans = Kanban::byEvent($event);
         return view('kanbans.index', [
             'event' => $event,
+            'kanbans' => $kanbans,
             'statusOptions' => $statusOptions
         ]);
     }
@@ -40,7 +42,7 @@ class KanbanController extends Controller
 
     public function updateStatusKanban(Request $request, Event $event, Kanban $kanban) {
         $request->validate([
-            'status' => ['required', 'in:Not Start,In Progress,Success']
+            'status' => ['required']
         ]);
         $kanban = $event->findByKanbanID($kanban->id);
         $kanban->status = $request->get('status');
