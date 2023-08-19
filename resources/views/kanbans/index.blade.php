@@ -54,7 +54,8 @@
                             method="POST">
                             @csrf
                             @method('DELETE')
-                            <button type="submit" class="bg-red-400 text-white rounded-full px-3 hover:opacity-90">DELETE</button>
+                            <button type="submit"
+                                class="bg-red-400 text-white rounded-full px-3 hover:opacity-90">DELETE</button>
                         </form>
                     </div>
 
@@ -69,10 +70,10 @@
             </ul>
             @endfor
     </div>
-    <div class="flex-col justify-center items-center bg-white">
+    <div class="flex-col justify-center items-center">
         <!-- Create new Kanban -->
         <form action="{{ route('events.kanbans.store', ['event' => $kanban->event]) }}" method="post"
-            class="shadow-lg p-5 mx-20 my-5">
+            class="p-5 mx-20 my-5">
             @csrf
             <h1 class="text-center text-xl font-semibold">Add new Kanban</h1>
             <div class="flex justify-center items-center w-full pt-5">
@@ -83,7 +84,7 @@
                         {{ $message }}
                     </div>
                     @enderror
-                    <input id="title" name="title" type="text" value="{{ old('title', $kanban->title) }}"
+                    <input id="title" name="title" type="text" placeholder="Enter title of your kanban"
                         class="@error('title') border-red-600 @enderror w-full">
                 </div>
                 <div class="w-3/12">
@@ -94,19 +95,18 @@
                     </div>
                     @enderror
                     <input id="date_deadline" name="date_deadline" type="date"
-                        value="{{ old('date_deadline', $kanban->date_deadline) }}"
                         class="@error('date_deadline') border-red-600 @enderror w-full">
                 </div>
-                <div class="flex justify-center items-center p-5">
-                    <label for="detail">รายละเอียด</label>
-                    @error('detail')
-                    <div class="text-red-600">
-                        {{ $message }}
-                    </div>
-                    @enderror
-                    <input id="detail" name="detail" type="text" value="{{ old('detail', $kanban->detail) }}"
-                        class="@error('title') border-red-600 @enderror w-full">
+            </div>
+            <div class="justify-center items-center p-5 mx-5">
+                <label for="detail" class="font-semibold">Detail</label>
+                @error('detail')
+                <div class="text-red-600">
+                    {{ $message }}
                 </div>
+                @enderror
+                <input id="detail" name="detail" type="text" placeholder="Enter detail of your kanban"
+                    class="@error('title') border-red-600 @enderror w-full">
             </div>
             <div class="text-center m-5">
                 <button type="submit" class="bg-yellow-300 rounded-lg p-2 px-5 hover:opacity-80">เพิ่มเนื้อหา</button>
