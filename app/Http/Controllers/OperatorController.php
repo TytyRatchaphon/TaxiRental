@@ -38,9 +38,19 @@ class OperatorController extends Controller
             'email' => ['required', 'string', 'email', 'max:255', 'unique:users'],
             'password' => 'required|string|min:8|confirmed',
             'organization' => 'required|string|max:255',
+            //'user_profile_img' => 'nullable|image|mimes:jpeg,png,jpg,gif|max:2048',
         ]);
 
+        //$imageName = null;
+        //if ($request->hasFile('user_profile_img')) {
+        //    $image = $request->file('user_profile_img');
+        //    $imageName = time() . '.' . $image->getClientOriginalExtension(); // how profile img file will be name when store
+        //    $image->storeAs('public/', $imageName);
+        //    return $imageName;
+        //}
+
         $user = User::create([
+            //'user_profile_img' => $imageName,
             'user_firstname' => $request->user_firstname,
             'user_lastname' => $request->user_lastname,
             'username' => $request->username,

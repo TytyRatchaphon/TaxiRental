@@ -27,11 +27,19 @@
 
         @auth
             <div class="flex items-center space-x-3 lg:order-2">
-                <a href="{{ route('profile.index') }}" class="flex items-center">
-                    <img src="{{ asset('/storage/' . auth()->user()->user_profile_img) }}" alt="Profile Image"
-                        class="h-8 w-8 rounded-full">
-                    <span class="text-Black text-sm font-medium mr-3 ml-2">{{ auth()->user()->username }}</span>
-                </a>
+                @if (Auth::user()->role == 'OPERATOR')
+                    <a href="{{ route('profile.index') }}" class="flex items-center">
+                        <img src="{{ asset('/storage/' . auth()->user()->user_profile_img) }}" alt="Profile Image"
+                            class="h-8 w-8 rounded-full">
+                        <span class="text-Black text-sm font-medium mr-3 ml-2">{{ auth()->user()->username }}</span>
+                    </a>
+                @else
+                    <div class="flex items-center">
+                        <img src="{{ asset('/storage/' . auth()->user()->user_profile_img) }}" alt="Profile Image"
+                            class="h-8 w-8 rounded-full">
+                        <span class="text-Black text-sm font-medium mr-3 ml-2">{{ auth()->user()->username }}</span>
+                    </div>
+                @endif
                 <a href="{{ route('logout') }}"
                     class="transition-transform duration-500 hover:scale-110 text-Black bg-[#fde047] hover:text-white font-medium rounded-lg text-sm  focus:ring-2 focus:ring-[#F6D106] px-3 py-1.5"
                     onclick="event.preventDefault(); document.getElementById('logout-form').submit();">
@@ -112,7 +120,7 @@
                     @endif
                     @if (Auth::user()->role == 'ADMIN')
                         <li>
-                            <a href="{{ route('operators.index') }}"
+                            <a href="{{ url('/operators') }}"
                                 class="pl-3 lg:pl-0 nav-menu hover:text-white lg:hover:text-[#fde047] transition {{ Route::currentRouteName() === 'songs.index' ? 'active' : '' }}">
                                 Operator List
                             </a>

@@ -4,8 +4,16 @@
     <div class="min-h-screen flex flex-col sm:justify-center items-center pt-6 sm:pt-0 bg-gray-100">
         <div class="w-full sm:max-w-md px-6 py-4 bg-white shadow-md overflow-hidden sm:rounded-lg">
             <div class="container">
-                <form method="POST" action="{{ route('operator.store') }}">
+                <form method="POST" action="{{ route('operators.store') }}">
                     @csrf
+
+                    <!-- Profile Image 
+                    <div class="mb-6">
+                        <x-input-label for="user_profile_img" :value="__('Profile Image')" />
+                        <input type="file" class="block w-full mt-1 form-input" id="user_profile_img" name="user_profile_img" 
+                            required />
+                    </div>
+                    -->
                     <!-- First Name -->
                     <div class="mb-6">
                         <x-input-label for="user_firstname" :value="__('First Name')" />

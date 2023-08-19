@@ -33,11 +33,6 @@ Route::get('/login', function () {
 Route::get('/events', [EventController::class, 'index'])->name('events.index');
 Route::resource('/events', EventController::class);
 
-Route::get('/create-operator', [OperatorController::class, 'create'])
-    ->name('operator.create')
-    ->middleware(AdminAccess::class);
-Route::post('/create-operator', [OperatorController::class, 'store'])->name('operator.store');
-
 //==========================GROUP OF ROTES THAT REQUIRED AUTH==================================== 
 Route::middleware('auth')->group(function () {
 
@@ -74,7 +69,6 @@ Route::delete('/events/{event}/kanbans/{kanban}', [KanbanController::class, 'des
 
 // Route Operator
 Route::get('/operators', [OperatorController::class, 'index'])->name('operators.index');
-Route::post('/operators/register', [OperatorController::class, 'create'])->name('operators.create');
 Route::delete('/operators/{operator}', [OperatorController::class, 'destroy'])->name('operators.destroy');
 Route::get('/operators', [OperatorController::class, 'search'])->name('operators.search');
 

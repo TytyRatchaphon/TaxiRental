@@ -28,7 +28,7 @@
             <div class="flex flex-col space-y-3 py-5">
                 <div class="flex bg-yellow-300 rounded-xl px-3 items-center">
                     <input type="checkbox" value="">
-                    <p class="font-semibold px-1">{{ $user->student->major }}</p>
+                        <p class="font-semibold px-1">{{ $user->student->major }}</p>
                 </div>
                 <div class="flex bg-yellow-300 rounded-xl px-3 items-center">
                     <input type="checkbox" value="">
