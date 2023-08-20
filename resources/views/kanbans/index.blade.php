@@ -23,8 +23,8 @@
         @elseif($statusOptions[$i]->value == 'Success')
             bg-green-100
         @endif">
-            @if(!$kanbans->byStatus($statusOptions[$i]->value)->get()->isEmpty())
-            @foreach ($kanbans->byStatus($statusOptions[$i]->value)->get() as $kanban)
+            @if(!$event->kanbans()->byStatus($statusOptions[$i]->value)->get()->isEmpty())
+            @foreach ($event->kanbans()->byStatus($statusOptions[$i]->value)->get() as $kanban)
             <li class="flex-col bg-white shadow-lg mb-3 p-3">
                 <div class="p-6">
                     <h2 class="font-bold text-gray-800 mb-2">{{ $kanban->title }}</h2>
@@ -72,7 +72,7 @@
     </div>
     <div class="flex-col justify-center items-center">
         <!-- Create new Kanban -->
-        <form action="{{ route('events.kanbans.store', ['event' => $kanban->event]) }}" method="post"
+        <form action="{{ route('events.kanbans.store', ['event' => $event]) }}" method="post"
             class="p-5 mx-20 my-5">
             @csrf
             <h1 class="text-center text-xl font-semibold">Add new Kanban</h1>

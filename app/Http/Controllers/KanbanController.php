@@ -2,7 +2,7 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\Enums\KanbanAccessibility;
+use App\Models\Enums\KanbanStatus;
 use App\Models\Event;
 use App\Models\Kanban;
 use Illuminate\Http\Request;
@@ -10,11 +10,9 @@ use Illuminate\Http\Request;
 class KanbanController extends Controller
 {
     public function showKanbans(Event $event) {
-        $statusOptions = KanbanAccessibility::cases();
-        $kanbans = Kanban::byEvent($event);
+        $statusOptions = KanbanStatus::cases();
         return view('kanbans.index', [
             'event' => $event,
-            'kanbans' => $kanbans,
             'statusOptions' => $statusOptions
         ]);
     }
@@ -30,7 +28,7 @@ class KanbanController extends Controller
         $kanban->title = $request->get('title');
         $kanban->detail = $request->get('detail');
         $kanban->date_deadline = $request->get('date_deadline');
-        $kanban->status = KanbanAccessibility::NOT_START->value;
+        $kanban->status = KanbanStatus::NOT_START->value;
         $event->kanbans()->save($kanban);
         return redirect()->route('events.kanbans.show', ['event'=> $event]);
     }

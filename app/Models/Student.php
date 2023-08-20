@@ -33,7 +33,7 @@ class Student extends Model
         return $this->belongsToMany(Event::class);
     }
     public function scopeByRoleEvent($query, $role) {
-        return $query->where('role', $role)->first();
+        return $query->where('role', $role);
     }
     public function scopeByStatus($query, $status) {
         return $query->where('status', $status);

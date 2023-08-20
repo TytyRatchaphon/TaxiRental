@@ -43,8 +43,8 @@ class EventController extends Controller
     }
     public function showCertificates() {
         $student = Auth::user()->student;
-        $applicants = $student->byStatusApplicant(ApplicantStatus::APPROVED)->get();
-        return view('events.show-certificates', ['applicants' => $applicants]);
+        $events = $student->events()->byStatusEvent(ApplicantStatus::APPROVED)->byEndEvent()->get();
+        return view('events.show-certificates', ['events' => $events]);
     }
     public function create() {
 
@@ -55,7 +55,7 @@ class EventController extends Controller
         return view('events.create');
     }
     public function showPendingEvents() {
-        $events = Event::byStatus('pending')->get();
+        $events = Event::byStatusEvent('pending')->get();
         return view('events.manage', [
             'events' => $events
         ]);
@@ -74,7 +74,7 @@ class EventController extends Controller
         /**
          * notify to head-event
          */
-        $user = $event->student->user;
+        $user = $event->students()->byRoleEvent('HEAD')->user;
         $user->notify(new EventApprovedNotification($event));
 
         $events = Event::get();

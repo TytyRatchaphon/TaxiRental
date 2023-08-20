@@ -2,7 +2,7 @@
 
 namespace App\Models\Enums;
 
-enum KanbanAccessibility : string {
+enum KanbanStatus : string {
     case NOT_START = "Not Start";
     case IN_PROGRESS = "In Progress";
     case SUCCESS = "Success";

@@ -10,14 +10,14 @@ use Illuminate\Notifications\Notification;
 class ApplicantApprovedNotification extends Notification
 {
     use Queueable;
-    protected $applicant;
+    protected $student;
 
     /**
      * Create a new notification instance.
      */
-    public function __construct($applicant)
+    public function __construct($student)
     {
-        $this->applicant = $applicant;
+        $this->student = $student;
     }
 
     /**
@@ -27,19 +27,14 @@ class ApplicantApprovedNotification extends Notification
      */
     public function via(object $notifiable): array
     {
-        return ['array'];
+        return ['database'];
     }
     
-    /**
-     * Get the array representation of the notification.
-     *
-     * @return array<string, mixed>
-     */
-    public function toArray(object $notifiable): array
+    public function toDatabase(object $notifiable): array
     {
         return [
-            'message' => 'Approval to the applicant in Event',
-            'details' => 'You '.$this->applicant->user->username.' in '.$this->applicant->event->event_name,
+            'message' => 'Approval to the student in Event',
+            'details' => 'You '.$this->student->user->username.' in '.$this->student->event->event_name,
         ];
     }
 }
