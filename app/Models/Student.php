@@ -5,6 +5,7 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
+use Illuminate\Database\Eloquent\Relations\BelongsToMany;
 use Illuminate\Database\Eloquent\Relations\HasMany;
 use Illuminate\Database\Eloquent\SoftDeletes;
 
@@ -28,11 +29,16 @@ class Student extends Model
     public function user(): BelongsTo {
         return $this->belongsTo(User::class);
     }
-    public function applicants() : HasMany {
-        return $this->hasMany(Applicant::class);
+    public function events(): BelongsToMany {
+        return $this->belongsToMany(Event::class);
     }
-    public function events(): HasMany
-    {
-        return $this->hasMany(Event::class);
+    public function scopeByRoleEvent($query, $role) {
+        return $query->where('role', $role)->first();
+    }
+    public function scopeByStatus($query, $status) {
+        return $query->where('status', $status);
+    }
+    public function scopeByStatusApplicant($query, $status) {
+        return $query->where('status', $status);
     }
 }

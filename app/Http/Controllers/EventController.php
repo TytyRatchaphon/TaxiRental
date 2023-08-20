@@ -43,7 +43,7 @@ class EventController extends Controller
     }
     public function showCertificates() {
         $student = Auth::user()->student;
-        $applicants = $student->applicants()->byStatus(ApplicantStatus::APPROVED)->get();
+        $applicants = $student->byStatusApplicant(ApplicantStatus::APPROVED)->get();
         return view('events.show-certificates', ['applicants' => $applicants]);
     }
     public function create() {
@@ -140,7 +140,8 @@ class EventController extends Controller
                 'event_application_deadline' => $request->get('event_application_deadline'),
             ]);
 
-            $student->events()->save($event);
+            $event->save();
+            $event->students()->attach($student->id, ['role' => 'HEAD']);
         }
         return redirect(RouteServiceProvider::HOME);
     }

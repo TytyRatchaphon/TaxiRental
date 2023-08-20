@@ -30,22 +30,16 @@ class Event extends Model
         'event_thumbnail',
         'event_image',
     ];
-    public function users() : BelongsToMany {
-        return $this->belongsToMany(User::class);
-    }
+
     public function kanbans() : HasMany {
         return $this->hasMany(Kanban::class);
-    }
-    public function applicants() : HasMany {
-        return $this->hasMany(Applicant::class);
     }
     public function certificate() : HasOne {
         return $this->hasOne(Certificate::class);
     }
-    public function student() {
-        return $this->belongsTo(Student::class, 'student_id');
+    public function students() {
+        return $this->belongsToMany(Student::class)->withPivot('role', 'status');
     }
-
     public function findByKanbanID($id) {
         return $this->kanbans()->find($id);
     }

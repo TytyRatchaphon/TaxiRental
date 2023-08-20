@@ -19,7 +19,7 @@
                 <ul class="flex p-2 pl-0 mb-5">
                     <li class="flex bg-[#F6D106] p-1 pl-3 pr-3 mr-5 rounded"><i
                             class="fa-solid fa-crown pt-1 text-center mr-2 "
-                            style="color: black;"></i>{{ $event->student->user->username }}</li>
+                            style="color: black;"></i>{{ $event->students()->headEvent()->user->username }}</li>
 
                     <li id="status"
                         class="bg-{{ $event->event_approval_status === 'pending' ? 'gray-100' : ($event->event_approval_status === 'approved' ? 'green' : '#FF6666') }} p-1 pl-3 pr-3 mr-5 rounded">
@@ -36,9 +36,9 @@
             <pre class="flex text-gray-700 leading-tight mb-4 break-all overflow-auto">{{ $event->event_description }}</pre>
             <div class="flex justify-between items-cente my-5">
                 <div class="flex items-center">
-                    <img src="{{ asset('/storage/' . $event->student->user->user_profile_img) }}" alt="Avatar"
+                    <img src="{{ asset('/storage/' . $event->students()->headEvent()->user_profile_img) }}" alt="Avatar"
                         class="w-8 h-8 rounded-full mr-2 object-cover">
-                    <span class="text-gray-800 font-semibold">Event Manager</span>
+                    <span class="text-gray-800 font-semibold">{{ $event->students()->headEvent()->user->user_firstname }} {{ $event->students()->headEvent()->user->user_lastname }}</span>
                 </div>
             </div>
             <div class="">
@@ -58,6 +58,7 @@
                 @endif
 
                 @if (Auth::check() && Auth::user()->student && Auth::user()->student->id !== $event->student_id)
+                <form action=""></form>
                     <button type="submit"
                         class="bg-[#F6D106] p-1 pl-5 pr-5 mr-5 rounded transition-all hover:opacity-80">Apply</button>
                 @endif
