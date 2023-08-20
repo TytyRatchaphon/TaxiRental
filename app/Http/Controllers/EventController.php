@@ -19,6 +19,7 @@ class EventController extends Controller
         $event = Event::get();
         return view('home', ['events' => $event]);
     }
+
     public function show(Event $event)
     {
         // $event = Event::all();
@@ -27,24 +28,30 @@ class EventController extends Controller
         // You can use Eloquent or query builder to fetch the event details from the database
         
         // For demonstration purposes, I'm just returning the eventId, eventName, and the event details
-        return view('events.show', ['event'=> $event]);
+        return view('events.show', ['event' => $event]);
     }
     public function manageKanban() {
         return view('events.manage.kanban');
     }
-    public function manageApplicants() {
-        return view('events.manage.manage-applicants');
+    public function manageApplicants(Event $event) {
+        $students = $event->students;
+        return view('events.manage.manage-applicants',['students' => $students]);
     }
-    public function manageStaffs() {
-        return view('events.manage.manage-staffs');
+    public function manageStaffs(Event $event) {
+        return view('events.manage.manage-staffs',['event'=> $event]);
     }
-    public function manageBudgets() {
-        return view('events.manage.manage-budgets');
+    public function manageBudgets(EVent $event) {
+        return view('events.manage.manage-budgets', ['event'=> $event]);
     }
     public function showCertificates() {
         $student = Auth::user()->student;
         $applicants = $student->byStatusApplicant(ApplicantStatus::APPROVED)->get();
         return view('events.show-certificates', ['applicants' => $applicants]);
+    }
+    public function updateApproveApplicant(Request $request, Student $student, Event $event){
+        $request->validate(['status' => ['pending']]);
+
+        $student = $event->students();
     }
     public function create() {
 

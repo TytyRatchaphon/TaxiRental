@@ -3,20 +3,17 @@
 <div class="text-sm font-medium text-center text-gray-500 border-b border-gray-200">
     <ul class="flex justify-center items-center bg-gray-100">
         <a href={{ url('/events/event/manage/kanban') }} class="inline-block p-6 pb-2 border-b-4 border-transparent rounded-t-lg hover:text-gray-600 hover:border-gray-300 text-base">คัมบังบอร์ด</a>
-        <a href={{ url('/events/event/manage/applicants') }} class="inline-block p-6 pb-2 border-b-4 border-transparent rounded-t-lg hover:text-gray-600 hover:border-gray-300 text-base">ผู้เข้าร่วมกิจกรรม</a>
-        <a href={{ url('/events/event/manage/staffs') }} class="inline-block p-6 pb-2 text-purple-600 border-b-4 border-purple-600 rounded-t-lg active text-base">ผู้จัดกิจกรรม</a>
-        <a href={{ url('/events/event/manage/budgets') }} class="inline-block p-6 pb-2 border-b-4 border-transparent rounded-t-lg hover:text-gray-600 hover:border-gray-300 text-base">ขอเบิกงบประมาณ</a>
+        <a href="{{ route('events.manage.applicants', ['event'=> $event]) }}" class="inline-block p-6 pb-2 border-b-4 border-transparent rounded-t-lg hover:text-gray-600 hover:border-gray-300 text-base">ผู้เข้าร่วมกิจกรรม</a>
+        <a href="{{ url('/events/event/manage/staffs') }}" class="inline-block p-6 pb-2 text-purple-600 border-b-4 border-purple-600 rounded-t-lg active text-base">ผู้จัดกิจกรรม</a>
+        <a href="{{ route('events.manage.budgets', ['event'=> $event]) }}" class="inline-block p-6 pb-2 border-b-4 border-transparent rounded-t-lg hover:text-gray-600 hover:border-gray-300 text-base">ขอเบิกงบประมาณ</a>
     </ul>
 </div>
 <div class="flex flex-col justify-center items-center bg-gray-100 p-7">
     <div class="flex bg-white rounded-lg shadow-lg overflow-hidden max-w-5xl w-full">
-        <img src="https://images.unsplash.com/photo-1454496522488-7a8e488e8606" alt="Mountain" class="w-full h-64 object-cover">
+        <img src="{{ asset('storage/' . $event->event_image) }}" alt="Mountain" class="w-full h-64 object-cover">
         <div class="p-6">
-            <h2 class="text-2xl font-bold text-gray-800 mb-2">Beautiful Mountain View</h2>
-            <p class="text-gray-700 leading-tight mb-4">
-                Lorem ipsum dolor sit amet, consectetur adipiscing elit. Aliquam eu sapien porttitor, blandit velit ac,
-                vehicula elit. Nunc et ex at turpis rutrum viverra.
-            </p>
+            <h2 class="text-2xl font-bold text-gray-800 mb-2">{{ $event->event_name}}</h2>
+            <p class="text-gray-700 leading-tight mb-4">{{ $event->event_description}}</p>
             <a href={{ url('/events/show') }}>เพิ่มเติม...</a>
             <div class="flex justify-between items-center mt-5">
                 <div class="flex items-center">

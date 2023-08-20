@@ -123,7 +123,7 @@
                     </a>
                 </li>
                 <li>
-                    <a href="{{ route('operators.index') }}"
+                    <a href="{{ url('/operators') }}"
                         class="pl-3 lg:pl-0 nav-menu hover:text-white lg:hover:text-[#fde047] transition {{ Route::currentRouteName() === 'songs.index' ? 'active' : '' }}">
                         Operator List
                     </a>
