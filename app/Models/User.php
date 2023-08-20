@@ -3,6 +3,7 @@
 namespace App\Models;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
+use Illuminate\Database\Eloquent\Relations\BelongsToMany;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
 use Laravel\Sanctum\HasApiTokens;
@@ -24,9 +25,6 @@ class User extends Authenticatable
         'user_lastname',
         'username',
         'user_profile_img',
-        'Major',
-        'Faculty',
-        'Year',
         'email',
         'password',
     ];
@@ -50,7 +48,26 @@ class User extends Authenticatable
         'email_verified_at' => 'datetime',
         'password' => 'hashed',
     ];
-     public function events() : BelongsToMany {
-         return $this->belongsToMany(Event::class);
-     }
+
+    public function student()
+    {
+        return $this->hasOne(Student::class);
+    }
+    public function isRole($role) {
+        if ($this->role === $role) {
+            return true;
+        } else {
+            return false;
+        }
+    }
+    public function scopeByRole($query, $role) {
+        return $query->where('role', $role);
+    }
+    public function scopeForSearch($query, $input) {
+        return $query->where(function ($query) use ($input) {
+            $query->where('username', 'LIKE', "%{$input}%")
+                ->orWhere('user_firstname', 'LIKE', "%{$input}%")
+                ->orWhere('user_lastname', 'LIKE', "%{$input}%");
+        })->limit(5);
+    }
 }

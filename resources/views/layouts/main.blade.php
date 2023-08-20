@@ -14,13 +14,13 @@
     @include('layouts.subviews.navbar')
 
     <div>
-        <main class="bg-gray-100 min-h-screen">
+        <main class="min-h-screen">
             @yield('content')
         </main>
     </div>
     
-    <footer class="bg-[#202020] text-white py-4 text-center">
-        <p>&copy; {{ date('Y') }} HoneyLemon's Event Management Project. All rights reserved.</p>
+    <footer class=" bg-gradient-to-r from-[#f75394] to-yellow-300 text-white py-4 text-center">
+        <p class="drop-shadow">&copy; {{ date('Y') }} HoneyLemon's Event Management Project. All rights reserved.</p>
     </footer>
     
 </body>

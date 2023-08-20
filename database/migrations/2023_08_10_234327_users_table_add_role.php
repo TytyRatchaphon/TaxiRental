@@ -11,14 +11,8 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('artists', function (Blueprint $table) {
-            $table->id();
-            $table->string(column:'name');
-            $table->string(column:'image_path')->nullable();
-
-
-            $table->timestamps();
-            $table->softDeletes(); //`deleted_at` timestamp nullable
+        Schema::table('users', function (Blueprint $table) {
+            $table ->string('role',20)->default('STUDENT');
         });
     }
 
@@ -27,6 +21,8 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists('artists');
+        Schema::table('users', function (Blueprint $table) {
+            $table->dropColumn('role');
+        });
     }
 };

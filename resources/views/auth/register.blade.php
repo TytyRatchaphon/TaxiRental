@@ -1,9 +1,8 @@
 <x-guest-layout>
-    <div class="flex justify-center">
-        <div class="w-full sm:w-96 bg-white dark:bg-black p-8 rounded-lg shadow-md">
+    <div class="">
+        <div class="">
             <form method="POST" action="{{ route('register') }}" enctype="multipart/form-data">
                 @csrf
-
                 <!-- First Name -->
                 <div class="mb-6">
                     <x-input-label for="user_firstname" :value="__('First Name')" />
@@ -35,9 +34,9 @@
                 </div>
 
                 <!-- Profile Image -->
-                <div class="mb-6">
+                <div class="">
                     <x-input-label for="user_profile_img" :value="__('Profile Image')" />
-                    <x-text-input id="user_profile_img" class="block w-full mt-1" type="file"
+                    <x-text-input id="user_profile_img" class="block w-full py-2 px-4 shadow-none" type="file"
                         name="user_profile_img" />
                     @error('user_profile_img')
                         <p class="mt-2 text-red-500 text-sm">{{ $message }}</p>
@@ -46,30 +45,30 @@
 
                 <!-- Major -->
                 <div class="mb-6">
-                    <x-input-label for="Major" :value="__('Major')" />
-                    <x-text-input id="Major" class="block w-full mt-1" type="text" name="Major"
-                        :value="old('Major')" required />
-                    @error('Major')
+                    <x-input-label for="major" :value="__('Major')" />
+                    <x-text-input id="major" class="block w-full mt-1" type="text" name="major"
+                        :value="old('major')" required />
+                    @error('major')
                         <p class="mt-2 text-red-500 text-sm">{{ $message }}</p>
                     @enderror
                 </div>
 
                 <!-- Faculty -->
                 <div class="mb-6">
-                    <x-input-label for="Faculty" :value="__('Faculty')" />
-                    <x-text-input id="Faculty" class="block w-full mt-1" type="text" name="Faculty"
-                        :value="old('Faculty')" required />
-                    @error('Faculty')
+                    <x-input-label for="faculty" :value="__('Faculty')" />
+                    <x-text-input id="faculty" class="block w-full mt-1" type="text" name="faculty"
+                        :value="old('faculty')" required />
+                    @error('faculty')
                         <p class="mt-2 text-red-500 text-sm">{{ $message }}</p>
                     @enderror
                 </div>
 
                 <!-- Year -->
                 <div class="mb-6">
-                    <x-input-label for="Year" :value="__('Year')" />
-                    <x-text-input id="Year" class="block w-full mt-1" type="number" name="Year"
-                        :value="old('Year')" min="1" max="4" required />
-                    @error('Year')
+                    <x-input-label for="year" :value="__('Year')" />
+                    <x-text-input id="year" class="block w-full mt-1" type="number" name="year"
+                        :value="old('year')" min="1" max="4" required />
+                    @error('year')
                         <p class="mt-2 text-red-500 text-sm">{{ $message }}</p>
                     @enderror
                 </div>
@@ -108,13 +107,25 @@
                     @enderror
                 </div>
 
+                <!-- ORGANIZTION only can be see by admin -->
+                @if(Auth::check() && Auth::user()->role == "ADMIN")
+                    <div class="mb-6">
+                        <x-input-label for="organization" :value="__('Organization')" />
+                        <x-text-input id="organization" class="block w-full mt-1" type="text" name="organization"
+                            :value="old('organization')" required />
+                        @error('organization')
+                            <p class="mt-2 text-red-500 text-sm">{{ $message }}</p>
+                        @enderror
+                    </div>
+                @endif
+
                 <div class="flex items-center justify-end mt-4">
-                    <a class="underline text-sm text-gray-600 dark:text-gray-400 hover:text-gray-900 dark:hover:text-gray-100 rounded-md focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500 dark:focus:ring-offset-gray-800"
+                    <a class="underline text-sm text-black hover:text-[#F6D106]  rounded-md focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-black"
                         href="{{ route('login') }}">
                         {{ __('Already registered?') }}
                     </a>
 
-                    <x-primary-button class="ml-4 bg-yellow-500 hover:bg-yellow-600">
+                    <x-primary-button class="ml-4 bg-[#F6D106] hover:bg-yellow-500 hover:scale-105">
                         {{ __('Register') }}
                     </x-primary-button>
                 </div>

@@ -1,42 +1,45 @@
-<nav class="bg-white border-gray-200 overflow-hidden sticky top-0 z-50">
+<nav class="bg-white drop-shadow border-gray-200 overflow-hidden sticky top-0 z-50">
     <div class="my-2 transition flex flex-wrap items-center justify-between max-w-screen-xl mx-auto">
+
         <a href="{{ url('/') }}" class="flex items-center">
-            <img src="https://www.svgrepo.com/show/429168/fruit-lemon-slice.svg" class="h-10 mr-1.5 sm:h-10"
-                alt="Logo">
+            <img src="https://www.svgrepo.com/show/429168/fruit-lemon-slice.svg" class="h-10 mr-1.5 sm:h-10" alt="Logo">
             <span
-                class="link link-underline link-underline-yellow text-[#F6D106] self-center text-xl font-semibold whitespace-nowrap hover:text-[#faea9d] mr-2 transition">HONEY
-                LEMON</span>
+                class="link link-underline link-underline-yellow text-[#F6D106] self-center text-xl font-semibold whitespace-nowrap hover:text-[#faea9d] hover:scale-105 mr-2 transition">HONEY
+                LEMON
+            </span>
         </a>
 
         @if (!auth()->check())
-            <div class="flex items-center lg:order-2">
-                <li class="hidden lg:flex justify-between space-x-2">
-                    <a href="{{ url('/login') }}"
-                        class="transition-transform duration-500 hover:scale-110 text-Black bg-[#fde047] hover:text-white font-medium rounded-lg text-sm  focus:ring-2 focus:ring-[#F6D106] px-5 py-1.5">
-                        Sign in
-                    </a>
-                    <a href="{{ url('/register') }}"
-                        class="transition-transform duration-500 hover:scale-110 text-Black hover:text-[#fde047] font-medium rounded-lg text-sm  focus:ring-2 focus:ring-[#F6D106] px-4 py-1.5">
-                        Sign up
-                    </a>
-                </li>
-            </div>
+        <div class="flex items-center lg:order-2">
+            <li class="hidden lg:flex justify-between space-x-2">
+                <a href="{{ url('/login') }}"
+                    class="transition-transform duration-500 hover:scale-105 text-Black bg-[#fde047] hover:text-white font-medium rounded-lg text-sm  focus:ring-2 focus:ring-[#F6D106] px-5 py-1.5">
+                    Sign In
+                </a>
+                <a href="{{ url('/register') }}"
+                    class="transition-transform duration-500 hover:scale-105 text-Black hover:text-[#fde047] font-medium rounded-lg text-sm  focus:ring-2 focus:ring-[#F6D106] px-4 py-1.5">
+                    Sign Up
+                </a>
+            </li>
+        </div>
         @endif
 
         @auth
-            <div class="flex items-center space-x-3 lg:order-2">
-                <img src="{{ Storage::url(auth()->user()->user_profile_img) }}" alt="Profile Image"
+        <div class="flex items-center space-x-3 lg:order-2">
+            <a href="{{ route('profile.index') }}" class="flex items-center">
+                <img src="{{ asset('/storage/' . auth()->user()->user_profile_img) }}" alt="Profile Image"
                     class="h-8 w-8 rounded-full">
-                <span class="text-Black text-sm font-medium mr-3">{{ auth()->user()->username }}</span>
-                <a href="{{ route('logout') }}"
-                    class="transition-transform duration-500 hover:scale-110 text-Black bg-[#fde047] hover:text-white font-medium rounded-lg text-sm  focus:ring-2 focus:ring-[#F6D106] px-3 py-1.5"
-                    onclick="event.preventDefault(); document.getElementById('logout-form').submit();">
-                    Sign Out
-                </a>
-                <form id="logout-form" action="{{ route('logout') }}" method="POST" style="display: none;">
-                    @csrf
-                </form>
-            </div>
+                <span class="text-Black text-sm font-medium mr-3 ml-2">{{ auth()->user()->username }}</span>
+            </a>
+            <a href="{{ route('logout') }}"
+                class="transition-transform duration-500 hover:scale-110 text-Black bg-[#fde047] hover:text-white font-medium rounded-lg text-sm  focus:ring-2 focus:ring-[#F6D106] px-3 py-1.5"
+                onclick="event.preventDefault(); document.getElementById('logout-form').submit();">
+                Sign Out
+            </a>
+            <form id="logout-form" action="{{ route('logout') }}" method="POST" style="display: none;">
+                @csrf
+            </form>
+        </div>
         @endauth
 
         <button data-collapse-toggle="mobile-menu-2" type="button"
@@ -63,49 +66,84 @@
         </button>
 
         @auth
-            <div class="bg-[#F6D106] items-end justify-between hidden pt-2 pb-2 w-full lg:pt-0 lg:pb-0 lg:flex lg:w-auto lg:order-1"
-                id="mobile-menu-2">
-                <ul
-                    class=" flex flex-col max-w-screen-xl mx-auto font-medium justify-between lg:flex-row lg:bg-white lg:space-x-8 lg:p-0 overflow-hidden">
-                    <li>
-                        <a href="{{ url('/') }}"
-                            class="pl-3 lg:pl-0 nav-menu hover:text-white lg:hover:text-[#fde047] transition {{ request()->is('/') ? 'active' : '' }}">
-                            My Activities
-                        </a>
-                    </li>
-                    <li>
-                        <a href="{{ url('/') }}"
-                            class="pl-3 lg:pl-0 nav-menu hover:text-white lg:hover:text-[#fde047] transition {{ request()->is('/') ? 'active' : '' }}">
-                            Activites
-                        </a>
-                    </li>
-                    <li>
-                        <a href="{{ route('home') }}"
-                            class="pl-3 lg:pl-0 nav-menu hover:text-white lg:hover:text-[#fde047] transition {{ Route::currentRouteName() === 'songs.index' ? 'active' : '' }}">
-                            Create Event
-                        </a>
-                    </li>
-                    <li>
-                        <a href="{{ route('home') }}"
-                            class="pl-3 lg:pl-0 nav-menu hover:text-white lg:hover:text-[#fde047] transition {{ Route::currentRouteName() === 'songs.index' ? 'active' : '' }}">
-                            Certificate
-                        </a>
-                    </li>
-                </ul>
-            </div>
+        <div class="bg-[#F6D106] items-end justify-between hidden pt-2 pb-2 w-full lg:pt-0 lg:pb-0 lg:flex lg:w-auto lg:order-1"
+            id="mobile-menu-2">
+            <ul
+                class=" flex flex-col max-w-screen-xl mx-auto font-medium justify-between lg:flex-row lg:bg-white lg:space-x-8 lg:p-0 overflow-hidden">
+
+                <li>
+                    <a href="{{ url('/home') }}"
+                        class="pl-3 lg:pl-0 nav-menu hover:text-white lg:hover:text-[#fde047] transition {{ request()->is('/') ? 'active' : '' }}">
+                        Events
+                    </a>
+                </li>
+
+                <!-- Student Role -->
+                @if (Auth::user()->isRole('STUDENT'))
+                <li>
+                    <a href="{{ route('events.create') }}"
+                        class="pl-3 lg:pl-0 nav-menu hover:text-white lg:hover:text-[#fde047] transition {{ Route::currentRouteName() === 'songs.index' ? 'active' : '' }}">
+                        Create Event
+                    </a>
+                </li>
+                <li>
+                    <a href="{{ url('/') }}"
+                        class="pl-3 lg:pl-0 nav-menu hover:text-white lg:hover:text-[#fde047] transition {{ request()->is('/') ? 'active' : '' }}">
+                        My Events
+                    </a>
+                </li>
+                <li>
+                    <a href="{{ route('events.show-certificates') }}"
+                        class="pl-3 lg:pl-0 nav-menu hover:text-white lg:hover:text-[#fde047] transition {{ Route::currentRouteName() === 'songs.index' ? 'active' : '' }}">
+                        Certificate
+                    </a>
+                </li>
+                <li>
+                <a href="{{ route('notification') }}"
+                        class="pl-3 lg:pl-0 nav-menu hover:text-white lg:hover:text-[#fde047] transition {{ Route::currentRouteName() === 'songs.index' ? 'active' : '' }}">
+                        Notification
+                    </a>
+                </li>
+
+                <!-- Operator Role -->
+                @elseif(Auth::user()->isRole('OPERATOR'))
+                <li>
+                    <a href="{{ route('events.manage') }}"
+                        class="pl-3 lg:pl-0 nav-menu hover:text-white lg:hover:text-[#fde047] transition {{ request()->is('/') ? 'active' : '' }}">
+                        Pending Event
+                    </a>
+                </li>
+
+                <!-- Admin Role -->
+                @else
+                <li>
+                    <a href="{{ route('operators.create') }}"
+                        class="pl-3 lg:pl-0 nav-menu hover:text-white lg:hover:text-[#fde047] transition {{ Route::currentRouteName() === 'songs.index' ? 'active' : '' }}">
+                        Create Operator
+                    </a>
+                </li>
+                <li>
+                    <a href="{{ route('operators.index') }}"
+                        class="pl-3 lg:pl-0 nav-menu hover:text-white lg:hover:text-[#fde047] transition {{ Route::currentRouteName() === 'songs.index' ? 'active' : '' }}">
+                        Operator List
+                    </a>
+                </li>
+                @endif
+            </ul>
+        </div>
         @endauth
     </div>
 </nav>
 
 <script>
-    document.addEventListener("DOMContentLoaded", function() {
-        const button = document.querySelector("[data-collapse-toggle='mobile-menu-2']");
-        const menu = document.getElementById("mobile-menu-2");
+document.addEventListener("DOMContentLoaded", function() {
+    const button = document.querySelector("[data-collapse-toggle='mobile-menu-2']");
+    const menu = document.getElementById("mobile-menu-2");
 
-        button.addEventListener("click", function() {
-            menu.classList.toggle("hidden");
-            const expanded = menu.classList.contains("hidden") ? "false" : "true";
-            button.setAttribute("aria-expanded", expanded);
-        });
+    button.addEventListener("click", function() {
+        menu.classList.toggle("hidden");
+        const expanded = menu.classList.contains("hidden") ? "false" : "true";
+        button.setAttribute("aria-expanded", expanded);
     });
+});
 </script>
