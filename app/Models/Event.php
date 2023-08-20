@@ -61,17 +61,13 @@ class Event extends Model
             return false;
         }
     }
-    public function isHeadEvent($user) {
-        if ($this->student->user->id === $user->id) {
-            return true;
-        } else {
-            return false;
-        }
-    }
-    public function scopeByStatus($query, $status) {
+    public function scopeByStatusEvent($query, $status) {
         return $query->where('event_approval_status', $status);
     }
     public function scopeAfterDeadline($query) {
         return $query->where('event_application_deadline', '>', Carbon::now()->toDateString());
+    }
+    public function scopeByEndEvent($query) {
+        return $query->where('event_date', '<=', Carbon::now()->toDateString());
     }
 }

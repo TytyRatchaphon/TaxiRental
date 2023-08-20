@@ -27,15 +27,10 @@ class EventApprovedNotification extends Notification
      */
     public function via(object $notifiable): array
     {
-        return ['array'];
+        return ['database'];
     }
-
-    /**
-     * Get the array representation of the notification.
-     *
-     * @return array<string, mixed>
-     */
-    public function toArray(object $notifiable): array
+    
+    public function toDatabase(object $notifiable)
     {
         return [
             'message' => 'Approval to Create Event',
