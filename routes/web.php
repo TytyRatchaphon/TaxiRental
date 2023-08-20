@@ -55,6 +55,7 @@ Route::get('/events/{event}/manage/staffs', [EventController::class, 'manageStaf
 Route::get('/events/{event}/manage/budgets', [EventController::class, 'manageBudgets'])->name('events.manage.budgets');
 Route::get('/certificates', [EventController::class, 'showCertificates'])->name('events.show-certificates');
 Route::get('/events/create', [EventController::class, 'create'])->name('events.create');
+Route::put('/events/{event}/manage/applicants/{student}', [EventController::class, 'updateApproveApplicant'])->name('applicant.update');
 
 //Delete ROUTE FOR ADMIN ONLY!!!
 Route::delete('/events/{event}', [EventController::class, 'destroy'])->name('events.destroy');
@@ -74,6 +75,7 @@ Route::get('/operators', [OperatorController::class, 'search'])->name('operators
 // Route Manage Event
 Route::get('/manage/events', [EventController::class, 'showPendingEvents'])->name('events.manage');
 Route::put('/manage/events/{event}', [EventController::class, 'changeStatus'])->name('events.change-status');
+
 
 
 Route::get('/dashboard', function () {

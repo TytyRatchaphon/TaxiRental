@@ -35,7 +35,7 @@ class EventController extends Controller
     }
     public function manageApplicants(Event $event) {
         $students = $event->students;
-        return view('events.manage.manage-applicants',['students' => $students]);
+        return view('events.manage.manage-applicants',['students' => $students, 'event' => $event]);
     }
     public function manageStaffs(Event $event) {
         return view('events.manage.manage-staffs',['event'=> $event]);
@@ -47,12 +47,18 @@ class EventController extends Controller
         $student = Auth::user()->student;
         $events = $student->events()->byStatusEvent(ApplicantStatus::APPROVED)->byEndEvent()->get();
         return view('events.show-certificates', ['events' => $events]);
+    }public function updateApproveApplicant(Request $request, $student_id, $event_id){
+        $request->validate(['status' => ['required']]);
+        $event = Event::find($event_id);
+        $applicant = $event->students()->byRoleEvent('APPLICANT')->where('student_id', $student_id)->first();
+    
+        if ($applicant) {
+            $applicant->pivot->update(['status' => 'approve']);
+        }
+    
+        return redirect()->route('events.manage.manage-applicants', ['event' => $event]);
     }
-    public function updateApproveApplicant(Request $request, Student $student, Event $event){
-        $request->validate(['status' => ['pending']]);
-
-        $student = $event->students();
-    }
+    
     public function create() {
 
         if (!Auth::check()) {
