@@ -52,6 +52,13 @@ class User extends Authenticatable
     {
         return $this->hasOne(Student::class);
     }
+    public function isRole($role) {
+        if ($this->role === $role) {
+            return true;
+        } else {
+            return false;
+        }
+    }
     public function scopeByRole($query, $role) {
         return $query->where('role', $role);
     }

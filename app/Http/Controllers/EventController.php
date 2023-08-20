@@ -6,6 +6,7 @@ use App\Models\Enums\ApplicantStatus;
 use Illuminate\Http\Request;
 use App\Models\Event;
 use App\Models\Student;
+use App\Notifications\EventApprovedNotification;
 use App\Providers\RouteServiceProvider;
 use Illuminate\Support\Facades\Gate;
 use Illuminate\Support\Facades\Auth;
@@ -54,18 +55,27 @@ class EventController extends Controller
         return view('events.create');
     }
     public function showPendingEvents() {
-        $events = Event::byStatus('pending')->afterDeadline()->get();
+        $events = Event::byStatus('pending')->get();
         return view('events.manage', [
             'events' => $events
         ]);
     }
     public function changeStatus(Request $request, Event $event) {
+        /**
+         * validate
+         */
         $request->validate([
             'status' => ['required']
         ]);
 
         $event->event_approval_status = $request->get('status');
         $event->save();
+
+        /**
+         * notify to head-event
+         */
+        $user = $event->student->user;
+        $user->notify(new EventApprovedNotification($event));
 
         $events = Event::get();
         return redirect()->route('events.manage', ['events' => $events]);
@@ -132,7 +142,6 @@ class EventController extends Controller
 
             $student->events()->save($event);
         }
-
         return redirect(RouteServiceProvider::HOME);
     }
 

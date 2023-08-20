@@ -6,6 +6,8 @@ use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\EventController;
 use App\Http\Controllers\KanbanController;
 use App\Http\Controllers\OperatorController;
+use App\Http\Controllers\NotificationController;
+use Illuminate\Auth\Events\Verified;
 use Illuminate\Support\Facades\Route;
 use App\Http\Middleware\AdminAccess;
 
@@ -34,10 +36,6 @@ Route::get('/events', [EventController::class, 'index'])->name('events.index');
 Route::resource('/events', EventController::class);
 
 //==========================GROUP OF ROTES THAT REQUIRED AUTH==================================== 
-Route::middleware('auth')->group(function () {
-
-
-Route::get('/profile/{user}/edit', [ProfileController::class, 'edit'])->name('profile.edit');
 
 Route::get('/event/{event}/kanban', [KanbanController::class, 'kanban'])
     ->name('events.manage.kanban');
@@ -82,11 +80,12 @@ Route::get('/dashboard', function () {
     return view('dashboard');
 })->middleware(['auth', 'verified'])->name('dashboard');
 
-
+Route::middleware('auth')->group(function () {
     Route::get('/profile', [ProfileController::class, 'index'])->name('profile.index');
     Route::get('/profile/{user}', [ProfileController::class, 'edit'])->name('profile.edit');
     Route::put('/profile/{user}', [ProfileController::class, 'update'])->name('profile.update');
     Route::delete('/profile/edit', [ProfileController::class, 'destroy'])->name('profile.destroy');
+    Route::get('/notification', [NotificationController::class, 'index'])->name('notification');
 });
 
 require __DIR__.'/auth.php';

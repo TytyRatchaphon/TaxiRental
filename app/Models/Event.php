@@ -56,7 +56,6 @@ class Event extends Model
             return false;
         }
     }
-
     public function isFuture() {
         $currentDate = Carbon::now()->format('Y-m-d');
         $deadline = Carbon::parse($this->event_application_deadline);
@@ -65,6 +64,13 @@ class Event extends Model
         } else {
             $this->event_approval_status = "rejected";
             $this->save();
+            return false;
+        }
+    }
+    public function isHeadEvent($user) {
+        if ($this->student->user->id === $user->id) {
+            return true;
+        } else {
             return false;
         }
     }
