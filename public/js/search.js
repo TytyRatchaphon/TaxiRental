@@ -1,6 +1,12 @@
 document.addEventListener('DOMContentLoaded', function () {
     const searchInput = document.getElementById('search');
     const searchSuggestions = document.getElementById('search-suggestions');
+    const dropdownButton = document.getElementById("dropdown-button");
+    const dropdownContent = document.getElementById("search-suggestions");
+
+    dropdownButton.addEventListener("click", function () {
+        dropdownContent.classList.toggle("hidden");
+    });
 
     searchInput.addEventListener('input', function () {
         const query = this.value.trim();

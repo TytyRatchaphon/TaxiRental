@@ -85,4 +85,10 @@ class Event extends Model
     public function scopeByEndEvent($query) {
         return $query->where('event_date', '<=', Carbon::now()->toDateString());
     }
+
+    public function scopeForSerch($query, $input){
+        return $query->where(function ($query) use ($input){
+            $query->where('','LIKE',"{%input}");
+        });
+    }
 }

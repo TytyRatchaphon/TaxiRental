@@ -29,6 +29,19 @@ class EventController extends Controller
 
         return view('home', ['events' => $events]);
     }
+
+    public function showMyEvent(Request $request) {
+        $user = Auth::user();
+        
+        // Assuming the user has a student relationship defined
+        $student = $user->student;
+    
+        // Assuming there's a relationship between students and events
+        $events = $student->events;
+    
+        return view('home', ['events' => $events]);
+    }
+    
     public function show(Event $event) {
         return view('events.show', ['event' => $event]);
     }
@@ -51,12 +64,7 @@ class EventController extends Controller
         $events = $student->events()->byStatusEvent(ApplicantStatus::APPROVED)->byEndEvent()->get();
         return view('events.show-certificates', ['events' => $events]);
     }
-    public function showMyEvent(Student $student){
-        $student = Auth::user()->student;
-        $events = $student->events;
-        // dd($events);
-        return view('myevent',['events' => $events]);
-    }
+
     public function create() {
 
         if (!Auth::check()) {
