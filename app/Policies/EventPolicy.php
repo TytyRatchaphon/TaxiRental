@@ -65,4 +65,34 @@ class EventPolicy
     {
         return $user->isRole('ADMIN');
     }
-}
+    
+    public function requestJoin(User $user, Event $event) {
+        return $user->isRole('STUDENT')
+            && !$event->hasStudentInEvent($user->student);
+    }
+
+    public function showStatus(User $user, Event $event) {
+        return $user->isRole('ADMIN');
+    }
+
+    public function viewKanban(User $user, Event $event) {
+        return $user->isRole('STUDENT') 
+            && $event->hasStudentInEvent($user->student) 
+            && !$event->isStudentEvent($user->student, 'APPLICANT');
+    }
+    public function createKanban(User $user, Event $event) {
+        return $user->isRole('STUDENT') 
+            && $event->hasStudentInEvent($user->student) 
+            && !$event->isStudentEvent($user->student, 'APPLICANT');
+    }
+    public function updateKanban(User $user, Event $event) {
+        return $user->isRole('STUDENT') 
+            && $event->hasStudentInEvent($user->student) 
+            && !$event->isStudentEvent($user->student, 'APPLICANT');
+    }
+    public function deleteKanban(User $user, Event $event) {
+        return $user->isRole('STUDENT') 
+            && $event->hasStudentInEvent($user->student) 
+            && !$event->isStudentEvent($user->student, 'APPLICANT');
+    }
+ }

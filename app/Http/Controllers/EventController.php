@@ -11,24 +11,25 @@ use App\Notifications\EventApprovedNotification;
 use App\Providers\RouteServiceProvider;
 use Illuminate\Support\Facades\Gate;
 use Illuminate\Support\Facades\Auth;
-use Illuminate\Support\Facades\Log;
 
 class EventController extends Controller
 {
-    public function index() {
-        // return view('events.index');
-        $event = Event::get();
-        return view('home', ['events' => $event]);
-    }
-
-    public function show(Event $event)
-    {
-        // $event = Event::all();
-
-        // Retrieve the event details using the $eventId and $eventName
-        // You can use Eloquent or query builder to fetch the event details from the database
+    public function index(Request $request) {
+        if (!Auth::check() || Auth::user()->isRole('STUDENT')) {
+            $events = Event::byStatusEvent('approved')->byDeadline()->get();
+        } else {
+            $events = Event::byDeadline()->get();
+        }
         
-        // For demonstration purposes, I'm just returning the eventId, eventName, and the event details
+        /**
+         * search with input
+         */
+        $query = $request->input('search');
+        $events = $query ? Event::where('event_name', 'LIKE', "%{$query}%")->get() : $events;
+
+        return view('home', ['events' => $events]);
+    }
+    public function show(Event $event) {
         return view('events.show', ['event' => $event]);
     }
     public function manageKanban() {
@@ -84,7 +85,7 @@ class EventController extends Controller
         /**
          * notify to head-event
          */
-        $user = $event->students()->byRoleEvent('HEAD')->user;
+        $user = $event->headEvent()->user;
         $user->notify(new EventApprovedNotification($event));
 
         $events = Event::get();
@@ -166,12 +167,8 @@ class EventController extends Controller
         }
     }
 
-        public function apply(Event $event)
-    {
-        // Logic to handle event application
-        // You can retrieve the authenticated user using Auth::user()
-
-        // For example:
+    public function apply(Event $event) {
+        Gate::authorize('requestJoin', $event);
         $user = Auth::user();
         $event->students()->attach($user->student->id, ['role' => 'PARTICIPANT']);
 

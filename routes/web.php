@@ -25,8 +25,7 @@ use App\Http\Middleware\AdminAccess;
 
 Route::get('/', [WelcomeController::class, 'index']);
 
-Route::get('/home', [HomeController::class, 'index'])->name('home'); //guest
-Route::get('/search-events', [HomeController::class, 'searchEvents']);
+Route::get('/home', [EventController::class, 'index'])->name('home'); //guest
 
 Route::get('/login', function () {
     return view('login');
