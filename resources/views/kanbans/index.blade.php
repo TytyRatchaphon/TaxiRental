@@ -109,7 +109,7 @@
                     class="@error('title') border-red-600 @enderror w-full">
             </div>
             <div class="text-center m-5">
-                <button type="submit" class="bg-yellow-300 rounded-lg p-2 px-5 hover:opacity-80">เพิ่มเนื้อหา</button>
+                <button type="submit" class="bg-yellow-300 rounded-lg p-2 px-5 hover:opacity-80">Add</button>
             </div>
         </form>
     </div>

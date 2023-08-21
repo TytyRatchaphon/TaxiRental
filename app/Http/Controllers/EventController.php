@@ -6,6 +6,7 @@ use App\Models\Enums\ApplicantStatus;
 use Illuminate\Http\Request;
 use App\Models\Event;
 use App\Models\Student;
+use App\Models\User;
 use App\Notifications\EventApprovedNotification;
 use App\Providers\RouteServiceProvider;
 use Illuminate\Support\Facades\Gate;
@@ -31,14 +32,15 @@ class EventController extends Controller
         return view('events.show', ['event' => $event]);
     }
     public function manageKanban() {
-        return view('events.manage.kanban');
+        return view('events.kanbans.show');
     }
     public function showManageApplicants(Event $event) {
         $students = $event->students;
         return view('events.manage.manage-applicants',['students' => $students, 'event' => $event]);
     }
     public function manageStaffs(Event $event) {
-        return view('events.manage.manage-staffs',['event'=> $event]);
+        $students = $event->students;
+        return view('events.manage.manage-staffs',['students' => $students,'event'=> $event]);
     }
     public function manageBudgets(EVent $event) {
         return view('events.manage.manage-budgets', ['event'=> $event]);
@@ -47,14 +49,6 @@ class EventController extends Controller
         $student = Auth::user()->student;
         $events = $student->events()->byStatusEvent(ApplicantStatus::APPROVED)->byEndEvent()->get();
         return view('events.show-certificates', ['events' => $events]);
-    }
-    public function updateApproveApplicant(Request $request, Event $event, Student $student){
-        $request->validate(['status' => ['required']]);
-        $student = $student->where('student_id', $student->id)->exists();
-        $student->status = $request->get('status');
-        $student->save();
-
-        return redirect()->route('events.manage.manage-applicants', ['event'=> $event]);
     }
     
     public function create() {
@@ -165,5 +159,61 @@ class EventController extends Controller
         } else {
             return redirect()->route('events.index')->with('error', 'You are not authorized to delete this event.');
         }
+    }
+
+        public function apply(Event $event)
+    {
+        // Logic to handle event application
+        // You can retrieve the authenticated user using Auth::user()
+
+        // For example:
+        $user = Auth::user();
+        $event->students()->attach($user->student->id, ['role' => 'PARTICIPANT']);
+
+        return redirect()->back()->with('success', 'Applied for the event successfully!');
+    }
+
+    public function approveStudent(Event $event, Student $student)
+    {
+        // You might want to add additional logic here
+        $event->students()->updateExistingPivot($student, ['status' => ApplicantStatus::APPROVED]);
+        
+        return redirect()->back()->with('success', 'Student has been approved.');
+    }
+
+    public function rejectStudent(Event $event, Student $student)
+    {
+        // You might want to add additional logic here
+        $event->students()->updateExistingPivot($student, ['status' => ApplicantStatus::UNAPPROVED]);
+
+        return redirect()->back()->with('success', 'Student has been rejected.');
+    }
+
+    public function detachStudent(Event $event, Student $student)
+    {
+        // Detach the student from the event
+        $event->students()->detach($student);
+
+        return redirect()->route('events.manage.staffs', ['event' => $event])
+            ->with('success', 'Participant detached successfully.');
+    }
+    
+    public function addStaff(Request $request, Event $event)
+    {
+        $username = $request->input('username');
+
+        // Find the user by username
+        $user = User::where('username', $username)->first();
+
+        if (!$user) {
+            return redirect()->route('events.manage.staffs', ['event' => $event])
+                ->with('error', 'User not found.');
+        }
+
+        // Attach the user as staff to the event
+        $event->students()->attach($user->student->id, ['role' => 'STAFF', 'status' => 'approved']);
+
+        return redirect()->route('events.manage.staffs', ['event' => $event])
+            ->with('success', 'Staff added successfully.');
     }
 }

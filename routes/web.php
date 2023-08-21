@@ -49,13 +49,16 @@ Route::post('/create-operators', [OperatorController::class, 'store'])->name('op
 
 // Route Event
 Route::resource('/events', EventController::class);
-Route::get('/events/event/manage/kanban', [EventController::class, 'manageKanban'])->name('events.manage.kanban');
 Route::get('/events/{event}/manage/applicants', [EventController::class, 'showManageApplicants'])->name('events.manage.applicants');
 Route::get('/events/{event}/manage/staffs', [EventController::class, 'manageStaffs'])->name('events.manage.staffs');
 Route::get('/events/{event}/manage/budgets', [EventController::class, 'manageBudgets'])->name('events.manage.budgets');
 Route::get('/certificates', [EventController::class, 'showCertificates'])->name('events.show-certificates');
 Route::get('/events/create', [EventController::class, 'create'])->name('events.create');
-Route::put('/events/{event}/manage/applicants/{student}', [EventController::class, 'updateApproveApplicant'])->name('applicant.update');
+Route::post('/events/{event}/apply', [EventController::class, 'apply'])->name('events.apply');
+Route::post('/events/{event}/students/{student}/approve', [EventController::class, 'approveStudent'])->name('approve');
+Route::post('/events/{event}/students/{student}/reject', [EventController::class, 'rejectStudent'])->name('reject');
+Route::post('/events/{event}/detach/{student}', [EventController::class, 'detachStudent'])->name('detach');
+Route::post('/events/{event}/add-staff', [EventController::class, 'addStaff'])->name('events.addStaff');
 
 //Delete ROUTE FOR ADMIN ONLY!!!
 Route::delete('/events/{event}', [EventController::class, 'destroy'])->name('events.destroy');
