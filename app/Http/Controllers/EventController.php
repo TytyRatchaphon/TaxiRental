@@ -109,10 +109,12 @@ class EventController extends Controller
             'event_application_deadline' => 'required|date|before_or_equal:event_date',
             'event_thumbnail' => '|image|mimes:jpeg,png,jpg,gif|max:2048',
             'event_image' => '|image|mimes:jpeg,png,jpg,gif|max:2048',
+            'event_certificate_image' => 'image|mimes:jpeg,png,jpg,gif|max:2048',
         ]);
 
         $thumbnailPath = null;
         $imagePath = null;
+        $certificateImagePath = null;
 
         if ($request->hasFile('event_thumbnail')) {
             $thumbnailFile = $request->file('event_thumbnail');
@@ -127,7 +129,13 @@ class EventController extends Controller
                 $imagePath = $imageFile->store('images', 'public');
             }
         }
-        
+
+        if ($request->hasFile('event_certificate_image')) {
+            $certificateImageFile = $request->file('event_certificate_image');
+            if ($certificateImageFile->isValid()) {
+                $certificateImagePath = $certificateImageFile->store('certificates', 'public');
+            }
+        }
 
         if (Auth::check() && Auth::user()->student) {
             $student = Auth::user()->student;
@@ -144,6 +152,7 @@ class EventController extends Controller
                 'event_applicants_limit' => $request->get('event_applicants_limit'),
                 'event_staffs_limit' => $request->get('event_staffs_limit'),
                 'event_application_deadline' => $request->get('event_application_deadline'),
+                'event_certificate_image' => $certificateImagePath,
             ]);
 
             $event->save();
@@ -191,8 +200,7 @@ class EventController extends Controller
         // Detach the student from the event
         $event->students()->detach($student);
 
-        return redirect()->route('events.manage.staffs', ['event' => $event])
-            ->with('success', 'Participant detached successfully.');
+        return redirect()->back()->with('success', 'Participant detached successfully.');
     }
     
     public function addStaff(Request $request, Event $event)
@@ -203,14 +211,12 @@ class EventController extends Controller
         $user = User::where('username', $username)->first();
 
         if (!$user) {
-            return redirect()->route('events.manage.staffs', ['event' => $event])
-                ->with('error', 'User not found.');
+            return redirect()->route('events.manage.staffs', ['event' => $event])->with('error', 'User not found.');
         }
 
         // Attach the user as staff to the event
         $event->students()->attach($user->student->id, ['role' => 'STAFF', 'status' => 'approved']);
 
-        return redirect()->route('events.manage.staffs', ['event' => $event])
-            ->with('success', 'Staff added successfully.');
+        return redirect()->back()->with('success', 'Staff added successfully.');
     }
 }

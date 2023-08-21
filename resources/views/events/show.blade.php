@@ -2,14 +2,6 @@
 @section('content')
 <div class="p-10 px-20">
     <div class="">
-        <div class="flex items-center">
-            <img src="{{ asset('/storage/' .$event->headEvent()->user_profile_img) }}" alt="Avatar"
-                class="w-8 h-8 rounded-full mr-2 object-cover">
-            <span class="text-gray-800 font-semibold">
-                {{  $event->headEvent()->user->user_firstname }}
-                {{  $event->headEvent()->user->user_lastname }}
-            </span>
-        </div>
         <div class="my-5 object-cover">
             <img src="{{ asset('storage/' . $event->event_image) }}" class="rounded-lg w-full h-[70vh]">
         </div>
@@ -67,8 +59,11 @@
                 </form>
                 @endauth
 
-                <button type="submit"
+                <a href="{{ url('/home') }}">
+                    <button type="submit"
                     class="bg-[#FF6666] p-1 px-10 rounded transition-all hover:opacity-80">back</button>
+                </a>
+                
             </div>
         </div>
     </div>

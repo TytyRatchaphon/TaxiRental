@@ -22,10 +22,10 @@ class UserFactory extends Factory
             'user_firstname' => $this->faker->firstName,
             'user_lastname' => $this->faker->lastName,
             'username' => $this->faker->unique()->userName,
-            'user_profile_img' => $this->faker->image('public/storage/', 200, 200, null, false),
             'email' => $this->faker->unique()->safeEmail,
             'password' => Hash::make('password123'),
             'remember_token' => Str::random(10),
+            'role' => $this->faker->randomElement(['STUDENT', 'HEAD', 'STAFF']),
         ];
     }
 
@@ -37,5 +37,14 @@ class UserFactory extends Factory
         return $this->state(fn (array $attributes) => [
             'email_verified_at' => null,
         ]);
+    }
+
+    public function student(): self
+    {
+        return $this->state(function (array $attributes) {
+            return [
+                // Add student-specific attributes here
+            ];
+        });
     }
 }

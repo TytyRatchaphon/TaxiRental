@@ -40,6 +40,13 @@
                         <span class="text-red-500 text-sm">{{ $message }}</span>
                     @enderror
                 </div>
+                <div class="flex flex-col p-3">
+                    <label for="event_certificate_image" class="pb-3">Add Event Certificate Image</label>
+                    <input type="file" name="event_certificate_image" id="event_certificate_image" class="h-64 w-full hover:opacity-80 rounded-lg cursor-pointer border-yellow-200">
+                    @error('event_certificate_image')
+                        <span class="text-red-500 text-sm">{{ $message }}</span>
+                    @enderror
+                </div>
                 <div class="flex flex-col  p-3">
                     <label for="event_thumbnail" class="pb-3">Add Event Thumbnail</label>
                     <input type="file" name="event_thumbnail" id="event_thumbnail" class="h-64 w-full hover:opacity-80 rounded-lg cursor-pointer border-yellow-200">
