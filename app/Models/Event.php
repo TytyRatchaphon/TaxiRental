@@ -76,6 +76,11 @@ class Event extends Model
     public function getApplicant($status) {
         return $this->students()->byRoleEvent('APPLICANT')->byStatus($status)->get();
     }
+
+    public function getStaff($status) {
+        return $this->students()->byRoleEvent('STAFF')->byStatus($status)->get();
+    }
+    
     public function scopeByStatusEvent($query, $status) {
         return $query->where('event_approval_status', $status);
     }

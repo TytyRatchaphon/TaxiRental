@@ -33,8 +33,7 @@ Route::resource('/events', EventController::class);
 
 //==========================GROUP OF ROTES THAT REQUIRED AUTH==================================== 
 
-Route::get('/event/{event}/kanban', [KanbanController::class, 'kanban'])
-    ->name('events.manage.kanban');
+Route::get('/event/{event}/kanban', [KanbanController::class, 'kanban'])->name('events.manage.kanban');
 
 //Delete ROUTE FOR ADMIN ONLY!!!
 Route::delete('/events/{event}', [EventController::class, 'destroy'])->name('events.destroy');
@@ -45,11 +44,9 @@ Route::post('/create-operators', [OperatorController::class, 'store'])->name('op
 
 // Route Event
 Route::resource('/events', EventController::class);
-Route::get('/my-events', [EventController::class, 'showMyEvent'])->name('event.showMyEvent');
 Route::get('/myevent/', [EventController::class, 'showMyEvent'])->name('events.myevent');
 Route::get('/events/{event}/manage/applicants', [EventController::class, 'showManageApplicants'])->name('events.manage.applicants');
 Route::get('/events/{event}/manage/staffs', [EventController::class, 'manageStaffs'])->name('events.manage.staffs');
-Route::get('/events/{event}/manage/budgets', [EventController::class, 'manageBudgets'])->name('events.manage.budgets');
 Route::get('/certificates', [EventController::class, 'showCertificates'])->name('events.show-certificates');
 Route::get('/events/create', [EventController::class, 'create'])->name('events.create');
 Route::post('/events/{event}/apply', [EventController::class, 'apply'])->name('events.apply');
@@ -61,7 +58,7 @@ Route::post('/events/{event}/add-staff', [EventController::class, 'addStaff'])->
 //Delete ROUTE FOR ADMIN ONLY!!!
 Route::delete('/events/{event}', [EventController::class, 'destroy'])->name('events.destroy');
 
-// Route kanban
+// Route kanban manage
 Route::get('/events/{event}/kanbans', [KanbanController::class, 'showKanbans'])->name('events.kanbans.show');
 Route::post('/events/{event}/kanbans', [KanbanController::class, 'storeKanban'])->name('events.kanbans.store');
 Route::put('/events/{event}/kanbans/{kanban}', [KanbanController::class, 'updateStatusKanban'])->name('events.kanbans.update-status');
@@ -77,12 +74,7 @@ Route::get('/operators', [OperatorController::class, 'search'])->name('operators
 Route::get('/manage/events', [EventController::class, 'showPendingEvents'])->name('events.manage');
 Route::put('/manage/events/{event}', [EventController::class, 'changeStatus'])->name('events.change-status');
 
-
-
-Route::get('/dashboard', function () {
-    return view('dashboard');
-})->middleware(['auth', 'verified'])->name('dashboard');
-
+// Profile
 Route::middleware('auth')->group(function () {
     Route::get('/profile', [ProfileController::class, 'index'])->name('profile.index');
     Route::get('/profile/{user}', [ProfileController::class, 'edit'])->name('profile.edit');

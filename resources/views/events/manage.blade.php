@@ -11,13 +11,13 @@
                 <div class="w-3/12">
                     <h1>Head-Event</h1>
                 </div>
-                <div class="w-6/12">
+                <div class="w-4/12">
                     <h2>Event</h2>
                 </div>
-                <div class="w-2/12 text-center">
+                <div class="w-3/12 text-center">
                     <h2>Expense Amount</h2>
                 </div>
-                <div class="w-2/12 text-center">
+                <div class="w-1/12 text-center">
                     <h2>Staffs Limit</h2>
                 </div>
             </div>
@@ -29,7 +29,7 @@
                 <a href="{{ route('events.show', ['event' => $event]) }}"
                     class="flex bg-white rounded-lg shadow-lg hover:opacity-80 w-11/12 p-3 items-center">
                     <div class="flex items-center w-3/12">
-                        <img src="https://randomuser.me/api/portraits/men/32.jpg" alt="Avatar"
+                        <img src="{{ asset('/storage/' . $event->headEvent()->user->user_profile_img)}}" alt="Avatar"
                             class="w-8 h-8 rounded-full mr-2 object-cover">
                         <span class="text-gray-800 font-semibold">{{ $event->headEvent()->user->username }}</span>
                     </div>
@@ -37,7 +37,7 @@
                         <h1>{{ $event->event_name }}</h1>
                     </div>
                     <div class="w-2/12 text-center">
-                        <h1>{{ $event->event_expense_amount}}</h1>
+                        <h1>{{ $event->event_expense_amount}}฿</h1>
                     </div>
                     <div class="w-2/12 text-center">
                         <h1>{{ $event->event_staffs_limit}}</h1>
@@ -48,9 +48,9 @@
                     @csrf
                     @method('PUT')
                     <button type="submit" value="approved" name="status"
-                        class="bg-yellow-300 rounded-full px-4 py-1 mr-2 hover:opacity-90 hover:text-white">A</button>
+                        class="bg-yellow-300 rounded-full px-4 py-1 mr-2 hover:opacity-90 hover:text-white">Accept</button>
                     <button type="submit" value="rejected" name="status"
-                        class="bg-red-400 rounded-full px-4 py-1 hover:opacity-90 hover:text-white">R</button>
+                        class="bg-red-400 rounded-full px-4 py-1 hover:opacity-90 hover:text-white">Reject</button>
                 </form>
             </li>
             @endforeach

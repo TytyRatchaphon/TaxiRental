@@ -16,7 +16,7 @@ return new class extends Migration
         Schema::create('certificates', function (Blueprint $table) {
             $table->id();
             $table->foreignIdFor(Event::class);
-            $table->string('path_image');
+            $table->string('path_image')->nullable();
             $table->timestamps();
         });
     }

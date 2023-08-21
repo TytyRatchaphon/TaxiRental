@@ -21,16 +21,11 @@ class EventFactory extends Factory
 
     public function definition(): array
     {
-            // Generate a random date in the future for the event date
-        $eventDate = $this->faker->dateTimeBetween('now', '+1 year')->format('Y-m-d');
-        
-        // Generate a random date between the present date and the event date for the application deadline
-        $applicationDeadline = $this->faker->dateTimeBetween('now', $eventDate)->format('Y-m-d');
         
         return [
             'event_name' => $this->faker->words(3, true),
-            'event_date' => $eventDate,
-            'event_application_deadline' => $applicationDeadline,
+            'event_date' => $this->faker->date('Y-m-d'),
+            'event_application_deadline' => $this->faker->date('Y-m-d'),
             'event_location' => $this->faker->city,
             'event_expense_amount' => $this->faker->randomFloat(2, 10, 500),
             'event_applicants_limit' => $this->faker->numberBetween(50, 500),

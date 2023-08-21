@@ -30,7 +30,9 @@
             </li>
             @endforeach
         @else
-            <h1>nothing</h1>
+            <div class="flex bg-white rounded-lg shadow-lg w-full p-3 items-center justify-center">
+                <h1 class="text-center text-gray-300 py-10">No Certificates</h1>
+            </div>
         @endif
     </ul>
 </div>
