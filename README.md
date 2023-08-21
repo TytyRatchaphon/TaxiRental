@@ -38,3 +38,12 @@ sail yarn install
 ```bash
 sail yarn dev
 ```
+
+If you encounter storage not found, try this
+
+```bash
+artisan storage:link
+```
+If still that still doesn't do the trick try...
+
+create a storage folder named " storage " in storage (I know it sound weird)
