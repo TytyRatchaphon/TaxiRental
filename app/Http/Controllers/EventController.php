@@ -48,8 +48,7 @@ class EventController extends Controller
         return view('events.show', ['event' => $event]);
     }
     public function showManageApplicants(Event $event) {
-        $students = $event->students;
-        return view('events.manage.manage-applicants',['students' => $students, 'event' => $event]);
+        return view('events.manage.manage-applicants',['event' => $event]);
     }
     public function manageStaffs(Event $event) {
         $students = $event->students;
