@@ -18,6 +18,7 @@ return new class extends Migration
             $table->date('event_date');
             $table->string('event_thumbnail')->nullable();
             $table->string('event_image')->nullable();
+            $table->string('event_certificate_image')->nullable();
             $table->string('event_location');
             $table->text('event_description')->nullable();
             $table->decimal('event_expense_amount', 10, 2);

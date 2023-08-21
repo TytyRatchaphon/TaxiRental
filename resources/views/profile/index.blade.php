@@ -14,12 +14,14 @@
                     <div class="inline-flex text-gray-700 items-center">
                         {{ $user->username }}
                     </div>
+                    @if (!Auth::user()->isRole('ADMIN'))
                     <div class="text-center m-5">
                         <a href="{{ route('profile.edit', ['user' => $user]) }}"
                             class="p-2 px-5 text-sm text-purple-600 font-semibold rounded-full border border-purple-200 hover:text-white hover:bg-purple-600 hover:border-transparent focus:outline-none focus:ring-2 focus:ring-purple-600 focus:ring-offset-2">
                             Edit Profile
                         </a>
                     </div>
+                    @endif  
                 </div>
             </div>
         </div>

@@ -3,16 +3,16 @@
 namespace Database\Seeders;
 
 use App\Models\User;
-use App\Models\Student;
 use Illuminate\Database\Seeder;
 
-class StudentSeeder extends Seeder
+class OperatorSeeder extends Seeder
 {
     /**
      * Run the database seeds.
      */
     public function run(): void
     {
-        Student::factory(15)->has(User::factory(15))->create();
+
+        User::factory()->count(10)->create(['role' => 'OPERATOR']);
     }
 }

@@ -3,6 +3,7 @@
 namespace Database\Factories;
 
 use App\Models\Enums\KanbanAccessibility;
+use App\Models\Enums\KanbanStatus;
 use Illuminate\Database\Eloquent\Factories\Factory;
 use App\Models\Event;
 
@@ -21,7 +22,7 @@ class KanbanFactory extends Factory
         return [
             'title' => fake()->realTextBetween(5, 10),
             'detail' => fake()->realText(200),
-            'status' => KanbanAccessibility::randomValue(),
+            'status' => KanbanStatus::randomValue(),
             'date_deadline' => fake()->date('Y-m-d'),
             'event_id' => fake()->numberBetween(1, Event::count())
         ];

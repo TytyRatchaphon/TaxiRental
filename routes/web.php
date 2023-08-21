@@ -22,16 +22,13 @@ use App\Http\Middleware\AdminAccess;
 |
 */
 
+//===========================Guest Accessible=============
 
 Route::get('/', [WelcomeController::class, 'index']);
-
 Route::get('/home', [EventController::class, 'index'])->name('home'); //guest
-
 Route::get('/login', function () {
-    return view('login');
+return view('login');
 })->middleware(['auth','verified'])->name('login');
-
-Route::get('/events', [EventController::class, 'index'])->name('events.index');
 Route::resource('/events', EventController::class);
 
 //==========================GROUP OF ROTES THAT REQUIRED AUTH==================================== 

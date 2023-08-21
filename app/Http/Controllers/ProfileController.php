@@ -5,6 +5,7 @@ use App\Models\User;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Redirect;
 use Illuminate\View\View;
 
@@ -40,6 +41,7 @@ class ProfileController extends Controller
             'facebook' => ['nullable', 'string', 'min:3', 'max:255'],
             'line' => ['nullable', 'string', 'min:3', 'max:255'],
             'instagram' => ['nullable', 'string', 'min:3', 'max:255'],
+            'password' => ['nullable', 'confirmed'],
             
         ]);
 
@@ -59,7 +61,9 @@ class ProfileController extends Controller
         $user->user_lastname = $request->get('user_lastname');
         $user->user_profile_img = $imageName;
 
-        
+        if ($request->filled('password')) {
+            $user->password = Hash::make($request->input('password'));
+        }
 
         if ($request->user()->isDirty('email')) {
             $request->user()->email_verified_at = null;

@@ -21,18 +21,41 @@ class EventFactory extends Factory
 
     public function definition(): array
     {
+            // Generate a random date in the future for the event date
+        $eventDate = $this->faker->dateTimeBetween('now', '+1 year')->format('Y-m-d');
+        
+        // Generate a random date between the present date and the event date for the application deadline
+        $applicationDeadline = $this->faker->dateTimeBetween('now', $eventDate)->format('Y-m-d');
+        
         return [
             'event_name' => $this->faker->words(3, true),
-            'event_date' => $this->faker->date('Y-m-d'),
+            'event_date' => $eventDate,
+            'event_application_deadline' => $applicationDeadline,
             'event_location' => $this->faker->city,
             'event_expense_amount' => $this->faker->randomFloat(2, 10, 500),
             'event_applicants_limit' => $this->faker->numberBetween(50, 500),
             'event_approval_status' => $this->faker->randomElement(['pending', 'approved', 'rejected']),
-            'event_application_deadline' => $this->faker->date('Y-m-d'),
             'event_description' => $this->faker->realText(200),
-            'event_thumbnail' => $this->faker->imageUrl(400, 300, 'events', true),
-            'event_image' => $this->faker->image('public/storage/', 800, 600, null, false),
             'event_staffs_limit' => $this->faker->numberBetween(0, 20),
         ];
+    }
+
+    /**
+     * Define the "withHeadUser" state to attach a user with the "HEAD" role to the event.
+     *
+     * @return \Illuminate\Database\Eloquent\Factories\Factory
+     */
+    public function withHeadUser()
+    {
+        return $this->afterCreating(function (Event $event) {
+            $user = User::where('role', 'STUDENT')->inRandomOrder()->first();
+            if ($user) {
+                // Debug statements
+                echo "Attaching user with ID: {$user->id} as HEAD to event with ID: {$event->id}\n";
+                $event->students()->attach($user, ['role' => 'HEAD', 'status' => 'approved']);
+            } else {
+                echo "No user with role STUDENT found.\n";
+            }
+        });
     }
 }
