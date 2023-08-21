@@ -29,7 +29,7 @@
                 <div class="flex items-center mb-3">
                     <img src="https://randomuser.me/api/portraits/men/32.jpg" alt="Avatar" class="w-8 h-8 rounded-full mr-2 object-cover">
                     <span class="text-gray-800 font-semibold mr-5">{{ $student->user->user_firstname}}</span>
-                    <form action="{{ route('applicant.update', ['student_id' => $student->id, 'event_id' => $event->id]) }}" method="POST" id="statusForm">
+                    <form action="{{ route('applicant.update', ['event' => $event, 'student' => $student]) }}" method="POST" id="statusForm">
                         @csrf
                         @method('PUT')
                         <button type="submit" name="status" value="approve" class="bg-[#fde047] font-semibold transition-colors hover:opacity-80 hover:text-white rounded-lg p-1 pr-2 pl-2 mr-3">อนุมัติ</button>
