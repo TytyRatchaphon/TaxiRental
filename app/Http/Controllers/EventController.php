@@ -8,6 +8,7 @@ use App\Models\Event;
 use App\Models\Student;
 use App\Models\User;
 use App\Notifications\EventApprovedNotification;
+use App\Notifications\ApplicantApprovedNotification;
 use App\Providers\RouteServiceProvider;
 use Illuminate\Support\Facades\Gate;
 use Illuminate\Support\Facades\Auth;
@@ -32,9 +33,6 @@ class EventController extends Controller
     public function show(Event $event) {
         return view('events.show', ['event' => $event]);
     }
-    public function manageKanban() {
-        return view('events.kanbans.show');
-    }
     public function manageApplicants(Event $event) {
         $students = $event->students;
         return view('events.manage.manage-applicants',['students' => $students, 'event' => $event]);
@@ -43,15 +41,11 @@ class EventController extends Controller
         $students = $event->students;
         return view('events.manage.manage-staffs',['students' => $students,'event'=> $event]);
     }
-    public function manageBudgets(EVent $event) {
-        return view('events.manage.manage-budgets', ['event'=> $event]);
-    }
     public function showCertificates() {
         $student = Auth::user()->student;
         $events = $student->events()->byStatusEvent(ApplicantStatus::APPROVED)->byEndEvent()->get();
         return view('events.show-certificates', ['events' => $events]);
     }
-    
     public function create() {
 
         if (!Auth::check()) {
@@ -86,15 +80,6 @@ class EventController extends Controller
         $events = Event::get();
         return redirect()->route('events.manage', ['events' => $events]);
     }
-
-    // public function show($eventId)
-    // {
-    //     // Retrieve the data from the request
-    //     // You can pass the data to the view or perform any other operations
-
-    //     return view('events', ['eventId' => $eventId]);
-    // }
-
     public function store(Request $request)
     {
         //remove validation for now
@@ -174,7 +159,11 @@ class EventController extends Controller
     {
         // You might want to add additional logic here
         $event->students()->updateExistingPivot($student, ['status' => ApplicantStatus::APPROVED]);
-        
+        /**
+         * notify
+         */
+        $user = $event->students()->where('student_id', $student->id)->get()->user;
+        $user->notify(new ApplicantApprovedNotification($event));
         return redirect()->back()->with('success', 'Student has been approved.');
     }
 
@@ -182,7 +171,11 @@ class EventController extends Controller
     {
         // You might want to add additional logic here
         $event->students()->updateExistingPivot($student, ['status' => ApplicantStatus::UNAPPROVED]);
-
+        /**
+         * notify
+         */
+        $user = $event->students()->where('student_id', $student->id)->get()->user;
+        $user->notify(new ApplicantApprovedNotification($event));
         return redirect()->back()->with('success', 'Student has been rejected.');
     }
 
@@ -209,7 +202,10 @@ class EventController extends Controller
 
         // Attach the user as staff to the event
         $event->students()->attach($user->student->id, ['role' => 'STAFF', 'status' => 'approved']);
-
+        /**
+         * notify
+         */
+        $user->notify(new ApplicantApprovedNotification($event));
         return redirect()->route('events.manage.staffs', ['event' => $event])
             ->with('success', 'Staff added successfully.');
     }
