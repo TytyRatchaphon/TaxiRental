@@ -73,6 +73,7 @@ class OperatorController extends Controller
     public function destroy(User $operator)
     {
         $operator->delete();
+        $operator->forcedelete(); // JUST IN CASE, IT GONNA CALLED BY ADMIN ONLY ANYWAY SO....
         $operators = User::byRole('OPERATOR')->get();
         return view('operators.index', [
             'operators' => $operators

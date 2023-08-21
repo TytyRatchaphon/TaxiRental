@@ -40,7 +40,7 @@
                             <div class="flex bg-white rounded-lg shadow-lg w-full p-3 items-center justify-between">
                                 <div class="flex w-full items-center">
                                     <div class="flex items-center w-3/12">
-                                        <img src="{{ asset('/storage/' . $operator->user_profile_img) }}" alt="profile_img"
+                                        <img src="https://cdn.discordapp.com/attachments/905107410912419880/1142719871700975656/image.png" alt="profile_img"
                                             class="w-8 h-8 rounded-full mr-2 object-cover">
                                         <span class="text-gray-800 font-semibold mr-5">{{ $operator->username }}</span>
                                     </div>
