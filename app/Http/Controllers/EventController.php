@@ -80,7 +80,7 @@ class EventController extends Controller
         /**
          * notify to head-event
          */
-        $user = $event->students()->byRoleEvent('HEAD')->user;
+        $user = $event->headEvent()->user;
         $user->notify(new EventApprovedNotification($event));
 
         $events = Event::get();

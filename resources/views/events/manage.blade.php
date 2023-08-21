@@ -31,7 +31,7 @@
                     <div class="flex items-center w-3/12">
                         <img src="https://randomuser.me/api/portraits/men/32.jpg" alt="Avatar"
                             class="w-8 h-8 rounded-full mr-2 object-cover">
-                        <span class="text-gray-800 font-semibold">{{ $event->students()->byRoleEvent('HEAD')->user->username }}</span>
+                        <span class="text-gray-800 font-semibold">{{ $event->headEvent()->user->username }}</span>
                     </div>
                     <div class="w-6/12">
                         <h1>{{ $event->event_name }}</h1>
