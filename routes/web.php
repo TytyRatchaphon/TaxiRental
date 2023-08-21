@@ -49,6 +49,7 @@ Route::post('/create-operators', [OperatorController::class, 'store'])->name('op
 
 // Route Event
 Route::resource('/events', EventController::class);
+Route::get('/myevent/', [EventController::class, 'showMyEvent'])->name('events.myevent');
 Route::get('/events/{event}/manage/applicants', [EventController::class, 'showManageApplicants'])->name('events.manage.applicants');
 Route::get('/events/{event}/manage/staffs', [EventController::class, 'manageStaffs'])->name('events.manage.staffs');
 Route::get('/events/{event}/manage/budgets', [EventController::class, 'manageBudgets'])->name('events.manage.budgets');

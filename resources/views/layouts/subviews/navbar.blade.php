@@ -87,8 +87,8 @@
                     </a>
                 </li>
                 <li>
-                    <a href="{{ url('/') }}"
-                        class="pl-3 lg:pl-0 nav-menu hover:text-white lg:hover:text-[#fde047] transition {{ request()->is('/') ? 'active' : '' }}">
+                    <a href="{{ route('events.myevent')}}"
+                        class="pl-3 lg:pl-0 nav-menu hover:text-white lg:hover:text-[#fde047] transition {{ Route::currentRouteName() === 'songs.index' ? 'active' : '' }}">
                         My Events
                     </a>
                 </li>
