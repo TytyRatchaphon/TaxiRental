@@ -172,7 +172,7 @@ class EventController extends Controller
     public function apply(Event $event) {
         Gate::authorize('requestJoin', $event);
         $user = Auth::user();
-        $event->students()->attach($user->student->id, ['role' => 'PARTICIPANT']);
+        $event->students()->attach($user->student->id, ['role' => 'APPLICANT', 'status' => 'pending']);
 
         return redirect()->back()->with('success', 'Applied for the event successfully!');
     }
