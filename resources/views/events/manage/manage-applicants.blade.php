@@ -11,7 +11,6 @@
                     class="w-8 h-8 rounded-full mr-2 object-cover">
                 <span class="text-gray-800 font-semibold mr-5">{{ $student->user->user_firstname }}</span>
 
-
                 <!-- Approve Button -->
                 <form action="{{ route('approve', ['event' => $event->id, 'student' => $student->id]) }}" method="POST">
                     @csrf

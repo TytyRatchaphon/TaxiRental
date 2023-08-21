@@ -15,19 +15,17 @@
                         style="color: black;"></i>{{ $event->headEvent()->user->username }}
                 </li>
                 @auth
-                @can('showStatus', $event)
-                <li id="status"
-                    class="bg-{{ $event->isStatus('approved') ? 'gray-100' : 'green' }} p-1 pl-3 pr-3 mr-5 rounded">
-                    {{ $event->event_approval_status }}
-                </li>
-                @endcan
-
-                @can('viewKanban', $event)
-                <a href="{{ route('events.kanbans.show', ['event' => $event]) }}" class="p-1 pl-3 pr-3 mr-5">
-                    Manage Event
-                </a>
-                @endcan
-
+                    @can('showStatus', $event)
+                    <li id="status"
+                        class="bg-{{ $event->isStatus('approved') ? 'gray-100' : 'green' }} p-1 pl-3 pr-3 mr-5 rounded">
+                        {{ $event->event_approval_status }}
+                    </li>
+                    @endcan
+                        @can('viewKanban', $event)
+                        <a href="{{ route('events.kanbans.show', ['event' => $event]) }}" class="p-1 pl-3 pr-3 mr-5">
+                            Manage Event
+                        </a>
+                    @endcan
                 @endauth
             </ul>
         </div>

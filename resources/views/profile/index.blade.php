@@ -57,7 +57,7 @@
                     <p class="font-semibold">Line (private)</p>
                     @endif
 
-                    @if($user->student->year)
+                    @if($user->student->instagram)
                     <p class="font-semibold">Instagram {{ $user->student->instagram }}</p>
                     @else
                     <p class="font-semibold">Instagram (private)</p>

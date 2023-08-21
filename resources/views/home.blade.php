@@ -31,11 +31,6 @@
                     <i class="fas fa-search"></i>
                 </button>
             </form>
-            <form action="{{ route('event.showMyEvent', ['events' => $events]) }}" method="GET">
-                @csrf
-                <button type="submit" class="bg-[#f3efef] p-1 px-10 rounded transition-all hover:opacity-80">My
-                    Event</button>
-            </form>
             <!-- Display search suggestions -->
             <p id="search-suggestions"
                 class="cursor-pointer absolute m-auto text-left w-[80vh] py-2 px-4 bg-slate-100 shadow-lg rounded hidden sm:left-0 sm:right-0">

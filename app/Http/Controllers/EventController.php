@@ -173,7 +173,6 @@ class EventController extends Controller
         Gate::authorize('requestJoin', $event);
         $user = Auth::user();
         $event->students()->attach($user->student->id, ['role' => 'APPLICANT', 'status' => 'pending']);
-
         return redirect()->back()->with('success', 'Applied for the event successfully!');
     }
 
@@ -216,7 +215,7 @@ class EventController extends Controller
         // Find the user by username
         $user = User::where('username', $username)->first();
 
-        if (!$user) {
+        if (!$user && $user->isRole('STUDENT')) {
             return redirect()->route('events.manage.staffs', ['event' => $event])->with('error', 'User not found.');
         }
 

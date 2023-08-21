@@ -14,16 +14,19 @@
     <div class="my-2 m-auto max-w-screen-xl mx-auto">
         <div class="container mt-8">    
             <h2 class="text-3xl font-semibold">About Us</h2>
-            <p class="mt-4 text-lg">Lorem ipsum dolor sit amet, consectetur adipiscing elit. Quisque nec odio dolor. Duis vitae
-                neque vel orci congue
-                feugiat. Aenean et eros in sapien eleifend elementum eu eget nisi. Vestibulum ante ipsum primis in faucibus orci
-                luctus et ultrices posuere cubilia Curae; Nunc pulvinar ipsum vitae nunc vestibulum luctus. Ut tincidunt felis
-                nec
-                dui iaculis posuere.</p>
+            <p class="mt-4 text-lg">Welcome to Our Website!
+
+                Thank you for visiting our website. We're thrilled to have you here!
+                
+                Explore our events, connect with our community, and stay updated on the latest news and updates.
+                
+                If you have any questions or need assistance, feel free to reach out to us. This website is dedicated for Web technology Project.
+                
+                And there plenty of works need to be done on this website, don't expect perfection from this.
+            </p>
             <h2 class="mt-8 text-3xl font-semibold">Our Services</h2>
             <ul class="mt-4 text-lg">
                 <li class="list-disc ml-8">Event Planning</li>
-                <li class="list-disc ml-8">Venue Management</li>
                 <li class="list-disc ml-8">Ticketing Solutions</li>
                 <li class="list-disc ml-8">Registration & Check-in</li>
             </ul>
