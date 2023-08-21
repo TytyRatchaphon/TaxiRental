@@ -9,6 +9,7 @@ use App\Models\Student;
 use App\Models\User;
 use App\Notifications\EventApprovedNotification;
 use App\Notifications\ApplicantApprovedNotification;
+use App\Notifications\StaffEventNotification;
 use App\Providers\RouteServiceProvider;
 use Illuminate\Support\Facades\Gate;
 use Illuminate\Support\Facades\Auth;
@@ -185,7 +186,7 @@ class EventController extends Controller
          * notify
          */
         $user = $event->students()->where('student_id', $student->id)->get()->user;
-        $user->notify(new ApplicantApprovedNotification($event));
+        $user->notify(new ApplicantApprovedNotification($event, $user->student));
         return redirect()->back()->with('success', 'Student has been approved.');
     }
 
@@ -197,7 +198,7 @@ class EventController extends Controller
          * notify
          */
         $user = $event->students()->where('student_id', $student->id)->get()->user;
-        $user->notify(new ApplicantApprovedNotification($event));
+        $user->notify(new ApplicantApprovedNotification($event, $user->student));
         return redirect()->back()->with('success', 'Student has been rejected.');
     }
 
@@ -225,7 +226,7 @@ class EventController extends Controller
         /**
          * notify
          */
-        $user->notify(new ApplicantApprovedNotification($event));
+        $user->notify(new StaffEventNotification($event, $user->student));
         return redirect()->back()->with('success', 'Staff added successfully.');
     }
 

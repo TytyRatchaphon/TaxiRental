@@ -10,13 +10,14 @@ use Illuminate\Notifications\Notification;
 class ApplicantApprovedNotification extends Notification
 {
     use Queueable;
-    protected $student;
+    protected $event, $student;
 
     /**
      * Create a new notification instance.
      */
-    public function __construct($student)
+    public function __construct($event, $student)
     {
+        $this->event = $event;
         $this->student = $student;
     }
 
@@ -34,7 +35,7 @@ class ApplicantApprovedNotification extends Notification
     {
         return [
             'message' => 'Approval to the student in Event',
-            'details' => 'You '.$this->student->user->username.' in '.$this->student->event->event_name,
+            'details' => 'You '.$this->student->user->username.' in '.$this->event->event_name,
         ];
     }
 }
