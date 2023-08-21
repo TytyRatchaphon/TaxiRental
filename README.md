@@ -42,7 +42,7 @@ sail yarn dev
 If you encounter storage not found, try this
 
 ```bash
-artisan storage:link
+sail artisan storage:link
 ```
 If still that still doesn't do the trick try...
 
