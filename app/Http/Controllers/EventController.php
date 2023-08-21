@@ -6,6 +6,7 @@ use App\Models\Enums\ApplicantStatus;
 use Illuminate\Http\Request;
 use App\Models\Event;
 use App\Models\Student;
+use App\Models\User;
 use App\Notifications\EventApprovedNotification;
 use App\Providers\RouteServiceProvider;
 use Illuminate\Support\Facades\Gate;
@@ -47,16 +48,6 @@ class EventController extends Controller
         $student = Auth::user()->student;
         $events = $student->events()->byStatusEvent(ApplicantStatus::APPROVED)->byEndEvent()->get();
         return view('events.show-certificates', ['events' => $events]);
-    }public function updateApproveApplicant(Request $request, $student_id, $event_id){
-        $request->validate(['status' => ['required']]);
-        $event = Event::find($event_id);
-        $applicant = $event->students()->byRoleEvent('APPLICANT')->where('student_id', $student_id)->first();
-    
-        if ($applicant) {
-            $applicant->pivot->update(['status' => 'approve']);
-        }
-    
-        return redirect()->route('events.manage.manage-applicants', ['event' => $event]);
     }
     
     public function create() {
@@ -168,4 +159,33 @@ class EventController extends Controller
             return redirect()->route('events.index')->with('error', 'You are not authorized to delete this event.');
         }
     }
+
+        public function apply(Event $event)
+    {
+        // Logic to handle event application
+        // You can retrieve the authenticated user using Auth::user()
+
+        // For example:
+        $user = Auth::user();
+        $event->students()->attach($user->student->id, ['role' => 'PARTICIPANT']);
+
+        return redirect()->back()->with('success', 'Applied for the event successfully!');
+    }
+
+    public function approveStudent(Event $event, Student $student)
+    {
+        // You might want to add additional logic here
+        $event->students()->updateExistingPivot($student, ['status' => ApplicantStatus::APPROVED]);
+        
+        return redirect()->back()->with('success', 'Student has been approved.');
+    }
+
+    public function rejectStudent(Event $event, Student $student)
+    {
+        // You might want to add additional logic here
+        $event->students()->updateExistingPivot($student, ['status' => ApplicantStatus::UNAPPROVED]);
+
+        return redirect()->back()->with('success', 'Student has been rejected.');
+    }
+    
 }
