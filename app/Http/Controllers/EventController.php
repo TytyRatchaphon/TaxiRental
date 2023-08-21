@@ -32,14 +32,15 @@ class EventController extends Controller
         return view('events.show', ['event' => $event]);
     }
     public function manageKanban() {
-        return view('events.manage.kanban');
+        return view('events.kanbans.show');
     }
     public function manageApplicants(Event $event) {
         $students = $event->students;
         return view('events.manage.manage-applicants',['students' => $students, 'event' => $event]);
     }
     public function manageStaffs(Event $event) {
-        return view('events.manage.manage-staffs',['event'=> $event]);
+        $students = $event->students;
+        return view('events.manage.manage-staffs',['students' => $students,'event'=> $event]);
     }
     public function manageBudgets(EVent $event) {
         return view('events.manage.manage-budgets', ['event'=> $event]);
@@ -187,5 +188,32 @@ class EventController extends Controller
 
         return redirect()->back()->with('success', 'Student has been rejected.');
     }
+
+    public function detachStudent(Event $event, Student $student)
+    {
+        // Detach the student from the event
+        $event->students()->detach($student);
+
+        return redirect()->route('events.manage.staffs', ['event' => $event])
+            ->with('success', 'Participant detached successfully.');
+    }
     
+    public function addStaff(Request $request, Event $event)
+    {
+        $username = $request->input('username');
+
+        // Find the user by username
+        $user = User::where('username', $username)->first();
+
+        if (!$user) {
+            return redirect()->route('events.manage.staffs', ['event' => $event])
+                ->with('error', 'User not found.');
+        }
+
+        // Attach the user as staff to the event
+        $event->students()->attach($user->student->id, ['role' => 'STAFF', 'status' => 'approved']);
+
+        return redirect()->route('events.manage.staffs', ['event' => $event])
+            ->with('success', 'Staff added successfully.');
+    }
 }
