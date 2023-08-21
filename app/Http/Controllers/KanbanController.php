@@ -6,10 +6,13 @@ use App\Models\Enums\KanbanStatus;
 use App\Models\Event;
 use App\Models\Kanban;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Gate;
 
 class KanbanController extends Controller
 {
     public function showKanbans(Event $event) {
+        Gate::authorize('viewKanban', $event);
         $statusOptions = KanbanStatus::cases();
         return view('kanbans.index', [
             'event' => $event,

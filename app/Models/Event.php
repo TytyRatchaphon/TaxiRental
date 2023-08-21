@@ -61,11 +61,26 @@ class Event extends Model
             return false;
         }
     }
+    public function isStudentEvent($student, $role) {
+        return $this->students()->byRoleEvent($role)->where('student_id', $student->id)->exists();
+    }
+    public function hasStudentInEvent($student) {
+        return $this->students()->where('student_id', $student->id)->exists();
+    }
+    public function headEvent() {
+        return $this->students()->byRoleEvent('HEAD')->first();
+    }
+    public function isStatus($status) {
+        return $this->where('event_approval_status', $status)->exists();
+    }
+    public function getApplicant($status) {
+        return $this->students()->byRoleEvent('APPLICANT')->byStatus($status)->get();
+    }
     public function scopeByStatusEvent($query, $status) {
         return $query->where('event_approval_status', $status);
     }
-    public function scopeAfterDeadline($query) {
-        return $query->where('event_application_deadline', '>', Carbon::now()->toDateString());
+    public function scopeByDeadline($query) {
+        return $query->where('event_application_deadline', '>=', Carbon::now()->toDateString());
     }
     public function scopeByEndEvent($query) {
         return $query->where('event_date', '<=', Carbon::now()->toDateString());
