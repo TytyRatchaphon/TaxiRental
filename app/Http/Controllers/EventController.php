@@ -185,7 +185,7 @@ class EventController extends Controller
         /**
          * notify
          */
-        $user = $event->students()->where('student_id', $student->id)->get()->user;
+        $user = $event->students()->find($student->id)->user;
         $user->notify(new ApplicantApprovedNotification($event, $user->student));
         return redirect()->back()->with('success', 'Student has been approved.');
     }
@@ -197,7 +197,7 @@ class EventController extends Controller
         /**
          * notify
          */
-        $user = $event->students()->where('student_id', $student->id)->get()->user;
+        $user = $event->students()->find($student->id)->user;
         $user->notify(new ApplicantApprovedNotification($event, $user->student));
         return redirect()->back()->with('success', 'Student has been rejected.');
     }
