@@ -67,6 +67,36 @@
                 @enderror
             </div>
 
+            <!-- Facebook -->
+            <div class="mb-6">
+                <x-input-label for="facebook" :value="__('Facebook')" />
+                <x-text-input id="facebook" class="block w-full mt-1" type="text" name="facebook"
+                    :value="old('facebook', $user->student->facebook)"/>
+                @error('facebook')
+                <p class="mt-2 text-red-500 text-sm">{{ $message }}</p>
+                @enderror
+            </div>
+
+            <!-- Line -->
+            <div class="mb-6">
+                <x-input-label for="line" :value="__('Line')" />
+                <x-text-input id="line" class="block w-full mt-1" type="text" name="line"
+                    :value="old('line', $user->student->line)"/>
+                @error('line')
+                <p class="mt-2 text-red-500 text-sm">{{ $message }}</p>
+                @enderror
+            </div>
+
+            <!-- IG -->
+            <div class="mb-6">
+                <x-input-label for="instagram" :value="__('Instagram')" />
+                <x-text-input id="instagram" class="block w-full mt-1" type="text" name="instagram"
+                    :value="old('instagram', $user->student->instagram)"/>
+                @error('instagram')
+                <p class="mt-2 text-red-500 text-sm">{{ $message }}</p>
+                @enderror
+            </div>
+
             <!-- Year -->
             <div class="mb-6">
                 <x-input-label for="year" :value="__('Year')" />

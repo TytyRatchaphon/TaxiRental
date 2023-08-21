@@ -19,7 +19,7 @@ class StudentFactory extends Factory
     {
 
         return [
-            'user_id' => User::factory()->create(['role' => 'USER'])->id,
+            'user_id' => User::factory()->create(['role' => 'STUDENT'])->id,
             'major' => $this->faker->word,
             'year' => $this->faker->numberBetween(1, 4),
             'facebook' => fake()->name(),

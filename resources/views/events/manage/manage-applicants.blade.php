@@ -41,8 +41,9 @@
                             <h1>Facbook : {{ $student->facebook }}</h1>
                             <h1>Line : {{ $student->line }}</h1>
                             <h1>IG : {{ $student->instagram }}</h1>
-                            <h1>Status :
-                                {{ $event->students()->where('student_id', $student->id)->first()->pivot->status }} </h1>
+                            <h1 class="bg-green-200 w-[22vh] py-1 mt-3 text-center rounded-lg">Status :
+                                {{ $event->students()->where('student_id', $student->id)->first()->pivot->status }}
+                            </h1>
                         </div>
                     </li>
                 @endif
@@ -80,14 +81,6 @@
                                         class="bg-[#FF6666] font-semibold text-white hover:opacity-80 rounded-lg p-1 pr-2 pl-2">Reject</button>
                                 </form>
 
-                                <!-- Delete Button -->
-                                <form action="{{ route('detach', ['event' => $event->id, 'student' => $student->id]) }}"
-                                    method="POST">
-                                    @csrf
-                                    <button type="submit"
-                                        class="bg-yellow-200 font-semibold text-gray-800 hover:opacity-80 rounded-lg p-1 pr-2 pl-2">Delete</button>
-                                </form>
-
                             </div>
                             <hr>
                             <div class="pt-3">
@@ -99,7 +92,7 @@
                                 <h1>Facbook : {{ $student->facebook }}</h1>
                                 <h1>Line : {{ $student->line }}</h1>
                                 <h1>IG : {{ $student->instagram }}</h1>
-                                <h1 class="bg-yellow-200 w-[22vh] py-1 mt-3 text-center rounded-lg">Status :
+                                <h1 class="bg-red-200 w-[22vh] py-1 mt-3 text-center rounded-lg">Status :
                                     {{ $event->students()->where('student_id', $student->id)->first()->pivot->status }}
                                 </h1>
                             </div>
