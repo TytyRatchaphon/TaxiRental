@@ -24,7 +24,7 @@ class KanbanController extends Controller
         $request->validate([
             'title' => ['required', 'string', 'min:4', 'max:255'],
             'detail' => ['required', 'string', 'min:4', 'max:255'],
-            'date_deadline' => ['required', 'date', 'after:today']
+            'date_deadline' => ['required', 'date', 'after:today', 'before:'.$event->event_date]
         ]);
 
         $kanban = new Kanban();
@@ -43,7 +43,7 @@ class KanbanController extends Controller
 
     public function updateStatusKanban(Request $request, Event $event, Kanban $kanban) {
         $request->validate([
-            'status' => ['required']
+            'status' => ['required', 'in:Not Start,In Progress,Success']
         ]);
         $kanban = $event->findByKanbanID($kanban->id);
         $kanban->status = $request->get('status');
