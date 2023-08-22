@@ -210,12 +210,15 @@ class EventController extends Controller
     
     public function addStaff(Request $request, Event $event)
     {
+        $request->validate([
+            'username' => ['string', 'min:3', 'max:20']
+        ]);
         $username = $request->input('username');
 
         // Find the user by username
         $user = User::where('username', $username)->first();
 
-        if (!$user && $user->isRole('STUDENT')) {
+        if (!$user || !$user->isRole('STUDENT')) {
             return redirect()->route('events.manage.staffs', ['event' => $event])->with('error', 'User not found.');
         }
 
