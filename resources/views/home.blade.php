@@ -50,7 +50,7 @@
                                 <img src="{{ asset('storage/' . $event->event_thumbnail) }}" alt="Event Thumbnail"
                                     class="w-full h-full object-cover">
                             @else
-                                <img src="https://cdn.discordapp.com/attachments/1132651254057795625/1143231381334409266/event_thumbnail.jpeg"
+                                <img src="{{ asset('default-img/event_thumbnail.jpg') }}"
                                     alt="Default Event Image" class="w-full h-full object-cover">
                             @endif
                         </div>

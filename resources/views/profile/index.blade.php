@@ -7,7 +7,7 @@
                 @if ($user->user_profile_img)
                     <img src="{{ asset('/storage/' . ($user->user_profile_img))}}" alt="Profile Image" class="h-48 w-48 rounded-full border-4 border-yellow-300 mx-auto my-5">
                 @else
-                    <img src="https://cdn.discordapp.com/attachments/1132651254057795625/1143232398243397733/user_image.jpeg" alt="Default Event Image" class="h-48 w-48 rounded-full border-4 border-yellow-300 mx-auto my-5">
+                <img src="{{ asset('default-img/user_image.jpg') }}" alt="Default Event Image" class="h-48 w-48 rounded-full border-4 border-yellow-300 mx-auto my-5">
                 @endif
                 <div class="py-5">
                     <h3 class="font-bold text-2xl mb-1">

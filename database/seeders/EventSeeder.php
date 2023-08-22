@@ -14,6 +14,6 @@ class EventSeeder extends Seeder
      */
     public function run(): void
     {
-        $events = Event::factory()->count(10)->withHeadUser()->has(Kanban::factory(10))->has(Certificate::factory())->create();
+        $events = Event::factory()->count(10)->withHeadUser()->has(Kanban::factory(10))->create();
     }
 }

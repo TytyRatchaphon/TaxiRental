@@ -30,7 +30,7 @@
                 @if (Auth::user()->user_profile_img)
                     <img src="{{ asset('/storage/' . auth()->user()->user_profile_img) }}" alt="Profile Image" class="h-8 w-8 rounded-full">
                 @else
-                    <img src="https://cdn.discordapp.com/attachments/1132651254057795625/1143232398243397733/user_image.jpeg" alt="Default Event Image" class="h-8 w-8 rounded-full">
+                <img src="{{ asset('default-img/user_image.jpg') }}" alt="Default Event Image" class="h-8 w-8 rounded-full">
                 @endif
                 <span class="text-Black text-sm font-medium mr-3 ml-2">{{ auth()->user()->username }}</span>
             </a>

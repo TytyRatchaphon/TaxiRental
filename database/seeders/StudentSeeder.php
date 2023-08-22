@@ -15,6 +15,34 @@ class StudentSeeder extends Seeder
     public function run(): void
     {
         $user = new User();
+        $user->email = 'student1@example.com';
+        $user->username = 'user1';
+        $user->user_firstname = 'firstname1';
+        $user->user_lastname = 'lastname1';
+        $user->password = Hash::make('password');
+        $user->role = 'STUDENT';
+        $user->save();
+
+        $student = new Student();
+        $student->major = 'major1';
+        $student->faculty = 'faculty1';
+        $student->year = 1;
+        $user->student()->save($student);
+
+        $user = new User();
+        $user->email = 'student2@example.com';
+        $user->username = 'user2';
+        $user->user_firstname = 'firstname2';
+        $user->user_lastname = 'lastname2';
+        $user->password = Hash::make('password');
+        $user->role = 'STUDENT';
+        $user->save();
+
+        $student = new Student();
+        $student->major = 'major2';
+        $student->faculty = 'faculty2';
+        $student->year = 1;
+        $user = new User();
         $user->email = 'student3@example.com';
         $user->username = 'user3';
         $user->user_firstname = 'firstname3';

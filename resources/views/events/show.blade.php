@@ -6,7 +6,7 @@
             @if ($event->event_image)
             <img src="{{ asset('storage/' . $event->event_image) }}" class="rounded-lg w-full h-[70vh]">
             @else
-            <img src="https://cdn.discordapp.com/attachments/1132651254057795625/1143230889027977296/event_image.jpeg" alt="Default Event Image" class="w-full h-full object-cover">
+            <img src="{{ asset('default-img/event_image.jpg') }}" alt="Default Event Image" class="w-full h-full object-cover">
             @endif
         </div>
     </div>
