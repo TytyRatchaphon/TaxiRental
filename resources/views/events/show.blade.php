@@ -38,7 +38,13 @@
         <p>Location: {{ $event->event_location }}</p>
         <div class="flex justify-between items-cente mt-16">
             <div class="">
-                <h1>Participants {{ $event->getApplicant('APPROVED')->count() }} / {{ $event->event_applicants_limit }}
+                @auth
+                    @if (Auth::user()->isRole('OPERATOR'))
+                        <h1>Event Staffs Limit: {{ $event->event_staffs_limit }}</h1>
+                        <h1>Event Budget: {{ $event->event_expense_amount }}</h1>
+                    @endif
+                @endauth
+                <h1>Participants: {{ $event->getApplicant('APPROVED')->count() }} / {{ $event->event_applicants_limit }}
                 </h1>
                 <p class="text-gray-600">Event Start: {{ $event->event_date }} </p>
                 <p class="text-gray-600">Deadline to JOIN: {{ $event->event_application_deadline }}</p>

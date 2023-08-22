@@ -29,7 +29,7 @@ class EventFactory extends Factory
             'event_location' => $this->faker->city,
             'event_expense_amount' => $this->faker->randomFloat(2, 10, 500),
             'event_applicants_limit' => $this->faker->numberBetween(50, 500),
-            'event_approval_status' => $this->faker->randomElement(['pending', 'approved', 'rejected']),
+            'event_approval_status' => $this->faker->randomElement(['approved']),
             'event_description' => $this->faker->realText(200),
             'event_staffs_limit' => $this->faker->numberBetween(0, 20),
         ];

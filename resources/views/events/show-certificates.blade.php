@@ -12,19 +12,17 @@
                             {{ $event->event_date }}
                         </p>
                     </div>
-                    <div>
-                        <a href="{{ route('events.show', ['event' => $event]) }}">See more</a>
-                    </div>
                 </div>
                 <hr>
-                @if($event->certificate)
+                @if($event->certificate->path_img)
                     <div class="object-cover m-20 mt-5 mb-5">
                         <img src="{{ assert('storage/'.$event->certficate->path_img) }}" alt="certficate"
                             class="rounded-lg w-full alsolute">
                     </div>
                 @else
                     <div class="object-cover m-20 mt-5 mb-5">
-                        <p>This event have not Certficate!</p>
+                        <!--This event have not Certficate!-->
+                        <img src="https://cdn.discordapp.com/attachments/1132651254057795625/1143230379055136788/Certificate_honeyLemon.png" alt="">
                     </div>
                 @endif
             </li>

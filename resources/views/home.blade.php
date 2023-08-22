@@ -59,7 +59,20 @@
                             {{ $event->getApplicant('APPROVED')->count() }} / {{ $event->event_applicants_limit }}</p>
                         <p class="text-red-500 text-sm">Application Deadline: {{ $event->event_application_deadline }}
                         </p>
-                        <!-- Add more event details here -->
+                        <p>
+                            @auth
+                                @if(Auth::user()->isRole('STUDENT') && $event->hasStudentInEvent(Auth::user()->student))
+                                    <p class="text-Gray-300 text-lg font-semibold pt-5">You are {{ $event->students()->find(Auth::user()->student->id)->pivot->role }}
+                                @endif
+                            @endauth
+                        </p>
+                        <p>
+                            @auth
+                                @if(!Auth::user()->isRole('STUDENT') || (Auth::user()->isRole('STUDENT') && $event->isStudentEvent(Auth::user()->student, 'HEAD')))
+                                    <p class="text-lg">Status: {{ $event->event_approval_status }}
+                                @endif
+                             @endauth
+                        </p>
                     </a>
                 @endforeach
             </div>
