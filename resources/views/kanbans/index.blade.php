@@ -44,7 +44,8 @@
                             @foreach ($statusOptions as $statusOption)
                             <button type="submit" id="status" name="status" value="{{ $statusOption }}"
                                 class="@if ($kanban->status == $statusOption->value)
-                                    bg-black text-yellow-400 @else border-yellow-400 border-2 hover:bg-yellow-400 @endif rounded-xl px-3 mr-2">
+                                    bg-black text-yellow-400 @else border-yellow-400 border-2 hover:bg-yellow-400 @endif rounded-xl px-3 mr-2"
+                                    onclick="return confirm('Are you sure you want to update {{$statusOption}} status?')">
                                 {{ $statusOption }}
                             </button>
                             @endforeach
@@ -55,7 +56,10 @@
                             @csrf
                             @method('DELETE')
                             <button type="submit"
-                                class="bg-red-400 text-white rounded-full px-3 hover:opacity-90">DELETE</button>
+                                class="bg-red-400 text-white rounded-full px-3 hover:opacity-90"
+                                onclick="return confirm('Are you sure you want to delete this post it?')">
+                                DELETE
+                            </button>
                         </form>
                     </div>
 
@@ -75,7 +79,7 @@
         <form action="{{ route('events.kanbans.store', ['event' => $event]) }}" method="post"
             class="p-5 mx-20 my-5">
             @csrf
-            <h1 class="text-center text-xl font-semibold">Add new Kanban</h1>
+            <h1 class="text-center text-xl font-semibold">Add Post-it</h1>
             <div class="flex justify-center items-center w-full pt-5">
                 <div class="w-8/12 pr-5">
                     <label for="title" class="font-semibold mr-5">Title</label>
@@ -88,7 +92,7 @@
                         class="@error('title') border-red-600 @enderror w-full">
                 </div>
                 <div class="w-3/12">
-                    <label for="date_deadline" class="font-semibold">Deadline</label>
+                    <label for="date_deadline" class="font-semibold">Deadline {{ today()->format('d/m/Y') }} {{ \Carbon\Carbon::createFromFormat('Y-m-d', $event->event_date)->format('d/m/Y') }}</label>
                     @error('date_deadline')
                     <div class="text-red-600">
                         {{ $message }}
