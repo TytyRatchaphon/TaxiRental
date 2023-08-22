@@ -34,7 +34,7 @@ class EventApprovedNotification extends Notification
     {
         return [
             'message' => 'Approval to Create Event',
-            'details' => 'Your event "'.$this->event->event_name.'" has been '.$this->event->event_approval_status
+            'details' => 'Your event "'.$this->event->event_name.'" has been '.$this->event->event_approval_status.'.'
         ];
     }
 }
