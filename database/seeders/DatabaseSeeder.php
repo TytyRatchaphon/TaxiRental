@@ -16,6 +16,6 @@ class DatabaseSeeder extends Seeder
         $this->call(StudentSeeder::class);
         $this->call(EventSeeder::class);
         $this->call(KanbanSeeder::class);
-        //$this->call(OperatorSeeder::class);
+        $this->call(OperatorSeeder::class);
     }
 }

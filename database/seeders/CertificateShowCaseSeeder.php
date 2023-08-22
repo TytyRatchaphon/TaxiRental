@@ -30,6 +30,7 @@ class CertificateShowCaseSeeder extends Seeder
         $student->major = 'major1';
         $student->faculty = 'faculty1';
         $student->year = 1;
+        $user->student()->save($student);
 
         $event = Event::factory()->create();
         $event->students()->attach($student->id, ['role' => 'HEAD']);
