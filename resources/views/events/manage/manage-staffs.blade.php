@@ -1,4 +1,5 @@
 @extends('layouts.main')
+@section('title', 'Add Staff')
 @section('content')
     @include('layouts.subviews.navbar-staff')
     <div class="text-sm font-medium text-center text-gray-500 border-b border-gray-200">
@@ -22,13 +23,13 @@
                                     <form action="{{ route('detach', ['event' => $event->id, 'student' => $student->id]) }}"
                                         method="POST">
                                         @csrf
-                                        <button type="submit"
+                                        <button type="submit" onclick="return confirm('Are you sure you want to DELETE THIS STAFF FROM THIS EVENT?')"
                                             class="bg-[#FF6666] font-semibold text-white hover:opacity-80 rounded-lg p-1 pr-2 pl-2">Delete</button>
                                     </form>
 
                                 </div>
                                 <hr>
-                                <div class="pt-3">
+                                <div class="pt-3 text-left">
                                     <h1 class="font-semibold">{{ $student->user->user_firstname }}
                                         {{ $student->user->user_lastname }}</h1>
                                     <h1>Faculty : {{ $student->faculty }}</h1>

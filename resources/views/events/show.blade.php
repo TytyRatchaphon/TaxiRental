@@ -34,8 +34,8 @@
             </ul>
         </div>
         <h1 class="text-xl font-semibold">{{ $event->event_name }}</h1>
+        <h2 class="pb-10">Location: {{ $event->event_location }}</h2>
         <pre class="flex text-gray-700 leading-tight mb-4 break-all overflow-auto">{{ $event->event_description }}</pre>
-        <p>Location: {{ $event->event_location }}</p>
         <div class="flex justify-between items-cente mt-16">
             <div class="">
                 @auth

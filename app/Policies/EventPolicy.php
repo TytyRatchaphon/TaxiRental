@@ -39,7 +39,7 @@ class EventPolicy
      */
     public function update(User $user, Event $event)
     {
-        return $user->isRole('STUDENT') || $user->isRole('OPERATOR');
+        return $user->isRole('STUDENT') || $user->isRole('OPERATOR') || $event->headEvent()->user->id === $user->id;
     }
 
     /**
@@ -47,7 +47,7 @@ class EventPolicy
      */
     public function delete(User $user, Event $event)
     {
-        return $user->isRole('ADMIN') || $event->isHeadEvent($user);
+        return $user->isRole('ADMIN') || $event->headEvent()->user->id === $user->id;
     }
 
     /**

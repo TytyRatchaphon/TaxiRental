@@ -51,6 +51,9 @@ class EventController extends Controller
     public function showManageApplicants(Event $event) {
         return view('events.manage.manage-applicants',['event' => $event]);
     }
+    public function edit(Event $event) {
+        return view('events.manage.manage-edit',['event' => $event]);
+    }
     public function manageStaffs(Event $event) {
         $students = $event->students;
         return view('events.manage.manage-staffs',['students' => $students,'event'=> $event]);
@@ -230,6 +233,55 @@ class EventController extends Controller
          */
         $user->notify(new StaffEventNotification($event, $user->student));
         return redirect()->back()->with('success', 'Staff added successfully.');
+    }
+
+        public function update(Request $request, Event $event)
+    {
+        // Validate the input data
+        $request->validate([
+            'event_name' => 'required|max:255',
+            'event_date' => 'required|date',
+            'event_location' => 'required|max:255',
+            'event_description' => 'required',
+            'event_expense_amount' => 'required|numeric|min:0',
+            'event_applicants_limit' => 'required|integer|min:1',
+            'event_staffs_limit' => 'required|integer|min:1',
+            'event_application_deadline' => 'required|date|before_or_equal:event_date',
+            'event_thumbnail' => '|image|mimes:jpeg,png,jpg,gif|max:2048',
+            'event_image' => '|image|mimes:jpeg,png,jpg,gif|max:2048',
+            'event_certificate_image' => 'image|mimes:jpeg,png,jpg,gif|max:2048',
+        ]);
+    
+        // Update the event data
+        $event->update([
+            'event_name' => $request->input('event_name'),
+            'event_date' => $request->input('event_date'),
+            'event_location' => $request->input('event_location'),
+            'event_description' => $request->input('event_description'),
+            'event_expense_amount' => $request->input('event_expense_amount'),
+            'event_applicants_limit' => $request->input('event_applicants_limit'),
+            'event_staffs_limit' => $request->input('event_staffs_limit'),
+            'event_application_deadline' => $request->input('event_application_deadline'),
+        ]);
+    
+        // Handle file uploads if new files are provided
+        if ($request->hasFile('event_thumbnail')) {
+            // Handle thumbnail upload
+        }
+    
+        if ($request->hasFile('event_image')) {
+            // Handle image upload
+        }
+    
+        if ($request->hasFile('event_certificate_image')) {
+            // Handle certificate image upload
+        }
+
+        $event->event_approval_status = 'pending';
+        $event->save();
+    
+        // Redirect back to the edit page with a success message
+        return redirect()->route('events.index', ['event' => $event])->with('success', 'Event information updated successfully.');
     }
 
 }

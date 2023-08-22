@@ -47,9 +47,11 @@
                         data-replace='{"opacity-0":"opacity-100"}'>
                         <div class="h-40 bg-cover bg-center rounded-t-lg">
                             @if ($event->event_thumbnail)
-                                <img src="{{ asset('storage/' . $event->event_thumbnail) }}" alt="Event Thumbnail" class="w-full h-full object-cover">
+                                <img src="{{ asset('storage/' . $event->event_thumbnail) }}" alt="Event Thumbnail"
+                                    class="w-full h-full object-cover">
                             @else
-                                <img src="https://cdn.discordapp.com/attachments/1132651254057795625/1143231381334409266/event_thumbnail.jpeg" alt="Default Event Image" class="w-full h-full object-cover">
+                                <img src="https://cdn.discordapp.com/attachments/1132651254057795625/1143231381334409266/event_thumbnail.jpeg"
+                                    alt="Default Event Image" class="w-full h-full object-cover">
                             @endif
                         </div>
                         <h2 class="text-xl font-semibold mt-4 mb-2">{{ $event->event_name }}</h2>
@@ -77,6 +79,19 @@
                                  @endif
                              @endauth
                         </p>
+                        @auth
+                            @if ($event->event_approval_status !== 'approved')
+                                @if (Auth::user()->isRole('ADMIN') || (Auth::user()->isRole('STUDENT') && $event->isStudentEvent(Auth::user()->student, 'HEAD')))
+                                <!-- DELETE EVENT BUTTON-->
+                                    <form action="{{ route('events.destroy', ['event' => $event]) }}" method="POST">
+                                        @csrf
+                                        @method('DELETE')
+                                        <button type="submit" onclick="return confirm('Are you sure you want to DELETE THIS EVENT?')"
+                                            class="bg-[#FF6666] font-semibold text-white hover:opacity-80 rounded-lg p-1 pr-2 pl-2">Delete</button>
+                                    </form>
+                                @endif
+                            @endif 
+                        @endauth
                     </a>
                 @endforeach
             </div>

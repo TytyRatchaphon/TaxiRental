@@ -10,7 +10,13 @@
         </a>
         <a href="{{ route('events.manage.staffs', ['event' => $event]) }}"
             class="inline-block p-6 pb-2 {{ request()->routeIs('events.manage.staffs') ? 'text-purple-600 border-b-4 border-purple-600' : 'border-b-4 border-transparent hover:text-gray-600 hover:border-gray-300' }} rounded-t-lg text-base">
-            Event Creator
+            Add Staff
         </a>
+        @if ($event->event_approval_status !== 'approved')
+            <a href="{{ route('events.manage.edit', ['event' => $event]) }}"
+                class="inline-block p-6 pb-2 {{ request()->routeIs('events.manage.edit') ? 'text-purple-600 border-b-4 border-purple-600' : 'border-b-4 border-transparent hover:text-gray-600 hover:border-gray-300' }} rounded-t-lg text-base">
+                Edit Event
+            </a>
+        @endif
     </ul>
 </div>
