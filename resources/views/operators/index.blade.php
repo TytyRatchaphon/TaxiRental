@@ -55,7 +55,7 @@
                                     class="flex ml-5 items-center justift-center">
                                     @csrf
                                     @method('DELETE')
-                                    <button type="submit"
+                                    <button type="submit" onclick="return confirm('Are you sure you want to remove operator?')"
                                         class="bg-red-400 rounded-full px-4 py-1 mr-2 hover:opacity-90 hover:text-white">Remove</button>
                                 </form>
                             </div>

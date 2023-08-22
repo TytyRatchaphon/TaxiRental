@@ -53,7 +53,7 @@
                             @endif
                         </div>
                         <h2 class="text-xl font-semibold mt-4 mb-2">{{ $event->event_name }}</h2>
-                        <p class="text-gray-600 text-sm">{{ $event->event_date }} | @ {{ $event->event_location }}</p>
+                        <p class="text-gray-600 text-sm">Event Day : {{ $event->event_date }} | @ {{ $event->event_location }}</p>
                         <p class="text-gray-800 text-sm mt-3">{{ $event->description }}</p>
                         <p class="text-yellow-500 font-bold">Participants:
                             {{ $event->getApplicant('APPROVED')->count() }} / {{ $event->event_applicants_limit }}</p>
@@ -61,16 +61,20 @@
                         </p>
                         <p>
                             @auth
-                                @if(Auth::user()->isRole('STUDENT') && $event->hasStudentInEvent(Auth::user()->student))
-                                    <p class="text-Gray-300 text-lg font-semibold pt-5">You are {{ $event->students()->find(Auth::user()->student->id)->pivot->role }}
+                                @if(Auth::user()->isRole('STUDENT') && $event->hasStudentInEvent(Auth::user()->student) && $event->students()->find(Auth::user()->student->id)->pivot->status === 'approved' && !$event->isStudentEvent(Auth::user()->student, 'HEAD'))
+                                    <p class="text-green-500 text-lg font-semibold pt-5">You are joined this event.</p>
+                                @elseif(Auth::user()->isRole('STUDENT') && $event->hasStudentInEvent(Auth::user()->student) && $event->students()->find(Auth::user()->student->id)->pivot->status === 'pending' && !$event->isStudentEvent(Auth::user()->student, 'HEAD'))
+                                    <p class="text-yellow-500 text-lg font-semibold pt-5">Your request is pending.</p>
                                 @endif
                             @endauth
                         </p>
                         <p>
                             @auth
-                                @if(!Auth::user()->isRole('STUDENT') || (Auth::user()->isRole('STUDENT') && $event->isStudentEvent(Auth::user()->student, 'HEAD')))
-                                    <p class="text-lg">Status: {{ $event->event_approval_status }}
-                                @endif
+                                @if(!Auth::user()->isRole('STUDENT') || (Auth::user()->isRole('STUDENT') && $event->isStudentEvent(Auth::user()->student, 'HEAD')) && $event->event_approval_status === 'approved')
+                                    <p class="text-lg text-green-500">Status: {{ $event->event_approval_status }}
+                                @elseif(!Auth::user()->isRole('STUDENT') || (Auth::user()->isRole('STUDENT') && $event->isStudentEvent(Auth::user()->student, 'HEAD')) && $event->event_approval_status === 'pending')
+                                    <p class="text-lg text-orange-500">Status: {{ $event->event_approval_status }}
+                                 @endif
                              @endauth
                         </p>
                     </a>

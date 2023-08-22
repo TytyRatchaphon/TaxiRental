@@ -17,6 +17,7 @@ use Illuminate\Support\Facades\Auth;
 class EventController extends Controller
 {
     public function index(Request $request) {
+    
         if (!Auth::check() || Auth::user()->isRole('STUDENT')) {
             $events = Event::byStatusEvent('approved')->byDeadline()->get();
         } else {
@@ -39,7 +40,7 @@ class EventController extends Controller
         $student = $user->student;
     
         // Assuming there's a relationship between students and events
-        $events = $student->events;
+        $events = $student->events()->endEvent()->get();
     
         return view('home', ['events' => $events]);
     }

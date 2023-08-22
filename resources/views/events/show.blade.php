@@ -54,7 +54,7 @@
                 <form method="POST" action="{{ route('events.apply', ['event' => $event]) }}">
                     @csrf
                     @can('requestJoin', $event)
-                    <button type="submit"
+                    <button type="submit" onclick="return confirm('Are you sure you want to apply to this event?')"
                         class="bg-[#F6D106] p-1 pl-5 pr-5 mr-5 rounded transition-all hover:opacity-80">
                         apply for event
                     </button>
