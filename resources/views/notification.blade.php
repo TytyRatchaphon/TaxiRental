@@ -8,10 +8,13 @@
         @if(!$notifications->isEmpty())
         <ul class="flex-col items-center">
             @foreach($notifications as $notification)
+            <a href="{{ route('events.show', ['event' => App\Models\Event::find($notification->data['event_id'])]) }}">
+
             <li class="notification bg-white rounded-lg shadow-lg mb-5 p-7 items-center">
                 <h1 class="font-bold">{{ $notification->data['message'] }}</h1>
                 <p>{!! $notification->data['details'] !!}</p>
             </li>
+            </a>
             @endforeach
         </ul>
         @else

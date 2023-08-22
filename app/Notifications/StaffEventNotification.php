@@ -37,6 +37,7 @@ class StaffEventNotification extends Notification
     public function toDatabase(object $notifiable): array
     {
         return [
+            'event_id' => $this->event->id,
             'message' => 'You are Staff in '.$this->event->event_name,
             'details' => $this->event->headEvent()->user->username.' choose you to the staff of '.$this->event->event_name,
         ];

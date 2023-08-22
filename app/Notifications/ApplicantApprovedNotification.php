@@ -34,6 +34,7 @@ class ApplicantApprovedNotification extends Notification
     public function toDatabase(object $notifiable): array
     {
         return [
+            'event_id' => $this->event->id,
             'message' => 'Approval to the student in Event',
             'details' => $this->student->user->username.' is '.$this->event->students()->find($this->student->id)->pivot->status.' in '.$this->event->event_name,
         ];

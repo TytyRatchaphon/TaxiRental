@@ -33,6 +33,7 @@ class EventApprovedNotification extends Notification
     public function toDatabase(object $notifiable)
     {
         return [
+            'event_id' => $this->event->id,
             'message' => 'Approval to Create Event',
             'details' => 'Your event "'.$this->event->event_name.'" has been '.$this->event->event_approval_status.'.'
         ];
