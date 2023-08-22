@@ -35,7 +35,7 @@ class ApplicantApprovedNotification extends Notification
     {
         return [
             'message' => 'Approval to the student in Event',
-            'details' => 'You '.$this->student->user->username.' in '.$this->event->event_name,
+            'details' => $this->student->user->username.' is '.$this->event->students()->find($this->student->id)->pivot->status.' in '.$this->event->event_name,
         ];
     }
 }
