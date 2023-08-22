@@ -70,8 +70,7 @@
                 <a href="{{ url('/home') }}">
                     <button type="submit"
                     class="bg-[#FF6666] p-1 px-10 rounded transition-all hover:opacity-80">back</button>
-                </a>
-                
+                </a>             
             </div>
         </div>
     </div>

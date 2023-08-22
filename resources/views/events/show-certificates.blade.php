@@ -4,28 +4,21 @@
     <ul class="flex flex-col justify-center items-center">
         @if(!$events->isEmpty())
             @foreach($events as $event)
-            <li class="flex flex-col bg-white rounded-lg shadow-lg overflow-hidden max-w-3xl w-full mb-5">
-                <div class="p-7">
-                    <div class="flex justify-between">
-                        <h1 class="text-xl leading-tight font-semibold mb-2">{{ $event->event_name }}</h1>
-                        <p class="text-gray-700 leading-tight">
-                            {{ $event->event_date }}
-                        </p>
+                <li class="flex flex-col bg-white rounded-lg shadow-lg overflow-hidden max-w-3xl w-full mb-5">
+                    <div class="p-7">
+                        <div class="flex justify-between">
+                            <h1 class="text-xl leading-tight font-semibold mb-2">{{ $event->event_name }}</h1>
+                            <p class="text-gray-700 leading-tight">
+                                {{ $event->event_date }}
+                            </p>
+                        </div>
                     </div>
-                </div>
-                <hr>
-                @if($event->certificate->path_img)
+                    <hr>
                     <div class="object-cover m-20 mt-5 mb-5">
-                        <img src="{{ assert('storage/'.$event->certficate->path_img) }}" alt="certficate"
-                            class="rounded-lg w-full alsolute">
+                    <img src="{{ asset('storage/'.$event->event_certificate_image) }}" alt="certficate"
+                        class="rounded-lg w-full alsolute">
                     </div>
-                @else
-                    <div class="object-cover m-20 mt-5 mb-5">
-                        <!--This event have not Certficate!-->
-                        <img src="https://cdn.discordapp.com/attachments/1132651254057795625/1143230379055136788/Certificate_honeyLemon.png" alt="">
-                    </div>
-                @endif
-            </li>
+                </li>
             @endforeach
         @else
             <div class="flex bg-white rounded-lg shadow-lg w-full p-3 items-center justify-center">

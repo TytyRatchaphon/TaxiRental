@@ -29,6 +29,7 @@ class Event extends Model
         'event_description',
         'event_thumbnail',
         'event_image',
+        'event_certificate_image',
     ];
 
     public function kanbans() : HasMany {

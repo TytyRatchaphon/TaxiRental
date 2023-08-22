@@ -60,7 +60,7 @@ class EventController extends Controller
     }
     public function showCertificates() {
         $student = Auth::user()->student;
-        $events = $student->events()->byStatusEvent(ApplicantStatus::APPROVED)->byEndEvent()->get();
+        $events = $student->events()->byStatusEvent(ApplicantStatus::APPROVED)->get();
         return view('events.show-certificates', ['events' => $events]);
     }
     public function create() {

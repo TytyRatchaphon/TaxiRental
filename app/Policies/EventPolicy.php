@@ -95,4 +95,11 @@ class EventPolicy
             && $event->hasStudentInEvent($user->student) 
             && !$event->isStudentEvent($user->student, 'APPLICANT');
     }
+
+    public function showCertificate(User $user, Event $event) {
+        return $user->isRole('STUDENT')
+            && $event->event_approval_status === "approved"
+            && $event->hasStudentInEvent($user->student)
+            && $event->getApplicant('approved')->find($user->student)->id === $user->student->id;
+    }
  }
