@@ -31,7 +31,7 @@ class EventPolicy
      */
     public function create(User $user)
     {
-        return $user->isRole('STUDENT');
+        return $user->isRole('ADMIN');
     }
 
     /**
@@ -67,8 +67,7 @@ class EventPolicy
     }
     
     public function requestJoin(User $user, Event $event) {
-        return $user->isRole('STUDENT')
-            && !$event->hasStudentInEvent($user->student);
+        return $user->isRole('USER');
     }
 
     public function showStatus(User $user, Event $event) {

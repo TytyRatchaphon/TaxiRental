@@ -1,4 +1,5 @@
 @extends('layouts.main')
+
 @section('content')
 
 <style>
@@ -7,44 +8,20 @@
       display: none;
     }
   </style>
+
 <div class="p-10 px-20">
     <div class="">
         <div class="my-5 object-cover">
-            @if ($taxi->car_image)
-            <img src="{{ asset('storage/' . $event->event_image) }}" class="rounded-lg w-full h-[70vh]">
-            @else
+            
             <img src="{{ asset('default-img/event_image.jpg') }}" alt="Default Event Image" class="w-full h-full object-cover">
-            @endif
+            
         </div>
     </div>
     <div class="">
-        <div class="flex flex-inline space-x-4">
-
-            <ul class="flex p-2 pl-0 mb-5">
-                @auth
-                    @can('showStatus', $taxi)
-                    <li id="status"
-                        class="bg-green p-1 pl-3 pr-3 mr-5 rounded text-xl">
-                        Status : {{ $taxi->car_status }}
-                    </li>
-                    @endcan
-                        @can('viewKanban', $taxi)
-                        <a href="{{ route('events.kanbans.show', ['event' => $event]) }}" class="p-1 pl-3 pr-3 mr-5">
-                            Manage Event
-                        </a>
-                    @endcan
-                @endauth
-            </ul>
-        </div>
-        <h1 class="text-xl font-semibold">Status : {{ $taxi->car_status }}</h1>
-        <h2 class="text-xl font-semibold">Car License : {{ $taxi->car_license }}</h2>
-        <h3 class="pb-10">Car color: {{ $taxi->car_color }}</h3>
         <div class="bg-white p-8 rounded-lg shadow-md space-y-6">
     
-    <!-- Duration Selection -->
-    @auth
-    <!--
-    <form action="" method="POST" enctype="multipart/form-data" >
+
+<form action="{{ route('payments.store', ['booking' => $booking]) }}" method="POST" enctype="multipart/form-data" >
       @csrf
         <div>
           <p class="text-xl mb-4">Select a Duration:</p>
@@ -117,28 +94,9 @@
                         class="bg-[#F6D106] p-1 pl-5 pr-5 mr-5 rounded transition-all hover:opacity-80">
                         apply for pay
               </button>
-  </form>  -->
-  @if(Auth::user()->isRole('USER'))
-      <form action="{{ route('bookings.store', ['taxi' => $taxi]) }}" method="POST" enctype="multipart/form-data">
-        @csrf
-        <div class="flex items-center w-1/2 pl-3 mb-10">
-                            <label for="B_date" class="pr-3">Booking Date
-                            </label>
-                            <input type="date" name="B_date" id="B_date">
-                            @error('B_date')
-                                <span class="text-red-500 text-sm">{{ $message }}</span>
-                        @enderror
-                        </div>
-      <button type="submit" onclick="return confirm('Are you sure you want to apply booking?')"
-                            class="bg-[#F6D106] p-1 pl-5 pr-5 mr-5 rounded transition-all hover:opacity-80">
-                            apply for booking
-                  </button>
-      </form>
-  @endif
-  @endauth
-  
+  </form>
 
-<!-- <script>
+  <script>
   function showContent(paymentType) {
     // Hide all content first
     document.getElementById('transferContent').classList.add('hidden');
@@ -152,6 +110,5 @@
     // Display the selected value in the "Total Amount" paragraph
     document.getElementById('totalAmount').textContent = 'Total Amount: ' + value + ' THB';
   }
-</script> -->
-
+</script> 
 @endsection

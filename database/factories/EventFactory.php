@@ -24,15 +24,12 @@ class EventFactory extends Factory
     {
         $deadline = Carbon::now()->addWeek();;
         return [
-            'event_name' => $this->faker->words(3, true),
-            'event_date' => fake()->dateTimeBetween($deadline, '+1 week'),
-            'event_application_deadline' => $deadline,
-            'event_location' => $this->faker->city,
-            'event_expense_amount' => $this->faker->randomFloat(2, 10, 500),
-            'event_applicants_limit' => $this->faker->numberBetween(50, 500),
-            'event_approval_status' => $this->faker->randomElement(['approved']),
-            'event_description' => $this->faker->realText(200),
-            'event_staffs_limit' => $this->faker->numberBetween(0, 20),
+            'car_license' => $this->faker->firstName,
+            'car_status' => $this->faker->randomElement(['occupied', 'available', 'maintain']),
+            'registration_no' => $this->faker->numerify('##########'),
+            'car_color' => $this->faker->colorName,
+            'car_year' => $this->faker->dateTimeThisYear,
+
         ];
     }
 

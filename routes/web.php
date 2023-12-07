@@ -1,5 +1,9 @@
 <?php
 
+use App\Http\Controllers\BookingController;
+use App\Http\Controllers\InsuranceController;
+use App\Http\Controllers\PaymentController;
+use App\Http\Controllers\TaxiController;
 use App\Http\Controllers\WelcomeController;
 use App\Http\Controllers\HomeController;
 use App\Http\Controllers\ProfileController;
@@ -7,6 +11,8 @@ use App\Http\Controllers\EventController;
 use App\Http\Controllers\KanbanController;
 use App\Http\Controllers\OperatorController;
 use App\Http\Controllers\NotificationController;
+use App\Models\Insurance;
+use App\Models\Payment;
 use Illuminate\Auth\Events\Verified;
 use Illuminate\Support\Facades\Route;
 use App\Http\Middleware\AdminAccess;
@@ -25,56 +31,56 @@ use App\Http\Middleware\AdminAccess;
 //===========================Guest Accessible=============
 
 Route::get('/', [WelcomeController::class, 'index']);
-Route::get('/home', [EventController::class, 'index'])->name('home'); //guest
+Route::get('/home', [TaxiController::class, 'index'])->name('home'); //guest
 Route::get('/login', function () {
 return view('login');
 })->middleware(['auth','verified'])->name('login');
-Route::resource('/events', EventController::class);
+Route::resource('/events', TaxiController::class);
 
 //==========================GROUP OF ROTES THAT REQUIRED AUTH==================================== 
 
-Route::get('/event/{event}/kanban', [KanbanController::class, 'kanban'])->name('events.manage.kanban');
+Route::get('/event/{taxi}/kanban', [KanbanController::class, 'kanban'])->name('events.manage.kanban');
 
 //Delete ROUTE FOR ADMIN ONLY!!!
-Route::delete('/events/{event}', [EventController::class, 'destroy'])->name('events.destroy');
+Route::delete('/events/{taxi}', [TaxiController::class, 'destroy'])->name('events.destroy');
+Route::post('transaction/{payment}/{booking}/{taxi}', [PaymentController::class, 'applyPay'])->name('payments.apply');
 
 // Route Admin use only!!
 Route::get('/create-operators', [OperatorController::class, 'create'])->name('operators.create')->middleware(AdminAccess::class);
 Route::post('/create-operators', [OperatorController::class, 'store'])->name('operators.store');
 
 // Route Event
-Route::resource('/events', EventController::class);
-Route::get('/myevent/', [EventController::class, 'showMyEvent'])->name('events.myevent');
-Route::get('/events/{event}/manage/edits', [EventController::class, 'edit'])->name('events.manage.edit');
-Route::put('/events/{event}/manage/edits/update', [EventController::class, 'update'])->name('events.manage.update');
-Route::get('/events/{event}/manage/applicants', [EventController::class, 'showManageApplicants'])->name('events.manage.applicants');
-Route::get('/events/{event}/manage/staffs', [EventController::class, 'manageStaffs'])->name('events.manage.staffs');
-Route::get('/certificates', [EventController::class, 'showCertificates'])->name('events.show-certificates');
-Route::get('/events/create', [EventController::class, 'create'])->name('events.create');
-Route::post('/events/{event}/apply', [EventController::class, 'apply'])->name('events.apply');
-Route::post('/events/{event}/students/{student}/approve', [EventController::class, 'approveStudent'])->name('approve');
-Route::post('/events/{event}/students/{student}/reject', [EventController::class, 'rejectStudent'])->name('reject');
-Route::post('/events/{event}/detach/{student}', [EventController::class, 'detachStudent'])->name('detach');
-Route::post('/events/{event}/add-staff', [EventController::class, 'addStaff'])->name('events.addStaff');
+Route::resource('/taxis', TaxiController::class);
+Route::get('/mytaxis', [TaxiController::class, 'myTaxi'])->name('taxis.myevent');
+Route::get('/managetaxi', [BookingController::class, 'manageTaxi'])->name('bookings.manage');
+Route::get('/mybooking', [BookingController::class, 'myBooking'])->name('bookings.mybooking');
+Route::get('/events/{taxi}/edits', [TaxiController::class, 'edit'])->name('events.edit');
+Route::put('/events/{taxi}/edits/update', [TaxiController::class, 'update'])->name('events.update');
+Route::get('/events/{taxi}/manage/applicants', [TaxiController::class, 'showManageApplicants'])->name('events.manage.applicants');
+Route::get('/events/{taxi}/manage/staffs', [TaxiController::class, 'manageStaffs'])->name('events.manage.staffs');
+Route::get('/certificates', [TaxiController::class, 'showCertificates'])->name('events.show-certificates');
+Route::get('/events/create', [TaxiController::class, 'create'])->name('events.create');
+Route::post('/events/create', [TaxiController::class, 'store'])->name('taxis.store');
+Route::get('/taxis/create',[BookingController::class, 'create'])->name('bookings.create');
+Route::post('/taxis/{taxi}',[BookingController::class, 'store'])->name('bookings.store');
+Route::get('/taxis/create', [PaymentController::class, 'create'])->name('payments.create');
+Route::post('/payment/{booking}', [PaymentController::class, 'store'])->name('payments.store');
+Route::post('/events/{taxi}/students/{student}/approve', [TaxiController::class, 'approveStudent'])->name('approve');
+Route::post('/events/{taxi}/students/{student}/reject', [TaxiController::class, 'rejectStudent'])->name('reject');
+Route::post('/events/{taxi}/detach/{student}', [TaxiController::class, 'detachStudent'])->name('detach');
+Route::post('/events/{taxi}/add-staff', [TaxiController::class, 'addStaff'])->name('events.addStaff');
+Route::get('mybooking/{booking}', [BookingController::class, 'show'])->name('bookings.show');
+Route::get('/transaction', [PaymentController::class,'index'])->name('payment.show');
+Route::get('/insurance',[InsuranceController::class,'index'])->name('insurance.show');
+Route::post('transaction/{booking}/apply',[BookingController::class, 'applyBooking'])->name('bookings.apply');
+Route::delete('transaction/{booking}/reject',[BookingController::class, 'rejectBooking'])->name('bookings.reject');
+Route::put('/managetaxi/{booking}/return', [BookingController::class, 'returnCar'])->name('bookings.return');
 
-//Delete ROUTE FOR ADMIN ONLY!!!
-Route::delete('/events/{event}', [EventController::class, 'destroy'])->name('events.destroy');
-
-// Route kanban manage
-Route::get('/events/{event}/kanbans', [KanbanController::class, 'showKanbans'])->name('events.kanbans.show');
-Route::post('/events/{event}/kanbans', [KanbanController::class, 'storeKanban'])->name('events.kanbans.store');
-Route::put('/events/{event}/kanbans/{kanban}', [KanbanController::class, 'updateStatusKanban'])->name('events.kanbans.update-status');
-Route::delete('/events/{event}/kanbans/{kanban}', [KanbanController::class, 'destroyKanban'])->name('events.kanbans.destroy');
-
-// Route Operator
-Route::get('/operators', [OperatorController::class, 'index'])->name('operators.index');
-Route::delete('/operators/{operator}', [OperatorController::class, 'destroy'])->name('operators.destroy');
-Route::get('/operators', [OperatorController::class, 'search'])->name('operators.search');
 
 
 // Route Manage Event
-Route::get('/manage/events', [EventController::class, 'showPendingEvents'])->name('events.manage');
-Route::put('/manage/events/{event}', [EventController::class, 'changeStatus'])->name('events.change-status');
+Route::get('/manage/events', [TaxiController::class, 'showPendingEvents'])->name('events.manage');
+Route::put('/manage/events/{event}', [TaxiController::class, 'changeStatus'])->name('events.change-status');
 
 // Profile
 Route::middleware('auth')->group(function () {

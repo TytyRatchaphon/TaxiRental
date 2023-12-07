@@ -20,7 +20,7 @@
                 <a href="/">
                     <x-application-logo class="w-20 h-20 fill-current text-white" />
                 </a>
-                <p class="text-gray-900 text-[3vh] font-semibold duration-300 relative transform transition-all translate-y-8 ease-out opacity-0" data-replace='{ "translate-y-8": "translate-y-0", "opacity-0": "opacity-100" }'>HoneyLemon</p>
+                <p class="text-gray-900 text-[3vh] font-semibold duration-300 relative transform transition-all translate-y-8 ease-out opacity-0" data-replace='{ "translate-y-8": "translate-y-0", "opacity-0": "opacity-100" }'>Taxi-Rental</p>
             </div>
 
             <div class="w-full sm:max-w-md mt-6 px-6 py-4 bg-white shadow-md overflow-hidden sm:rounded-lg">

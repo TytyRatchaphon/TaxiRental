@@ -1,10 +1,9 @@
 <?php
 
-use App\Models\Event;
-use App\Models\Student;
 use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
+use App\Models\Taxi;
 
 return new class extends Migration
 {
@@ -13,10 +12,14 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('certificates', function (Blueprint $table) {
+        Schema::create('insurance', function (Blueprint $table) {
             $table->id();
-            $table->foreignIdFor(Event::class);
-            $table->string('path_image')->nullable();
+            $table->foreignIdFor(Taxi::class, 'car_license');
+            $table->string('insurance_type');
+            $table->string('company');
+            $table->string('start_date');
+            $table->string('expired_date');
+            $table->string('I_phonenumber');
             $table->timestamps();
         });
     }
@@ -26,6 +29,6 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists('certificates');
+        Schema::dropIfExists('insurance');
     }
 };

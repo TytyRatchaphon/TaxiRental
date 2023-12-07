@@ -5,30 +5,39 @@
                 @csrf
                 <!-- First Name -->
                 <div class="mb-6">
-                    <x-input-label for="user_firstname" :value="__('First Name')" />
-                    <x-text-input id="user_firstname" class="block w-full mt-1" type="text" name="user_firstname"
-                        :value="old('user_firstname')" required autofocus />
-                    @error('user_firstname')
+                    <x-input-label for="F_name" :value="__('First Name')" />
+                    <x-text-input id="F_name" class="block w-full mt-1" type="text" name="F_name"
+                        :value="old('F_name')" required autofocus />
+                    @error('F_name')
                         <p class="mt-2 text-red-500 text-sm">{{ $message }}</p>
                     @enderror
                 </div>
 
                 <!-- Last Name -->
                 <div class="mb-6">
-                    <x-input-label for="user_lastname" :value="__('Last Name')" />
-                    <x-text-input id="user_lastname" class="block w-full mt-1" type="text" name="user_lastname"
-                        :value="old('user_lastname')" required />
-                    @error('user_lastname')
+                    <x-input-label for="L_name" :value="__('Last Name')" />
+                    <x-text-input id="L_name" class="block w-full mt-1" type="text" name="L_name"
+                        :value="old('L_name')" required />
+                    @error('L_name')
                         <p class="mt-2 text-red-500 text-sm">{{ $message }}</p>
                     @enderror
                 </div>
 
-                <!-- Username -->
+                <!-- email -->
                 <div class="mb-6">
-                    <x-input-label for="username" :value="__('Username')" />
-                    <x-text-input id="username" class="block w-full mt-1" type="text" name="username"
-                        :value="old('username')" required />
-                    @error('username')
+                    <x-input-label for="email" :value="__('Email')" />
+                    <x-text-input id="email" class="block w-full mt-1" type="email" name="email"
+                        :value="old('email')" required />
+                    @error('email')
+                        <p class="mt-2 text-red-500 text-sm">{{ $message }}</p>
+                    @enderror
+                </div>
+
+                 <div class="mb-6">
+                    <x-input-label for="id_card_number" :value="__('ID Card')" />
+                    <x-text-input id="id_card_number" class="block w-full mt-1" type="text" name="id_card_number"
+                        :value="old('id_card_number')" required />
+                    @error('id_card_number')
                         <p class="mt-2 text-red-500 text-sm">{{ $message }}</p>
                     @enderror
                 </div>
@@ -43,42 +52,32 @@
                     @enderror
                 </div>
 
-                <!-- Major -->
+                <!-- license_id -->
                 <div class="mb-6">
-                    <x-input-label for="major" :value="__('Major')" />
-                    <x-text-input id="major" class="block w-full mt-1" type="text" name="major"
-                        :value="old('major')" required />
-                    @error('major')
+                    <x-input-label for="license_id" :value="__('License ID')" />
+                    <x-text-input id="license_id" class="block w-full mt-1" type="text" name="license_id"
+                        :value="old('license_id')" required />
+                    @error('license_id')
                         <p class="mt-2 text-red-500 text-sm">{{ $message }}</p>
                     @enderror
                 </div>
 
-                <!-- Faculty -->
+                <!-- pb_license -->
                 <div class="mb-6">
-                    <x-input-label for="faculty" :value="__('Faculty')" />
-                    <x-text-input id="faculty" class="block w-full mt-1" type="text" name="faculty"
-                        :value="old('faculty')" required />
-                    @error('faculty')
+                    <x-input-label for="pb_license" :value="__('Public License ID')" />
+                    <x-text-input id="pb_license" class="block w-full mt-1" type="text" name="pb_license"
+                        :value="old('pb_license')" required />
+                    @error('pb_license')
                         <p class="mt-2 text-red-500 text-sm">{{ $message }}</p>
                     @enderror
                 </div>
 
-                <!-- Year -->
+                <!-- phone_number -->
                 <div class="mb-6">
-                    <x-input-label for="year" :value="__('Year')" />
-                    <x-text-input id="year" class="block w-full mt-1" type="number" name="year"
-                        :value="old('year')" min="1" max="4" required />
-                    @error('year')
-                        <p class="mt-2 text-red-500 text-sm">{{ $message }}</p>
-                    @enderror
-                </div>
-
-                <!-- Email Address -->
-                <div class="mt-4">
-                    <x-input-label for="email" :value="__('Email')" />
-                    <x-text-input id="email" class="block mt-1 w-full" type="email" name="email"
-                        :value="old('email')" required autocomplete="username" />
-                    @error('email')
+                    <x-input-label for="phone_number" :value="__('Phone number')" />
+                    <x-text-input id="phone_number" class="block w-full mt-1" type="text" name="phone_number"
+                        :value="old('phone_number')" required />
+                    @error('phone_number')
                         <p class="mt-2 text-red-500 text-sm">{{ $message }}</p>
                     @enderror
                 </div>

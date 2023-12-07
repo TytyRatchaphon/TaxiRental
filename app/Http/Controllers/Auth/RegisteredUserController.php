@@ -33,14 +33,14 @@ class RegisteredUserController extends Controller
     public function store(Request $request): RedirectResponse
     {
         $request->validate([
-            'user_firstname' => ['required', 'string', 'max:255'],
-            'user_lastname' => ['required', 'string', 'max:255'],
-            'username' => ['required', 'string', 'max:255', 'unique:users'],
+            'F_name' => ['required', 'string', 'max:127'],
+            'L_name' => ['required', 'string', 'max:127'],
+            'email' => ['required', 'string', 'max:127', 'unique:users'],
             'user_profile_img' => 'nullable|image|mimes:jpeg,png,jpg,gif|max:2048',
-            'major' => ['required', 'string', 'max:255'],
-            'faculty' => ['required', 'string', 'max:255'],
-            'year' => ['required', 'integer', 'min:1', 'max:4'],
-            'email' => ['required', 'string', 'email', 'max:255', 'unique:users'],
+            'phone_number' => ['required', 'string', 'min:10', 'max:10', 'unique:users'],
+            'id_card_number' => ['required', 'string', 'min:13', 'max:13', 'unique:users'],
+            'license_id' => ['required', 'string', 'min:8', 'max:8', 'unique:users'],
+            'pb_license' => ['required', 'string', 'min:8', 'max:8', 'unique:users'],
             'password' => ['required', 'confirmed', Rules\Password::defaults()],
         ]);
     
@@ -53,24 +53,19 @@ class RegisteredUserController extends Controller
         }
     
         $user = User::create([
-            'user_firstname' => $request->user_firstname,
-            'user_lastname' => $request->user_lastname,
-            'username' => $request->username,
-            'user_profile_img' => $imageName,
+            'F_name' => $request->F_name,
+            'L_name' => $request->L_name,
             'email' => $request->email,
+            'id_card_number' => $request->id_card_number,
+            'user_profile_img' => $imageName,
+            'phone_number' => $request->phone_number,
+            'license_id' => $request->license_id,
+            'pb_license' => $request->pb_license,
             'password' => Hash::make($request->password),
         ]);
 
         event(new Registered($user));
-    
         Auth::login($user);
-    
-        $student = Student::create([
-            'user_id' => $user->id,
-            'major' => $request['major'],
-            'faculty' => $request['faculty'],
-            'year' => $request['year'],
-        ]);
         return redirect(RouteServiceProvider::HOME);
     }
 }

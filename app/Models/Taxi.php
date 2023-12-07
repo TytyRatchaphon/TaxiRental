@@ -2,37 +2,34 @@
 
 namespace App\Models;
 
-use App\Models\Enums\EventStatus;
-use Carbon\Carbon;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\Relations\BelongsToMany;
-use Illuminate\Database\Eloquent\Relations\HasMany;
+use Illuminate\Notifications\Notifiable;
 use Illuminate\Database\Eloquent\Relations\HasOne;
 
-class Event extends Model
-{
+class Taxi extends Model{
     use HasFactory;
-
-    protected $table = 'events'; // Set the table name if it's different from the default
+    
+    protected $table = 'taxis'; // Set the table name if it's different from the default
 
     protected $primaryKey = 'id'; // Set the primary key column name if it's different from the default
 
     protected $fillable = [
+        'user_id',
         'car_license',
-        'car_status',
         'registration_no',
         'car_color',
-        'car_year',
-        'car_image',
-        'insurance',
+        'car_model',
+        'car_image'
     ];
 
-
-
-
-    public function hasStudentInEvent($student) {
-        return $this->students()->where('student_id', $student->id)->exists();
+    public function insurance(){
+        return $this->hasMany(Insurance::class, 'car_license');
+    }
+    public function booking(){
+        return $this->hasMany (Booking::class);
     }
     
     public function scopeByStatusEvent($query, $status) {

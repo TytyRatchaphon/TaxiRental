@@ -2,10 +2,10 @@
     <div class="my-2 transition flex flex-wrap items-center justify-between max-w-screen-xl mx-auto">
 
         <a href="{{ url('/') }}" class="flex items-center">
-            <img src="https://www.svgrepo.com/show/429168/fruit-lemon-slice.svg" class="h-10 mr-1.5 sm:h-10" alt="Logo">
+            <img src="https://png.pngtree.com/png-clipart/20230417/original/pngtree-taxi-yellow-taxi-cartoon-png-image_9059688.png" class="h-10 mr-1.5 sm:h-10" alt="Logo">
             <span
-                class="link link-underline link-underline-yellow text-[#F6D106] self-center text-xl font-semibold whitespace-nowrap hover:text-[#faea9d] hover:scale-105 mr-2 transition">HONEY
-                LEMON
+                class="link link-underline link-underline-yellow text-[#F6D106] self-center text-xl font-semibold whitespace-nowrap hover:text-[#faea9d] hover:scale-105 mr-2 transition">TAXI
+                 REANTAL
             </span>
         </a>
 
@@ -32,7 +32,7 @@
                 @else
                 <img src="{{ asset('default-img/user_image.jpg') }}" alt="Default Event Image" class="h-8 w-8 rounded-full">
                 @endif
-                <span class="text-Black text-sm font-medium mr-3 ml-2">{{ auth()->user()->username }}</span>
+                <span class="text-Black text-sm font-medium mr-3 ml-2">{{ auth()->user()->F_name }}</span>
             </a>
             <a href="{{ route('logout') }}"
                 class="transition-transform duration-500 hover:scale-110 text-Black bg-[#fde047] hover:text-white font-medium rounded-lg text-sm  focus:ring-2 focus:ring-[#F6D106] px-3 py-1.5"
@@ -77,43 +77,45 @@
                 <li>
                     <a href="{{ route('home') }}"
                         class="pl-3 lg:pl-0 nav-menu hover:text-white lg:hover:text-[#fde047] transition {{ request()->is('/') ? 'active' : '' }}">
-                        Events
+                        Find Taxi
                     </a>
                 </li>
 
                 <!-- Student Role -->
-                @if (Auth::user()->isRole('STUDENT'))
+                @if (Auth::user()->isRole('USER'))
                 <li>
-                    <a href="{{ route('events.create') }}"
+                    <a href="{{ route('taxis.myevent')}}"
                         class="pl-3 lg:pl-0 nav-menu hover:text-white lg:hover:text-[#fde047] transition {{ Route::currentRouteName() === 'songs.index' ? 'active' : '' }}">
-                        Create Event
-                    </a>
-                </li>
-                <li>
-                    <a href="{{ route('events.myevent')}}"
-                        class="pl-3 lg:pl-0 nav-menu hover:text-white lg:hover:text-[#fde047] transition {{ Route::currentRouteName() === 'songs.index' ? 'active' : '' }}">
-                        My Events
-                    </a>
-                </li>
-                <li>
-                    <a href="{{ route('events.show-certificates') }}"
-                        class="pl-3 lg:pl-0 nav-menu hover:text-white lg:hover:text-[#fde047] transition {{ Route::currentRouteName() === 'songs.index' ? 'active' : '' }}">
-                        Certificate
-                    </a>
-                </li>
-                <li>
-                <a href="{{ route('notification') }}"
-                        class="pl-3 lg:pl-0 nav-menu hover:text-white lg:hover:text-[#fde047] transition {{ Route::currentRouteName() === 'songs.index' ? 'active' : '' }}">
-                        Notification
+                        My Taxi
                     </a>
                 </li>
 
-                <!-- Operator Role -->
-                @elseif(Auth::user()->isRole('OPERATOR'))
                 <li>
-                    <a href="{{ route('events.manage') }}"
-                        class="pl-3 lg:pl-0 nav-menu hover:text-white lg:hover:text-[#fde047] transition {{ request()->is('/') ? 'active' : '' }}">
-                        Pending Event
+                    <a href="{{ route('bookings.mybooking')}}"
+                        class="pl-3 lg:pl-0 nav-menu hover:text-white lg:hover:text-[#fde047] transition {{ Route::currentRouteName() === 'songs.index' ? 'active' : '' }}">
+                        My Payment
+                    </a>
+                </li>
+                
+
+                <!-- Operator Role -->
+                @elseif(Auth::user()->isRole('ADMIN'))
+                <li>
+                    <a href="{{ route('events.create') }}"
+                        class="pl-3 lg:pl-0 nav-menu hover:text-white lg:hover:text-[#fde047] transition {{ Route::currentRouteName() === 'songs.index' ? 'active' : '' }}">
+                        Add taxi
+                    </a>
+                </li>
+                <li>
+                    <a href="{{ url('/transaction') }}"
+                        class="pl-3 lg:pl-0 nav-menu hover:text-white lg:hover:text-[#fde047] transition {{ Route::currentRouteName() === 'songs.index' ? 'active' : '' }}">
+                        Payment
+                    </a>
+                </li>
+                <li>
+                    <a href="{{ route('bookings.manage')}}"
+                        class="pl-3 lg:pl-0 nav-menu hover:text-white lg:hover:text-[#fde047] transition {{ Route::currentRouteName() === 'songs.index' ? 'active' : '' }}">
+                        Manage Car
                     </a>
                 </li>
 
@@ -131,6 +133,7 @@
                         Operator List
                     </a>
                 </li>
+                
                 @endif
             </ul>
         </div>

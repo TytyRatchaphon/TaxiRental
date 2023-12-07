@@ -26,15 +26,15 @@
         <div class=" mx-auto px-4 py-8 rounded-lg sm:px-8 md:px-12 lg:px-16 transition-all">
             <div class="grid grid-cols-1 gap-6 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-3">
                 @foreach ($taxis as $taxi)
-                    <a href="{{ route('taxis.show', ['taxi' => $taxi]) }}"
+                    <a href=""
                         class="bg-white transition-all duration-1000 hover:scale-105 rounded-lg shadow-md p-6 opacity-0"
                         data-replace='{"opacity-0":"opacity-100"}'>
                         <div class="h-40 bg-cover bg-center rounded-t-lg">
                                 <img src="{{ asset('default-img/event_thumbnail.jpg') }}"
                                     alt="Default Event Image" class="w-full h-full object-cover">
                         </div>
-                        <h2 class="text-xl font-semibold mt-4 mb-2">License Plate : {{ $taxi->car_license }}</h2>
-                        <p class="text-gray-600 text-sm"> Color : {{ $taxi->car_color }}</p>
+                        <h2 class="text-xl font-semibold mt-4 mb-2">Car Status : {{ $taxi->B_status }}</h2>
+                        <p class="text-gray-600 text-sm"> Booked Date : {{ $taxi->B_date }} </p>
                         <p>
                             @auth
                                 @if(Auth::user()->isRole('ADMIN')  && $taxi->car_status === 'available')
@@ -47,6 +47,7 @@
                              @endauth
                         </p>
                         @auth
+                            @if ($taxi->car_status !== 'approved')
                                 @if (Auth::user()->isRole('ADMIN') || (Auth::user()->isRole('STUDENT') && $event->isStudentEvent(Auth::user()->student, 'HEAD')))
                                 <div class="flex">
                                     <form action="{{ route('events.destroy', ['taxi' => $taxi]) }}" method="POST" class="mr-4">
@@ -62,14 +63,15 @@
                                             class="bg-[#69e932] font-semibold text-white hover:opacity-80 rounded-lg p-1 pr-2 pl-2">Edit</button>
                                     </form>
                                 </div>
-                                @endif 
+                                @endif
+                            @endif 
                         @endauth 
                      </a>
                 @endforeach
             </div>
         @else
             <div class="flex bg-white rounded-lg shadow-lg w-full p-3 items-center justify-center">
-                <h1 class="text-center text-gray-300 py-10">No Taxi available</h1>
+                <h1 class="text-center text-gray-300 py-10">You don't have taxi</h1>
             </div>
     @endif
 
